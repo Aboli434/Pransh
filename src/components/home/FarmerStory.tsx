@@ -73,8 +73,8 @@ export default function FarmerStory({ locale }: { locale: Locale }) {
             </motion.div>
             
             <motion.div variants={textVariants}>
-              <Link href={`/${locale}#journey`}>
-                <Button variant="outline">{dict.farmer.cta}</Button>
+              <Link href={`/${locale}/our-story`}>
+                <Button variant="outline">Meet the Farmer</Button>
               </Link>
             </motion.div>
           </motion.div>

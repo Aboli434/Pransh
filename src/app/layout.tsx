@@ -14,8 +14,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PRANSH - Premium Agricultural Brand",
-  description: "Direct from farm premium products.",
+  metadataBase: new URL("https://pransh.farm"),
+  title: "PRANSH | Direct From Farm",
+  description: "A premium agricultural brand offering direct access to farm harvests. Discover the journey of PRANSH rice from seed to final grain.",
+  keywords: ["agriculture", "premium rice", "direct from farm", "farmer", "PRANSH"],
+  openGraph: {
+    title: "PRANSH | Direct From Farm",
+    description: "A premium agricultural brand offering direct access to farm harvests.",
+    url: "https://pransh.farm",
+    siteName: "PRANSH",
+    images: [
+      {
+        url: "/images/hero/hero-bg.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PRANSH Farm Landscape",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

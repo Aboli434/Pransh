@@ -11,10 +11,10 @@ export interface RiceProduct {
 
 export const productsData: RiceProduct[] = [
   {
-    id: "pransh-rice-current",
-    name: "PRANSH Farm Rice",
-    variety: "[CURRENT RICE VARIETY]",
-    description: "Explore the rice currently offered through PRANSH, grown as part of our farming journey and available through direct enquiry.",
+    id: "indrayani-rice",
+    name: "Indrayani Rice",
+    variety: "इंद्रायणी तांदूळ",
+    description: "Indrayani Rice is a well-known rice variety associated with Maharashtra, valued for its soft texture and distinct character when cooked. Its compact grain and familiar regional identity make it a popular choice for everyday Maharashtrian meals.",
     image: "/images/rice/rice-product.jpg",
     grainImage: "/images/rice/rice-grain-macro.jpg",
     availability: "[AVAILABLE PACK SIZE / DETAILS]"

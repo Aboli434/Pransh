@@ -122,5 +122,17 @@ const dict = {
         "rice": "चावल"
     }
 }
+,
+  enquiryCTA: {
+    "eyebrow": "बातचीत शुरू करें",
+    "heading": "हमारे चावल में रुचि है?",
+    "description": "क्या आपके पास वर्तमान में प्रांश (PRANSH) के माध्यम से उपलब्ध चावल के बारे में कोई प्रश्न है? सीधे संपर्क करें और बातचीत शुरू करें।",
+    "phoneCta": "पूछताछ के लिए कॉल करें",
+    "emailCta": "ईमेल भेजें",
+    "whatsappCta": "WhatsApp पर चैट करें",
+    "phoneLabel": "कॉल",
+    "emailLabel": "ईमेल",
+    "whatsappLabel": "व्हाट्सएप"
+}
 };
 export default dict;

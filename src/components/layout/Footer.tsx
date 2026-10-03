@@ -3,6 +3,7 @@ import { Locale } from '@/i18n/config';
 import { getDictionary } from '@/lib/i18n';
 import { brandConfig } from '@/data/brand';
 import Container from '../ui/Container';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -22,10 +23,11 @@ export default function Footer({ locale }: { locale: Locale }) {
             <h4 className="text-sm uppercase tracking-widest mb-6 text-[var(--color-champagne)]">Navigation</h4>
             <ul className="space-y-3 text-sm">
               <li><Link href={`/${locale}`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.home}</Link></li>
-              <li><Link href={`/${locale}#story`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourStory}</Link></li>
-              <li><Link href={`/${locale}#journey`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.theJourney}</Link></li>
-              <li><Link href={`/${locale}#rice`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourRice}</Link></li>
-              <li><Link href={`/${locale}#gallery`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.gallery}</Link></li>
+              <li><Link href={`/${locale}/our-story`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourStory}</Link></li>
+              <li><Link href={`/${locale}/journey`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.theJourney}</Link></li>
+              <li><Link href={`/${locale}/our-rice`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourRice}</Link></li>
+              <li><Link href={`/${locale}/gallery`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.gallery}</Link></li>
+              <li><Link href={`/${locale}/contact`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.contact}</Link></li>
             </ul>
           </div>
 
@@ -41,9 +43,7 @@ export default function Footer({ locale }: { locale: Locale }) {
           <div>
             <h4 className="text-sm uppercase tracking-widest mb-6 text-[var(--color-champagne)]">Language</h4>
             <div className="flex gap-4 text-sm">
-              <Link href="/en" className={locale === 'en' ? 'text-white' : 'text-white/50 hover:text-white'}>EN</Link>
-              <Link href="/mr" className={locale === 'mr' ? 'text-white' : 'text-white/50 hover:text-white'}>मराठी</Link>
-              <Link href="/hi" className={locale === 'hi' ? 'text-white' : 'text-white/50 hover:text-white'}>हिंदी</Link>
+              <LanguageSwitcher currentLocale={locale} />
             </div>
           </div>
         </div>

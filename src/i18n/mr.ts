@@ -122,5 +122,17 @@ const dict = {
         "rice": "तांदूळ"
     }
 }
+,
+  enquiryCTA: {
+    "eyebrow": "संवाद सुरू करा",
+    "heading": "आमच्या तांदळात स्वारस्य आहे?",
+    "description": "प्रांश (PRANSH) च्या माध्यमातून सध्या उपलब्ध असलेल्या तांदळाबद्दल काही प्रश्न आहेत? थेट संपर्क साधा आणि संवाद सुरू करा.",
+    "phoneCta": "चौकशीसाठी कॉल करा",
+    "emailCta": "ईमेल पाठवा",
+    "whatsappCta": "WhatsApp वर चॅट करा",
+    "phoneLabel": "कॉल",
+    "emailLabel": "ईमेल",
+    "whatsappLabel": "व्हॉट्सॲप"
+}
 };
 export default dict;

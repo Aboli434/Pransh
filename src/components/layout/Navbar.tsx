@@ -34,11 +34,11 @@ export default function Navbar({ locale }: { locale: Locale }) {
 
   const navLinks = [
     { name: dict.navigation.home, href: `/${locale}` },
-    { name: dict.navigation.ourStory, href: `/${locale}#story` },
-    { name: dict.navigation.theJourney, href: `/${locale}#journey` },
-    { name: dict.navigation.ourRice, href: `/${locale}#rice` },
-    { name: dict.navigation.gallery, href: `/${locale}#gallery` },
-    { name: dict.navigation.contact, href: `/${locale}#contact` },
+    { name: dict.navigation.ourStory, href: `/${locale}/our-story` },
+    { name: dict.navigation.theJourney, href: `/${locale}/journey` },
+    { name: dict.navigation.ourRice, href: `/${locale}/our-rice` },
+    { name: dict.navigation.gallery, href: `/${locale}/gallery` },
+    { name: dict.navigation.contact, href: `/${locale}/contact` },
   ];
 
   return (
@@ -81,7 +81,9 @@ export default function Navbar({ locale }: { locale: Locale }) {
               
               <LanguageSwitcher currentLocale={locale} />
               
-              <Button variant="primary">{dict.navigation.enquireNow}</Button>
+              <Link href={`/${locale}/contact`}>
+                <Button variant="primary">{dict.navigation.enquireNow}</Button>
+              </Link>
             </nav>
 
             {/* Mobile Toggle */}
@@ -140,9 +142,11 @@ export default function Navbar({ locale }: { locale: Locale }) {
               transition={{ delay: 0.8 }}
             >
               <LanguageSwitcher currentLocale={locale} />
-              <Button variant="primary" className="w-full justify-center">
-                {dict.navigation.enquireNow}
-              </Button>
+              <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="primary" className="w-full justify-center">
+                  {dict.navigation.enquireNow}
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         )}

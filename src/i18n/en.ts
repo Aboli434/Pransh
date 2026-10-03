@@ -122,5 +122,17 @@ const dict = {
         "rice": "RICE"
     }
 }
+,
+  enquiryCTA: {
+    "eyebrow": "START A CONVERSATION",
+    "heading": "Interested in Our Rice?",
+    "description": "Have a question about the rice currently available through PRANSH? Get in touch directly and start a conversation.",
+    "phoneCta": "Call to Enquire",
+    "emailCta": "Send an Email",
+    "whatsappCta": "Chat on WhatsApp",
+    "phoneLabel": "CALL",
+    "emailLabel": "EMAIL",
+    "whatsappLabel": "WHATSAPP"
+}
 };
 export default dict;
