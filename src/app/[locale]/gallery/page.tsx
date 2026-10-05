@@ -7,5 +7,5 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
   const typedLocale = locale as Locale;
   const dict = getDictionary(typedLocale);
 
-  return <GalleryClient locale={typedLocale} dict={dict} />;
+  return <GalleryClient />;
 }

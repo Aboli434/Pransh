@@ -1,7 +1,7 @@
 'use client';
 import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, useTexture, Environment } from '@react-three/drei';
+import { PerspectiveCamera, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import FarmTerrain from './FarmTerrain';
 import FloatingGrain from './FloatingGrain';

@@ -1,38 +1,38 @@
 import Container from '@/components/ui/Container';
-import { contactData } from '@/data/contact';
 
 export default async function ContactPage() {
   return (
-    <main className="pt-32 pb-32 bg-[var(--color-charcoal)] min-h-[90vh] flex items-center text-[var(--color-ivory)]">
+    <main className="pt-32 pb-32 bg-[var(--color-charcoal)] min-h-screen flex items-center justify-center text-[var(--color-ivory)]">
       <Container>
-        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16">
+        <div className="max-w-[1000px] mx-auto text-center flex flex-col items-center">
           
-          <div className="w-full md:w-auto">
-            <h1 className="text-[12vw] md:text-[140px] font-serif leading-[0.8] tracking-tighter mb-4">
-              LET&apos;S
-              <br />
-              <span className="italic font-light text-[var(--color-champagne)]">TALK.</span>
-            </h1>
-          </div>
-          
-          <div className="w-full md:w-auto flex flex-col gap-12 font-medium">
-            <div className="flex flex-col gap-2">
-              <a 
-                href={`tel:${contactData.phone}`} 
-                className="text-4xl md:text-5xl font-serif hover:text-[var(--color-champagne)] transition-colors inline-block"
-              >
-                {contactData.phone}
-              </a>
-              <a 
-                href={`mailto:${contactData.email}`} 
-                className="text-xl md:text-2xl font-light hover:text-[var(--color-champagne)] transition-colors inline-block"
-              >
-                {contactData.email}
-              </a>
-            </div>
+          <p className="text-xs uppercase tracking-[0.4em] font-semibold text-[var(--color-champagne)] mb-8">
+            LOOKING FOR INDRAYANI RICE?
+          </p>
 
-            <div className="flex flex-col gap-1 text-sm uppercase tracking-widest text-[var(--color-ivory)]/60">
-              <span>{contactData.address}</span>
+          <h1 className="text-5xl md:text-7xl lg:text-[100px] font-serif leading-[1] tracking-tighter mb-16">
+            START AN ENQUIRY
+          </h1>
+          
+          <div className="flex flex-col gap-6 text-xl md:text-2xl font-light">
+            <a 
+              href="tel:9370943298" 
+              className="hover:text-[var(--color-champagne)] transition-colors inline-block"
+            >
+              Phone: 9370943298
+            </a>
+            <a 
+              href="mailto:unmeshrisbud345@gmail.com" 
+              className="hover:text-[var(--color-champagne)] transition-colors inline-block"
+            >
+              Email: unmeshrisbud345@gmail.com
+            </a>
+            
+            <div className="mt-8 text-lg opacity-80 uppercase tracking-widest text-[var(--color-ivory)]">
+              <span className="block mb-2">Location:</span>
+              <span className="block">Pavnanagar</span>
+              <span className="block">Kale Colony</span>
+              <span className="block">410406</span>
             </div>
           </div>
 

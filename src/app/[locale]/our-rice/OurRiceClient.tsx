@@ -1,103 +1,74 @@
 'use client';
-import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Locale } from '@/i18n/config';
 import { productsData } from '@/data/products';
-import Container from '@/components/ui/Container';
 import RiceClusterScene from '@/components/three/RiceClusterScene';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function OurRiceClient({ dict }: { locale: Locale, dict: any }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
-  
+export default function OurRiceClient() {
   const product = productsData.find(p => p.id === "indrayani-rice") || productsData[0];
 
   return (
-    <main className="pt-32 pb-32 bg-[var(--color-ivory)] min-h-screen overflow-hidden">
-      <Container className="relative">
-        <div 
-          ref={containerRef}
-          className="relative max-w-[1400px] mx-auto min-h-[80vh] flex items-center justify-center [perspective:2000px]"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+    <main className="pt-32 pb-32 bg-[var(--color-ivory)] min-h-screen">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-12">
+        
+        {/* Header Section */}
+        <div className="mb-24 md:mb-32 max-w-3xl">
+          <h1 className="text-6xl md:text-8xl lg:text-[100px] font-serif text-[var(--color-charcoal)] leading-[0.9] tracking-tighter mb-4">
+            INDRAYANI RICE
+          </h1>
+          <h2 className="text-3xl md:text-4xl font-serif text-[var(--color-champagne)] italic mb-12">
+            {product.variety}
+          </h2>
+          
+          <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/60 mb-4">
+            What is Indrayani Rice?
+          </div>
+          <p className="text-lg md:text-xl text-[var(--color-charcoal)]/80 font-light leading-relaxed">
+            {product.description}
+          </p>
+        </div>
+
+        {/* Visual Section */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+          
           {/* Main Macro Image */}
-          <motion.div 
-            className="absolute inset-0 w-full h-full lg:w-[85%] lg:left-[7.5%] z-0"
-            animate={{ 
-              scale: isHovered && !prefersReducedMotion ? 1.05 : 1,
-              rotateX: isHovered && !prefersReducedMotion ? 2 : 0,
-            }}
-            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="relative w-full h-full shadow-2xl">
+          <div className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] relative overflow-hidden">
+            <Image 
+              src={product.image}
+              alt={product.name}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+
+          {/* Interactive Grain 3D & Close-up */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-12 h-full justify-between">
+            
+            <div className="relative w-full h-[300px] md:h-[400px] bg-[var(--color-charcoal)]/5">
+              {/* Floating 3D WebGL Grain Cluster */}
+              <RiceClusterScene />
+              <div className="absolute bottom-4 left-4 text-xs font-sans uppercase tracking-widest text-[var(--color-charcoal)]/50 pointer-events-none">
+                Interactive Grain View
+              </div>
+            </div>
+
+            <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden">
               <Image 
-                src={product.image}
-                alt={product.name}
+                src={product.grainImage || product.image}
+                alt="Grain Close-up"
                 fill
-                priority
                 className="object-cover"
-                sizes="100vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <motion.div 
-                className="absolute inset-0 bg-[var(--color-champagne)] mix-blend-overlay pointer-events-none"
-                animate={{ opacity: isHovered ? 0.3 : 0.1 }}
-                transition={{ duration: 1 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)]/80 via-transparent to-[var(--color-charcoal)]/30 pointer-events-none" />
-            </div>
-          </motion.div>
-
-          {/* Floating 3D WebGL Grain Cluster */}
-          <motion.div 
-            className="absolute right-0 bottom-[15%] w-[400px] h-[500px] z-10 hidden lg:block"
-            animate={{ 
-              y: isHovered && !prefersReducedMotion ? -30 : 0,
-            }}
-            transition={{ duration: 2, ease: "easeOut" }}
-          >
-            <RiceClusterScene />
-          </motion.div>
-
-          {/* Floating Editorial Information Card */}
-          <motion.div 
-            className="absolute bottom-0 md:bottom-12 left-4 right-4 md:left-12 md:right-auto md:w-[500px] bg-[var(--color-ivory)]/80 backdrop-blur-xl border border-[var(--color-ivory)] p-8 md:p-12 shadow-2xl z-20"
-            animate={{ 
-              y: isHovered && !prefersReducedMotion ? -10 : 0,
-              translateZ: 100
-            }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            <div className="mb-6 flex items-center gap-3">
-              <span className="h-px w-12 bg-[var(--color-champagne)]"></span>
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-terracotta)]">
-                {dict.riceProduct.eyebrow}
-              </span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-serif text-[var(--color-charcoal)] mb-2 tracking-tighter">
-              {product.name}.
-            </h1>
-            <h2 className="text-2xl font-serif text-[var(--color-champagne)] italic mb-8">
-              {product.variety}
-            </h2>
-            
-            <p className="text-[var(--color-charcoal)]/80 font-light leading-relaxed mb-8 text-balance">
-              {product.description}
-            </p>
-
-            <div className="border-t border-[var(--color-charcoal)]/10 pt-6">
-              <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--color-charcoal)]/60 mb-2">Availability</h3>
-              <p className="text-[var(--color-charcoal)] font-medium">{product.availability}</p>
-            </div>
-          </motion.div>
+          </div>
           
         </div>
-      </Container>
+
+      </div>
     </main>
   );
 }

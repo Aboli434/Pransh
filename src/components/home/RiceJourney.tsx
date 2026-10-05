@@ -1,72 +1,75 @@
-'use client';
-import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Locale } from '@/i18n/config';
 import { journeyStagesData } from '@/data/journey';
-import TextReveal from '../motion/TextReveal';
 
 export default function RiceJourney({ locale }: { locale: Locale }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const yMove = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "25%"]);
+  // Select 3 preview stages
+  const previewStages = [
+    journeyStagesData[1], // Sowing
+    journeyStagesData[3], // Harvesting
+    journeyStagesData[7], // Final Rice
+  ];
 
   return (
-    <section id="journey" ref={containerRef} className="w-full bg-[var(--color-charcoal)] py-32 md:py-48 overflow-hidden">
+    <section id="journey" className="w-full bg-[var(--color-charcoal)] py-24 md:py-48">
       <div className="w-full max-w-[1600px] mx-auto px-4 md:px-12">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+        
+        {/* Header Question */}
+        <div className="mb-16 md:mb-32">
+          <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">
+            THE JOURNEY
+          </span>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
-          {/* Typographic Left Side */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
-            <div className="flex items-center gap-4 mb-12">
-              <span className="h-px w-24 bg-[var(--color-champagne)]"></span>
-              <span className="text-xs uppercase tracking-[0.3em] font-medium text-[var(--color-champagne)]">
-                The Process
-              </span>
-            </div>
-            
-            <div className="text-5xl md:text-7xl lg:text-[90px] leading-[1.05] font-serif text-[var(--color-ivory)] mb-12 flex flex-col gap-2">
-              <TextReveal delay={0.2} staggerDelay={0.08}>From</TextReveal>
-              <TextReveal delay={0.4} staggerDelay={0.08}>Seed To</TextReveal>
-              <TextReveal delay={0.6} staggerDelay={0.08}>Grain.</TextReveal>
-            </div>
-            
-            <p className="text-xl md:text-2xl text-[var(--color-ivory)]/60 font-light max-w-md mb-16 leading-relaxed">
-              Every harvest is a dialogue between the soil, the seasons, and the hands that guide them.
-            </p>
-            
-            <Link 
-              href={`/${locale}/journey`}
-              className="group inline-flex items-center gap-6"
-            >
-              <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-ivory)] group-hover:text-[var(--color-champagne)] transition-colors">
-                Enter the Journey
-              </span>
-              <span className="w-12 h-px bg-[var(--color-ivory)]/40 group-hover:bg-[var(--color-champagne)] group-hover:w-24 transition-all duration-500 ease-out" />
-            </Link>
+          {/* Visual Sequence */}
+          <div className="w-full lg:w-1/2 flex flex-col md:flex-row gap-4 h-[60vh] md:h-[500px]">
+            {previewStages.map((stage, idx) => (
+              <div key={stage.id} className="relative flex-1 h-full overflow-hidden group">
+                <Image 
+                  src={stage.image}
+                  alt={stage.title}
+                  fill
+                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500" />
+                <div className="absolute bottom-4 left-4 z-10 text-[var(--color-ivory)]">
+                  <span className="block text-xs uppercase tracking-widest font-semibold opacity-80 mb-1">
+                    0{idx === 0 ? 2 : idx === 1 ? 4 : 8}
+                  </span>
+                  <span className="block font-serif text-lg tracking-wide">{stage.title}</span>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Cinematic Image Right Side */}
-          <div className="w-full lg:w-1/2 relative h-[60vh] lg:h-[85vh] overflow-hidden group">
-            <motion.div 
-              style={{ y: yMove }}
-              className="absolute inset-[-15%] w-[130%] h-[130%]"
-            >
-              <Image 
-                src={journeyStagesData[3].image} // Harvest image
-                alt="Harvest"
-                fill
-                className="object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-1000"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </motion.div>
+          {/* Text Sequence Side */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+            
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-6 text-xl md:text-3xl font-serif text-[var(--color-ivory)] leading-[1.2] mb-16">
+              {journeyStagesData.map((stage, idx) => (
+                <div key={stage.id} className="flex items-center gap-4">
+                  <span className="opacity-80 hover:text-[var(--color-champagne)] transition-colors cursor-default">
+                    {stage.title}
+                  </span>
+                  {idx < journeyStagesData.length - 1 && (
+                    <span className="text-[var(--color-champagne)] font-sans text-sm opacity-50">→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            
+            <div>
+              <Link 
+                href={`/${locale}/journey`}
+                className="inline-block text-xs uppercase tracking-[0.2em] text-[var(--color-ivory)] border-b border-[var(--color-ivory)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
+              >
+                ENTER THE FULL JOURNEY
+              </Link>
+            </div>
           </div>
           
         </div>

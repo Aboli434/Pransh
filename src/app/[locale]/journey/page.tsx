@@ -7,5 +7,5 @@ export default async function JourneyPage({ params }: { params: Promise<{ locale
   const typedLocale = locale as Locale;
   const dict = getDictionary(typedLocale);
 
-  return <JourneyPageClient locale={typedLocale} dict={dict} />;
+  return <JourneyPageClient />;
 }
