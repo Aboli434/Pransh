@@ -61,11 +61,8 @@ export default function Hero({ locale }: { locale: Locale }) {
           <h1 className="text-[12vw] md:text-[100px] lg:text-[120px] leading-[0.9] font-serif tracking-tighter mb-6 drop-shadow-lg">
             INDRAYANI RICE
           </h1>
-          <p className="text-2xl md:text-3xl font-serif text-[var(--color-champagne)] italic mb-6">
-            Grown by a farmer. Prepared for your table.
-          </p>
           <p className="text-base md:text-lg font-sans font-light opacity-90 max-w-xl leading-relaxed mb-10 drop-shadow-sm">
-            PRANSH brings Indrayani Rice directly from our farm in Pavnanagar, with the journey from seed to grain at the heart of the story.
+            Grown by a farmer in Pavnanagar, PRANSH brings the journey of rice from the field to the grain on your table.
           </p>
           
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
