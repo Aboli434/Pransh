@@ -3,14 +3,10 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { getDictionary } from '@/lib/i18n';
 import { Locale } from '@/i18n/config';
 import { productsData } from '@/data/products';
-import Container from '../ui/Container';
-import Button from '../ui/Button';
 
 export default function RiceProduct({ locale }: { locale: Locale }) {
-  const dict = getDictionary(locale);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -19,66 +15,60 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
     offset: ["start end", "end start"]
   });
 
-  const cardY = useTransform(scrollYProgress, [0, 1], ["20%", prefersReducedMotion ? "0%" : "-20%"]);
-  
-  // We explicitly use Indrayani Rice data
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "20%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "-15%"]);
+
   const product = productsData.find(p => p.id === "indrayani-rice") || productsData[0];
 
   return (
-    <section id="rice" ref={containerRef} className="py-24 md:py-32 lg:py-40 bg-[var(--color-warm-beige)] overflow-hidden relative">
-      <Container>
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+    <section id="rice" ref={containerRef} className="w-full bg-[var(--color-ivory)] py-24 md:py-48 overflow-hidden">
+      <div className="w-full max-w-[1800px] mx-auto px-4 md:px-12">
+        <div className="flex flex-col lg:flex-row items-center">
           
-          {/* Visual Presentation */}
-          <div className="w-full lg:w-3/5 relative aspect-square md:aspect-[4/3] lg:aspect-[16/10] bg-[var(--color-charcoal)] rounded-sm overflow-hidden group">
-            <Image 
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-1000"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-            />
-            
-            {/* Floating Product Card (3D Parallax Effect) */}
-            <motion.div 
-              style={{ y: cardY }}
-              className="absolute right-8 bottom-8 md:right-12 md:bottom-12 bg-[var(--color-ivory)]/90 backdrop-blur-md p-6 md:p-8 shadow-2xl max-w-xs border border-[var(--color-ivory)]"
-            >
-              <h3 className="text-2xl font-serif text-[var(--color-charcoal)] mb-1">{product.name}</h3>
-              <p className="text-sm font-semibold tracking-widest text-[var(--color-champagne)] mb-4">{product.variety}</p>
-              <Link href={`/${locale}/our-rice`} className="text-xs uppercase tracking-widest text-[var(--color-charcoal)] hover:text-[var(--color-champagne)] transition-colors flex items-center gap-2">
-                Discover More <span>→</span>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Text Content */}
-          <div className="w-full lg:w-2/5">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="h-px w-8 bg-[var(--color-champagne)]"></span>
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-sage)]">
-                {dict.riceProduct.eyebrow}
+          {/* Typographic Split */}
+          <motion.div 
+            style={{ y: textY }}
+            className="w-full lg:w-1/2 flex flex-col justify-center order-2 lg:order-1 pt-16 lg:pt-0 lg:pr-12"
+          >
+            <div className="mb-8">
+              <span className="text-xs uppercase tracking-[0.4em] font-medium text-[var(--color-charcoal)]/50 block mb-2">
+                The Result
               </span>
+              <h2 className="text-6xl md:text-8xl lg:text-[100px] font-serif text-[var(--color-charcoal)] leading-none tracking-tighter">
+                Indrayani<span className="text-[var(--color-champagne)]">.</span>
+              </h2>
             </div>
             
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--primary)] mb-8 leading-[1.1]">
-              Indrayani Rice. <br />
-              <span className="text-[var(--color-sage)] italic font-light">इंद्रायणी तांदूळ</span>
-            </h2>
-            
-            <p className="text-lg text-[var(--color-charcoal)]/80 font-light mb-10 text-balance leading-relaxed">
-              {product.description}
+            <p className="text-xl text-[var(--color-charcoal)]/70 font-light max-w-md mb-12 leading-relaxed">
+              Cultivated in the rich soils of Pavnanagar, this premium indigenous variety carries the exact fragrance and texture of authentic traditional farming.
             </p>
             
-            <div className="flex gap-4">
-              <Link href={`/${locale}/our-rice`}>
-                <Button variant="primary">Explore Indrayani Rice</Button>
-              </Link>
-            </div>
+            <Link 
+              href={`/${locale}/our-rice`}
+              className="group inline-flex items-center gap-6"
+            >
+              <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-charcoal)] group-hover:text-[var(--color-champagne)] transition-colors font-medium">
+                See the Rice
+              </span>
+              <span className="w-12 h-px bg-[var(--color-charcoal)]/30 group-hover:bg-[var(--color-champagne)] group-hover:w-24 transition-all duration-500 ease-out" />
+            </Link>
+          </motion.div>
+
+          {/* Macro Image Split */}
+          <div className="w-full lg:w-1/2 h-[60vh] lg:h-[90vh] relative order-1 lg:order-2 overflow-hidden bg-[var(--color-charcoal)]">
+            <motion.div style={{ y: imageY }} className="absolute inset-[-10%] w-[120%] h-[120%]">
+              <Image 
+                src={product.image}
+                alt="Indrayani Rice Macro"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-[1.5s]"
+              />
+            </motion.div>
           </div>
           
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

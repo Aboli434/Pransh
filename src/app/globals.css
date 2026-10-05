@@ -6,8 +6,19 @@
   --color-sage: #7B8768;
   --color-ivory: #F7F4ED;
   --color-warm-beige: #E9E1D2;
+  --color-warm-sand: #DCCCB5;
+  --color-terracotta: #A86143;
+  --color-burnt-clay: #8C4F38;
+  --color-harvest-gold: #C49A55;
+  --color-golden-wheat: #D7B86A;
+  --color-muted-marigold: #C58A3A;
+  --color-earth-brown: #654936;
   --color-champagne: #B99A5B;
   --color-charcoal: #20231F;
+  --color-soft-sky: #A9B8B5;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
 }
 
 @layer base {

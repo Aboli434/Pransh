@@ -1,11 +1,11 @@
 export const brandConfig = {
   name: "PRANSH",
-  description: "[Short brand description will be added after farmer information is finalized.]",
-  farmerName: "[FARMER NAME]",
-  location: "[FARM LOCATION]",
+  tagline: "Authentic Agriculture from the Source",
+  farmerName: "The Farmer Behind PRANSH",
+  location: "Pavnanagar, Kale Colony, 410406",
   contact: {
-    phone: "[PHONE NUMBER]",
-    email: "[EMAIL ADDRESS]",
+    phone: "9370943298",
+    email: "unmeshrisbud345@gmail.com",
   },
-  logo: "/images/brand/pransh-logo.png",
+  description: "Authentic Indrayani rice cultivated with care and tradition.",
 };

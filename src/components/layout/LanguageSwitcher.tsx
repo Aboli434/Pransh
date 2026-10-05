@@ -26,7 +26,7 @@ export default function LanguageSwitcher({ currentLocale }: { currentLocale: Loc
         <button
           key={loc}
           onClick={() => handleSwitch(loc)}
-          className={`transition-colors duration-300 ${currentLocale === loc ? 'text-[var(--primary)] font-semibold border-b border-[var(--primary)]' : 'text-gray-500 hover:text-[var(--primary)]'}`}
+          className={`transition-colors duration-300 ${currentLocale === loc ? 'text-[var(--color-champagne)] font-semibold border-b border-[var(--color-champagne)]' : 'text-current opacity-50 hover:opacity-100 hover:text-[var(--color-champagne)]'}`}
           aria-label={`Switch to ${labels[loc]}`}
         >
           {labels[loc]}

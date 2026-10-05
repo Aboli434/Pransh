@@ -3,15 +3,11 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { getDictionary } from '@/lib/i18n';
 import { Locale } from '@/i18n/config';
 import { journeyStagesData } from '@/data/journey';
-import Container from '../ui/Container';
-import Button from '../ui/Button';
-import TiltCard from '../motion/TiltCard';
+import TextReveal from '../motion/TextReveal';
 
 export default function RiceJourney({ locale }: { locale: Locale }) {
-  const dict = getDictionary(locale);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -20,70 +16,61 @@ export default function RiceJourney({ locale }: { locale: Locale }) {
     offset: ["start end", "end start"]
   });
 
-  const xMove = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "-20%"]);
-
-  // We only show a few stages as a teaser
-  const teaserStages = journeyStagesData.slice(0, 4);
+  const yMove = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "25%"]);
 
   return (
-    <section id="journey" ref={containerRef} className="py-24 md:py-32 bg-[var(--color-charcoal)] overflow-hidden">
-      <Container>
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="h-px w-8 bg-[var(--color-champagne)]"></span>
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">
-                {dict.journey.eyebrow}
+    <section id="journey" ref={containerRef} className="w-full bg-[var(--color-charcoal)] py-32 md:py-48 overflow-hidden">
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          
+          {/* Typographic Left Side */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+            <div className="flex items-center gap-4 mb-12">
+              <span className="h-px w-24 bg-[var(--color-champagne)]"></span>
+              <span className="text-xs uppercase tracking-[0.3em] font-medium text-[var(--color-champagne)]">
+                The Process
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-ivory)] leading-tight">
-              {dict.journey.heading}
-            </h2>
+            
+            <div className="text-5xl md:text-7xl lg:text-[90px] leading-[1.05] font-serif text-[var(--color-ivory)] mb-12 flex flex-col gap-2">
+              <TextReveal delay={0.2} staggerDelay={0.08}>From</TextReveal>
+              <TextReveal delay={0.4} staggerDelay={0.08}>Seed To</TextReveal>
+              <TextReveal delay={0.6} staggerDelay={0.08}>Grain.</TextReveal>
+            </div>
+            
+            <p className="text-xl md:text-2xl text-[var(--color-ivory)]/60 font-light max-w-md mb-16 leading-relaxed">
+              Every harvest is a dialogue between the soil, the seasons, and the hands that guide them.
+            </p>
+            
+            <Link 
+              href={`/${locale}/journey`}
+              className="group inline-flex items-center gap-6"
+            >
+              <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-ivory)] group-hover:text-[var(--color-champagne)] transition-colors">
+                Enter the Journey
+              </span>
+              <span className="w-12 h-px bg-[var(--color-ivory)]/40 group-hover:bg-[var(--color-champagne)] group-hover:w-24 transition-all duration-500 ease-out" />
+            </Link>
+          </div>
+
+          {/* Cinematic Image Right Side */}
+          <div className="w-full lg:w-1/2 relative h-[60vh] lg:h-[85vh] overflow-hidden group">
+            <motion.div 
+              style={{ y: yMove }}
+              className="absolute inset-[-15%] w-[130%] h-[130%]"
+            >
+              <Image 
+                src={journeyStagesData[3].image} // Harvest image
+                alt="Harvest"
+                fill
+                className="object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-1000"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </motion.div>
           </div>
           
-          <Link href={`/${locale}/journey`} className="hidden md:block">
-            <Button variant="primary">Explore the Journey</Button>
-          </Link>
         </div>
-
-        {/* Horizontal Scroll Teaser */}
-        <div className="relative mt-12 w-full">
-          <motion.div 
-            style={{ x: xMove }}
-            className="flex gap-6 md:gap-8 min-w-max pr-[20vw]"
-          >
-            {teaserStages.map((stage, i) => (
-              <TiltCard key={stage.id} maxTilt={10} className="w-[75vw] sm:w-[50vw] md:w-[35vw] lg:w-[25vw] shrink-0">
-                <div className="relative aspect-[3/4] bg-[var(--color-ivory)]/5 border border-[var(--color-ivory)]/10 overflow-hidden group">
-                  <Image 
-                    src={stage.image}
-                    alt={`Stage ${i + 1}`}
-                    fill
-                    className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 75vw, (max-width: 1024px) 35vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-                    <span className="text-[var(--color-champagne)] text-sm font-semibold tracking-widest uppercase mb-2 block">
-                      0{i + 1}
-                    </span>
-                    <h3 className="text-[var(--color-ivory)] font-serif text-2xl md:text-3xl mb-2">
-                      {/* Using English fallback here for simplicity, in a real scenario we'd extract from dict.journey.stages */}
-                      {stage.id.charAt(0).toUpperCase() + stage.id.slice(1)}
-                    </h3>
-                  </div>
-                </div>
-              </TiltCard>
-            ))}
-          </motion.div>
-        </div>
-
-        <div className="mt-12 md:hidden">
-          <Link href={`/${locale}/journey`}>
-            <Button variant="primary" className="w-full justify-center">Explore the Journey</Button>
-          </Link>
-        </div>
-      </Container>
+      </div>
     </section>
   );
 }
