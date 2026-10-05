@@ -7,5 +7,5 @@ export default async function OurRicePage({ params }: { params: Promise<{ locale
   const typedLocale = locale as Locale;
   const dict = getDictionary(typedLocale);
 
-  return <OurRiceClient />;
+  return <OurRiceClient dict={dict} />;
 }

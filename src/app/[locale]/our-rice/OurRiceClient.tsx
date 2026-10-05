@@ -1,112 +1,215 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { productsData } from '@/data/products';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { images } from '@/data/images';
-import RiceClusterScene from '@/components/three/RiceClusterScene';
+import { useParams } from 'next/navigation';
 
-export default function OurRiceClient() {
-  const product = productsData.find(p => p.id === "indrayani-rice") || productsData[0];
+export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<string, string> } }) {
+  const t = dict?.ourRicePage || {
+    eyebrow: "OUR RICE",
+    title: "INDRAYANI RICE",
+    subtitle: "इंद्रायणी तांदूळ",
+    description: "Indrayani Rice is a rice variety associated with Maharashtra, known for its soft texture and familiar regional character.",
+    visualStory: "From the fields to the final grain, the story continues in every handful.",
+    fromJourney: "FROM THE JOURNEY",
+    exploreJourney: "EXPLORE THE JOURNEY →",
+    availablePacking: "AVAILABLE PACKING",
+    packing10kg: "10 KG",
+    packing25kg: "25 KG",
+    productInfo: "PRODUCT INFORMATION",
+    varietyLabel: "Variety",
+    varietyValue: "Indrayani",
+    regionLabel: "Region",
+    regionValue: "Maharashtra",
+    packingLabel: "Packing",
+    packingValue: "10 KG / 25 KG",
+    orderingLabel: "Ordering",
+    orderingValue: "Enquiry based",
+    enquireHeading: "LOOKING FOR INDRAYANI RICE?",
+    enquireDesc: "Tell us what you need and get in touch directly.",
+    enquireBtn: "ENQUIRE TO ORDER"
+  };
+
+  const params = useParams();
+  const locale = params?.locale || 'en';
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: containerRef });
+  
+  // Subtle parallax for the main hero image
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   return (
-    <main className="pt-32 pb-32 bg-[var(--color-ivory)] min-h-screen text-[var(--color-charcoal)]">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12">
-        
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+    <main ref={containerRef} className="bg-[#f2ede4] min-h-screen text-[#2b2723] selection:bg-[#8a7d6d] selection:text-[#f2ede4]">
+      
+      {/* 01 PRODUCT INTRO */}
+      <section className="pt-32 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
           
-          {/* LEFT: Large rice macro photograph */}
-          <div className="w-full lg:w-1/2 h-[60vh] lg:h-[85vh] relative overflow-hidden">
-            <Image 
-              src={images.rice.v01_macro}
-              alt="Raw Indrayani rice grains macro"
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-
-          {/* RIGHT: Product Information */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
-            
-            <div className="text-xs uppercase tracking-[0.4em] font-semibold text-[var(--color-champagne)] mb-6">
-              OUR RICE / WHAT IS IT?
+          {/* TEXT BLOCK */}
+          <div className="w-full lg:w-[40%] flex flex-col pt-12">
+            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-8 font-semibold">
+              {t.eyebrow}
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-[90px] font-serif leading-[0.9] tracking-tighter mb-4">
-              INDRAYANI RICE
+            <h1 className="text-6xl md:text-[5.5rem] lg:text-[7rem] font-serif leading-[0.85] tracking-tighter mb-4 text-[#2b2723]">
+              {t.title.split(' ')[0]}<br/>
+              {t.title.split(' ').slice(1).join(' ')}
             </h1>
-            <h2 className="text-2xl md:text-3xl font-serif text-[var(--color-charcoal)]/60 italic mb-10">
-              इंद्रायणी तांदूळ
+            
+            <h2 className="text-2xl md:text-3xl font-serif italic text-[#6b6255] mb-12">
+              {t.subtitle}
             </h2>
             
-            <p className="text-lg md:text-xl text-[var(--color-charcoal)]/80 font-light leading-relaxed max-w-xl mb-16">
-              {product.description}
+            <p className="text-lg md:text-xl font-serif text-[#4a433c] leading-relaxed max-w-md border-l border-[#8a7d6d]/30 pl-6 py-2">
+              {t.description}
             </p>
+          </div>
 
-            <div className="mb-16">
-              <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/50 mb-6">
-                AVAILABLE PACKING
-              </div>
-              <div className="flex gap-4">
-                <div className="border border-[var(--color-charcoal)]/20 px-8 py-4 text-xl font-serif tracking-widest text-[var(--color-charcoal)]">
-                  10 KG
-                </div>
-                <div className="border border-[var(--color-charcoal)]/20 px-8 py-4 text-xl font-serif tracking-widest text-[var(--color-charcoal)]">
-                  25 KG
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-16">
-              <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/50 mb-6">
-                ORDER
-              </div>
-              <p className="text-base text-[var(--color-charcoal)]/70 mb-6">
-                Interested in Indrayani Rice? Enquire for availability and ordering details.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                <a 
-                  href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-10 py-5 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] transition-colors inline-block"
-                >
-                  ENQUIRE TO ORDER →
-                </a>
-                <div className="flex flex-col gap-1 text-sm tracking-widest opacity-80">
-                  <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">9370943298</a>
-                  <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">unmeshrisbud345@gmail.com</a>
-                </div>
-              </div>
-            </div>
-
-            {/* Secondary close-up image & 3D Interactive subtle hint */}
-            <div className="flex flex-col sm:flex-row gap-6 h-[250px] mt-auto">
-              <div className="relative w-full sm:w-1/2 h-full overflow-hidden">
+          {/* VISUAL BLOCK */}
+          <div className="w-full lg:w-[60%]">
+            <div className="relative w-full aspect-[4/5] md:aspect-square lg:aspect-[4/3] overflow-hidden bg-[#e6dfd3]">
+              <motion.div style={{ y: heroY }} className="w-full h-[120%] -top-[10%] relative">
                 <Image 
-                  src={images.rice.v03_cleanCloseUp}
-                  alt="Clean rice grains close-up"
+                  src={images.journey.finalRice} 
+                  alt={t.title}
                   fill
+                  priority
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
                 />
-              </div>
-              <div className="relative w-full sm:w-1/2 h-full bg-[var(--color-charcoal)]/5 flex flex-col items-center justify-center">
-                <div className="absolute inset-0">
-                  <RiceClusterScene />
-                </div>
-                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-[0.3em] text-[var(--color-charcoal)]/40 pointer-events-none font-semibold">
-                  INTERACTIVE GRAIN
-                </div>
-              </div>
+              </motion.div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 02 GRAIN MACRO / VISUAL STORY */}
+      <section className="py-24 bg-[#e6dfd3]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            
+            <div className="w-full md:w-1/2 relative aspect-square overflow-hidden">
+              <Image 
+                src={images.rice.v03_cleanCloseUp} 
+                alt="Grain Detail"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            
+            <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left py-12 px-6">
+              <p className="text-2xl md:text-4xl font-serif leading-snug tracking-tight text-[#2b2723] max-w-lg">
+                &quot;{t.visualStory}&quot;
+              </p>
             </div>
 
           </div>
-          
         </div>
+      </section>
 
-      </div>
+      {/* 03 FROM THE JOURNEY */}
+      <section className="py-24 md:py-32 px-6 md:px-12">
+        <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center">
+          <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
+            {t.fromJourney}
+          </div>
+          <h3 className="text-4xl md:text-5xl font-serif tracking-tighter mb-10 text-[#2b2723]">
+            {t.title}
+          </h3>
+          <Link 
+            href={`/${locale}/journey`}
+            className="inline-block border-b border-[#2b2723] text-[#2b2723] pb-1 text-sm font-sans uppercase tracking-[0.2em] hover:text-[#8a7d6d] hover:border-[#8a7d6d] transition-colors"
+          >
+            {t.exploreJourney}
+          </Link>
+        </div>
+      </section>
+
+      {/* 04 AVAILABLE PACKING & 05 PRODUCT INFORMATION */}
+      <section className="py-24 bg-[#2b2723] text-[#f2ede4]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-24">
+          
+          <div className="w-full lg:w-1/2">
+            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#a89f91] mb-12 font-semibold">
+              {t.availablePacking}
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-8">
+              <div className="flex-1 border border-[#f2ede4]/20 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#f2ede4]/5 transition-colors">
+                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing10kg}</span>
+                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#a89f91]">{t.availablePacking}</span>
+              </div>
+              <div className="flex-1 border border-[#f2ede4]/20 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#f2ede4]/5 transition-colors">
+                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing25kg}</span>
+                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#a89f91]">{t.availablePacking}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-1/2">
+            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#a89f91] mb-12 font-semibold">
+              {t.productInfo}
+            </div>
+            <div className="border-t border-[#f2ede4]/20 flex flex-col">
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.varietyLabel}</span>
+                <span className="text-xl font-serif tracking-wide">{t.varietyValue}</span>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.regionLabel}</span>
+                <span className="text-xl font-serif tracking-wide">{t.regionValue}</span>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.packingLabel}</span>
+                <span className="text-xl font-serif tracking-wide">{t.packingValue}</span>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.orderingLabel}</span>
+                <span className="text-xl font-serif tracking-wide">{t.orderingValue}</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 06 ENQUIRE TO ORDER */}
+      <section className="py-32 md:py-48 px-6 md:px-12 bg-[#e6dfd3]">
+        <div className="max-w-[800px] mx-auto text-center flex flex-col items-center">
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-6 text-[#2b2723]">
+            {t.enquireHeading}
+          </h2>
+          <p className="text-lg md:text-xl font-sans font-light text-[#4a433c] mb-12">
+            {t.enquireDesc}
+          </p>
+          
+          <a 
+            href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[#2b2723] text-[#f2ede4] px-12 py-5 text-sm font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[#4a433c] transition-colors mb-8"
+          >
+            {t.enquireBtn}
+          </a>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm font-sans uppercase tracking-[0.2em] text-[#6b6255]">
+            <a href="tel:9370943298" className="hover:text-[#2b2723] transition-colors">9370943298</a>
+            <span className="hidden sm:inline">·</span>
+            <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[#2b2723] transition-colors">unmeshrisbud345@gmail.com</a>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

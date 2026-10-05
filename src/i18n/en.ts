@@ -134,5 +134,30 @@ const dict = {
     "emailLabel": "EMAIL",
     "whatsappLabel": "WHATSAPP"
 }
+,
+  ourRicePage: {
+    eyebrow: "OUR RICE",
+    title: "INDRAYANI RICE",
+    subtitle: "????????? ??????",
+    description: "Indrayani Rice is a rice variety associated with Maharashtra, known for its soft texture and familiar regional character.",
+    visualStory: "From the fields to the final grain, the story continues in every handful.",
+    fromJourney: "FROM THE JOURNEY",
+    exploreJourney: "EXPLORE THE JOURNEY ?",
+    availablePacking: "AVAILABLE PACKING",
+    packing10kg: "10 KG",
+    packing25kg: "25 KG",
+    productInfo: "PRODUCT INFORMATION",
+    varietyLabel: "Variety",
+    varietyValue: "Indrayani",
+    regionLabel: "Region",
+    regionValue: "Maharashtra",
+    packingLabel: "Packing",
+    packingValue: "10 KG / 25 KG",
+    orderingLabel: "Ordering",
+    orderingValue: "Enquiry based",
+    enquireHeading: "LOOKING FOR INDRAYANI RICE?",
+    enquireDesc: "Tell us what you need and get in touch directly.",
+    enquireBtn: "ENQUIRE TO ORDER"
+  }
 };
 export default dict;
