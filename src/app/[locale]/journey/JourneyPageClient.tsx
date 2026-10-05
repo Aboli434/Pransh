@@ -146,7 +146,7 @@ function StageBlock({
           </p>
         </motion.div>
         <motion.div style={{ opacity, clipPath }} className={`relative w-full ${imageAspect} overflow-hidden`}>
-          <motion.div style={{ scale }} className="w-full h-full">
+          <motion.div style={{ scale }} className="relative w-full h-full">
             <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="100vw" />
           </motion.div>
         </motion.div>
@@ -158,7 +158,7 @@ function StageBlock({
           <>
             <div className="w-[55%] pr-16 lg:pr-24 flex justify-end">
               <motion.div style={{ opacity, clipPath }} className={`relative w-full max-w-2xl ${imageAspect} overflow-hidden`}>
-                <motion.div style={{ scale }} className="w-full h-full">
+                <motion.div style={{ scale }} className="relative w-full h-full">
                   <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="50vw" />
                 </motion.div>
               </motion.div>
@@ -194,7 +194,7 @@ function StageBlock({
             </div>
             <div className="w-[55%] pl-16 lg:pl-24">
               <motion.div style={{ opacity, clipPath }} className={`relative w-full max-w-2xl ${imageAspect} overflow-hidden`}>
-                <motion.div style={{ scale }} className="w-full h-full">
+                <motion.div style={{ scale }} className="relative w-full h-full">
                   <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="50vw" />
                 </motion.div>
               </motion.div>

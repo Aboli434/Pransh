@@ -1,7 +1,7 @@
 export const images = {
   hero: "/images/hero/hero-bg.jpg",
   farmer: {
-    portrait: "/images/farmer/portrait-1.jpg",
+    portrait: "/images/farmer/farmer-portrait.jpg",
     farm: "/images/gallery/landscape-1.jpg",
   },
   journey: {
@@ -31,7 +31,7 @@ export const images = {
     "/images/gallery/landscape-1.jpg",
     "/images/gallery/harvest-1.jpg",
     "/images/gallery/detail-1.jpg",
-    "/images/farmer/portrait-1.jpg",
+    "/images/farmer/farmer-portrait.jpg",
     "/images/hero/hero-bg.jpg",
     "/images/rice/rice-grain-macro.jpg",
   ],
