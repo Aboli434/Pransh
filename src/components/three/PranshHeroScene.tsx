@@ -55,22 +55,43 @@ function ProceduralSupa({ scrollProgress }: { scrollProgress: React.RefObject<nu
   return (
     <group ref={groupRef}>
       {/* 
-        A quarter-sphere scaled perfectly creates a traditional dustpan/winnowing basket shape. 
-        It has a flat open front, curved bottom, and raised back wall.
+        A highly accurate supa shape: A half-pipe (U-shape) that is open at the front, 
+        and closed at the back. This forms a perfect traditional scoop.
       */}
-      <mesh rotation={[0, -Math.PI / 2, 0]} scale={[1.8, 0.4, 1.6]}>
-        <sphereGeometry args={[1, 64, 32, 0, Math.PI, 0, Math.PI / 2]} />
+      {/* The main U-shaped body */}
+      <mesh rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0, 0]}>
+        <cylinderGeometry args={[1.5, 1.5, 3.2, 32, 1, true, 0, Math.PI]} />
         <meshStandardMaterial 
-          color="#d4b27d" 
-          roughness={0.9} 
-          metalness={0.1}
+          color="#c29a65" 
+          roughness={1.0} 
+          metalness={0.0}
           side={THREE.DoubleSide} 
         />
       </mesh>
-      {/* Thick woven rim around the back/sides */}
-      <mesh rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={[1.8, 1.6, 0.4]}>
-        <torusGeometry args={[1, 0.06, 16, 64, Math.PI]} />
-        <meshStandardMaterial color="#8e6234" roughness={1} />
+      
+      {/* The closed back wall (half circle) */}
+      <mesh position={[0, 0, -1.6]} rotation={[0, Math.PI, 0]}>
+        <circleGeometry args={[1.5, 32, 0, Math.PI]} />
+        <meshStandardMaterial 
+          color="#c29a65" 
+          roughness={1.0} 
+          metalness={0.0}
+          side={THREE.DoubleSide} 
+        />
+      </mesh>
+
+      {/* Thick bamboo rim around the top edge */}
+      <mesh position={[-1.5, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.08, 0.08, 3.2, 16]} />
+        <meshStandardMaterial color="#8b5e34" roughness={1} />
+      </mesh>
+      <mesh position={[1.5, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.08, 0.08, 3.2, 16]} />
+        <meshStandardMaterial color="#8b5e34" roughness={1} />
+      </mesh>
+      <mesh position={[0, 0, -1.6]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.08, 0.08, 3.0, 16]} />
+        <meshStandardMaterial color="#8b5e34" roughness={1} />
       </mesh>
     </group>
   );
@@ -80,7 +101,7 @@ function ProceduralSupa({ scrollProgress }: { scrollProgress: React.RefObject<nu
 // Rice Simulation (360 Arc + Staggered Release)
 // --------------------------------------------------------
 function WinnowingParticles({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
-  const riceCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 500 : 1800;
+  const riceCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 800 : 2500;
   const riceMeshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
@@ -122,8 +143,10 @@ function WinnowingParticles({ scrollProgress }: { scrollProgress: React.RefObjec
   }, [riceCount]);
 
   const riceGeometry = useMemo(() => {
-    const geom = new THREE.CylinderGeometry(0.015, 0.015, 0.08, 6);
-    geom.rotateX(Math.PI / 2);
+    // A sphere scaled heavily on one axis creates a perfect natural rice grain shape!
+    // It's tapered/pointed at the ends and thick in the middle.
+    const geom = new THREE.SphereGeometry(0.02, 12, 12);
+    geom.scale(0.35, 0.35, 2.0); 
     return geom;
   }, []);
 
@@ -193,7 +216,7 @@ function WinnowingParticles({ scrollProgress }: { scrollProgress: React.RefObjec
 
   return (
     <instancedMesh ref={riceMeshRef} args={[riceGeometry, undefined, riceCount]} castShadow receiveShadow>
-      <meshStandardMaterial color="#Fdfbf7" roughness={0.4} />
+      <meshStandardMaterial color="#Fdfbf7" roughness={1.0} metalness={0.0} />
     </instancedMesh>
   );
 }

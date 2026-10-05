@@ -42,9 +42,21 @@ export default function Hero({ locale }: { locale: Locale }) {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-[250vh] md:h-[300vh] w-full bg-[var(--color-charcoal)]"
+      className="relative h-[250vh] md:h-[300vh] w-full bg-[#1c1814]"
     >
       <div className="sticky top-0 h-[100vh] w-full overflow-hidden">
+        
+        {/* Cinematic Agricultural Background - Resolves the Black Void */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#2b2216]" /> {/* Fallback color */}
+          <img 
+            src="/images/hero/hero-bg.jpg"
+            alt="Agricultural Farm"
+            className="w-full h-full object-cover opacity-50"
+          />
+          {/* Warm atmospheric overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1c1814] via-transparent to-[#4a3928] opacity-60 mix-blend-multiply pointer-events-none" />
+        </div>
         
         {/* Real WebGL 3D Layer */}
         {mounted && <PranshHeroScene scrollProgress={scrollRef} />}
