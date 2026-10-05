@@ -9,7 +9,7 @@ import { brandConfig } from '@/data/brand';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const navImages: Record<string, string> = {
-  home: "/images/hero/hero-landscape.jpg",
+  home: "/images/hero/hero-bg.jpg",
   story: "/images/farmer/portrait-1.jpg",
   journey: "/images/gallery/harvest-1.jpg",
   rice: "/images/rice/rice-product.jpg",

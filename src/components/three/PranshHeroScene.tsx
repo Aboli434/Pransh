@@ -9,7 +9,7 @@ import HeroCamera from './HeroCamera';
 
 // Background Plane Component
 function BackgroundPlane({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
-  const texture = useTexture('/images/hero/hero-landscape.jpg');
+  const texture = useTexture('/images/hero/hero-bg.jpg');
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
