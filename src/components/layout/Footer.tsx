@@ -31,7 +31,6 @@ export default function Footer({ locale }: { locale: Locale }) {
                 <Link href={`/${locale}/journey`} className="hover:text-[var(--color-champagne)] transition-colors">The Journey</Link>
                 <Link href={`/${locale}/our-rice`} className="hover:text-[var(--color-champagne)] transition-colors">Our Rice</Link>
                 <Link href={`/${locale}/gallery`} className="hover:text-[var(--color-champagne)] transition-colors">Gallery</Link>
-                <Link href={`/${locale}/contact`} className="hover:text-[var(--color-champagne)] transition-colors">Contact</Link>
               </nav>
             </div>
 
@@ -57,12 +56,14 @@ export default function Footer({ locale }: { locale: Locale }) {
             {/* Final CTA */}
             <div className="flex flex-col gap-6">
               <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Order</h4>
-              <Link 
-                href={`/${locale}/contact`}
+              <a 
+                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[var(--color-champagne)] text-[var(--color-charcoal)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-ivory)] transition-colors inline-block text-center mt-2"
               >
                 ENQUIRE TO ORDER →
-              </Link>
+              </a>
             </div>
 
           </div>

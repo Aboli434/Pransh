@@ -18,7 +18,6 @@ export default function Navbar({ locale }: { locale: Locale }) {
     { id: 'journey', num: '02', name: 'THE JOURNEY', href: `/${locale}/journey` },
     { id: 'rice', num: '03', name: 'OUR RICE', href: `/${locale}/our-rice` },
     { id: 'gallery', num: '04', name: 'GALLERY', href: `/${locale}/gallery` },
-    { id: 'contact', num: '05', name: 'CONTACT', href: `/${locale}/contact` },
   ];
 
   return (
@@ -45,12 +44,14 @@ export default function Navbar({ locale }: { locale: Locale }) {
           
           <div className="flex items-center gap-8">
             <LanguageSwitcher currentLocale={locale} />
-            <Link 
-              href={`/${locale}/contact`}
+            <a 
+              href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+              target="_blank"
+              rel="noopener noreferrer"
               className="border border-[var(--color-ivory)] px-6 py-2 text-xs font-sans uppercase tracking-[0.2em] hover:bg-[var(--color-ivory)] hover:text-[var(--color-charcoal)] transition-colors"
             >
               ENQUIRE
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -133,13 +134,15 @@ export default function Navbar({ locale }: { locale: Locale }) {
                 <a href="tel:9370943298" className="text-xl font-serif tracking-widest mt-2 hover:opacity-70">
                   9370943298
                 </a>
-                <Link 
-                  href={`/${locale}/contact`}
+                <a 
+                  href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMenuOpen(false)}
                   className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] transition-colors inline-block text-center mt-4 w-max"
                 >
                   ENQUIRE TO ORDER
-                </Link>
+                </a>
               </motion.div>
             </div>
 

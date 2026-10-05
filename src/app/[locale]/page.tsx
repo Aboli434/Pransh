@@ -20,7 +20,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <RiceJourney locale={typedLocale} />
       <RiceProduct locale={typedLocale} />
       <FarmGallery locale={typedLocale} />
-      <EnquiryCTA locale={typedLocale} />
     </>
   );
 }

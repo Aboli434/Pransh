@@ -66,12 +66,14 @@ export default function OurRiceClient() {
                 Interested in Indrayani Rice? Enquire for availability and ordering details.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                <Link 
-                  href="../contact"
+                <a 
+                  href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-10 py-5 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] transition-colors inline-block"
                 >
                   ENQUIRE TO ORDER →
-                </Link>
+                </a>
                 <div className="flex flex-col gap-1 text-sm tracking-widest opacity-80">
                   <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">9370943298</a>
                   <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">unmeshrisbud345@gmail.com</a>
