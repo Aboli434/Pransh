@@ -9,9 +9,9 @@ export const images = {
     sowing: "/images/journey/02-sowing-v2.jpg",
     growing: "/images/journey/03-growing-v2.jpg",
     harvesting: "/images/journey/04-harvesting-v2.jpg",
-    drying: "/images/journey/05-drying-v2.jpg",
-    processing: "/images/journey/06-processing-v2.jpg",
-    cleaning: "/images/journey/07-cleaning-v2.jpg",
+    drying: "/images/journey/05-drying-v3.jpg",
+    processing: "/images/journey/06-processing-v3.jpg",
+    cleaning: "/images/journey/07-cleaning-v3.jpg",
     finalRice: "/images/journey/08-rice-v2.jpg",
   },
   rice: {
@@ -22,9 +22,9 @@ export const images = {
     v04_cooked: "/images/gallery/detail-1.jpg", // Cooked rice serving context
     v05_paddyCrop: "/images/journey/03-growing-v2.jpg", // Paddy crop before harvesting
     v06_harvested: "/images/journey/04-harvesting-v2.jpg", // Harvested paddy
-    v07_drying: "/images/journey/05-drying-v2.jpg", // Rice drying
-    v08_processing: "/images/journey/06-processing-v2.jpg", // Rice processing/milling
-    v09_cleaning: "/images/journey/07-cleaning-v2.jpg", // Cleaning/grading
+    v07_drying: "/images/journey/05-drying-v3.jpg", // Rice drying
+    v08_processing: "/images/journey/06-processing-v3.jpg", // Rice processing/milling
+    v09_cleaning: "/images/journey/07-cleaning-v3.jpg", // Cleaning/grading
     v10_packing: "/images/rice/rice-product.jpg", // Rice packing/sack placeholder
   },
   gallery: [
