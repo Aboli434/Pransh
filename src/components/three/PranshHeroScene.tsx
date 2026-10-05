@@ -1,210 +1,175 @@
 /* eslint-disable */
 'use client';
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, Environment } from '@react-three/drei';
+import { PerspectiveCamera, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 // --------------------------------------------------------
-// Realistic Procedural Supa (Winnowing Basket)
+// 1. Realistic 2.5D Supa (Reverted to the highly realistic photo)
 // --------------------------------------------------------
-function getSupaState(sp: number) {
-  // Start resting position
-  let y = -1.5; 
-  let z = -5.0; 
-  let rotX = 0;
-  let rotZ = 0;
-  
-  if (sp > 0.15 && sp <= 0.30) {
-    // Preparation: slightly down and back
-    const p = (sp - 0.15) / 0.15;
-    y -= p * 0.3;
-    z += p * 0.2;
-    rotX = -p * 0.15;
-  } else if (sp > 0.30 && sp <= 0.42) {
-    // STRONG FLICK: Up, forward, pitching down
-    const p = (sp - 0.30) / 0.12;
-    const ease = Math.sin((p * Math.PI) / 2); // ease out
-    y = -1.8 + ease * 2.5;
-    z = -4.8 - ease * 1.0;
-    rotX = -0.15 + ease * 0.8; 
-  } else if (sp > 0.42) {
-    // Follow through & settle
-    const p = Math.min(1, (sp - 0.42) / 0.20);
-    const ease = 1 - Math.pow(1 - p, 3);
-    y = 0.7 - ease * 2.2;
-    z = -5.8 + ease * 0.8;
-    rotX = 0.65 - ease * 0.65;
-  }
-  
-  return { y, z, rotX, rotZ };
-}
-
-function ProceduralSupa({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
-  const groupRef = useRef<THREE.Group>(null);
+function SupaBackground({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
+  const texture = useTexture('/images/hero/supa-hands.jpg');
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
-    if (!groupRef.current) return;
     const sp = scrollProgress.current || 0;
-    const state = getSupaState(sp);
-    
-    groupRef.current.position.set(0, state.y, state.z);
-    groupRef.current.rotation.set(state.rotX, 0, state.rotZ);
+
+    if (meshRef.current) {
+      // Base position matching the original realistic look
+      meshRef.current.position.set(2.0, -1.0, -5.0);
+      meshRef.current.scale.set(16, 16, 1);
+
+      if (sp < 0.15) {
+        meshRef.current.position.y = -1.0;
+        meshRef.current.rotation.x = 0;
+      } else if (sp < 0.30) {
+        const p = (sp - 0.15) / 0.15;
+        meshRef.current.position.y = -1.0 - p * 0.1; 
+        meshRef.current.rotation.x = -p * 0.05; 
+      } else if (sp < 0.45) {
+        const p = (sp - 0.30) / 0.15;
+        meshRef.current.position.y = -1.1 + Math.sin(p * Math.PI * 0.5) * 0.5; 
+        meshRef.current.rotation.x = -0.05 + Math.sin(p * Math.PI * 0.5) * 0.2; 
+      } else if (sp < 0.60) {
+        const p = (sp - 0.45) / 0.15;
+        meshRef.current.position.y = -0.6 - p * 0.4; 
+        meshRef.current.rotation.x = 0.15 - p * 0.15;
+      } else {
+        meshRef.current.position.y = -1.0;
+        meshRef.current.rotation.x = 0;
+      }
+    }
   });
 
   return (
-    <group ref={groupRef}>
-      {/* 
-        A highly accurate supa shape: A half-pipe (U-shape) that is open at the front, 
-        and closed at the back. This forms a perfect traditional scoop.
-      */}
-      {/* The main U-shaped body */}
-      <mesh rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0, 0]}>
-        <cylinderGeometry args={[1.5, 1.5, 3.2, 32, 1, true, 0, Math.PI]} />
-        <meshStandardMaterial 
-          color="#c29a65" 
-          roughness={1.0} 
-          metalness={0.0}
-          side={THREE.DoubleSide} 
-        />
-      </mesh>
-      
-      {/* The closed back wall (half circle) */}
-      <mesh position={[0, 0, -1.6]} rotation={[0, Math.PI, 0]}>
-        <circleGeometry args={[1.5, 32, 0, Math.PI]} />
-        <meshStandardMaterial 
-          color="#c29a65" 
-          roughness={1.0} 
-          metalness={0.0}
-          side={THREE.DoubleSide} 
-        />
-      </mesh>
-
-      {/* Thick bamboo rim around the top edge */}
-      <mesh position={[-1.5, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 3.2, 16]} />
-        <meshStandardMaterial color="#8b5e34" roughness={1} />
-      </mesh>
-      <mesh position={[1.5, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 3.2, 16]} />
-        <meshStandardMaterial color="#8b5e34" roughness={1} />
-      </mesh>
-      <mesh position={[0, 0, -1.6]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.08, 0.08, 3.0, 16]} />
-        <meshStandardMaterial color="#8b5e34" roughness={1} />
-      </mesh>
-    </group>
+    <mesh ref={meshRef}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial map={texture} depthWrite={false} toneMapped={false} />
+    </mesh>
   );
 }
 
 // --------------------------------------------------------
-// Rice Simulation (360 Arc + Staggered Release)
+// 2. Realistic Rice (Reverted to the original geometry) + Massive Spatial Arc
 // --------------------------------------------------------
 function WinnowingParticles({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
-  const riceCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 800 : 2500;
+  const riceCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 800 : 2000;
+  
   const riceMeshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
+
+  // Launch origin matching the 2D supa image center perfectly
+  const launchOrigin = new THREE.Vector3(1.8, -1.0, -3.5);
 
   const riceData = useMemo(() => {
     const data = [];
     for (let i = 0; i < riceCount; i++) {
-      // Build a dense mound inside the supa's local space
-      const r = Math.pow(Math.random(), 0.6) * 1.3;
+      // Dense pile inside the supa center
+      const r = Math.pow(Math.random(), 0.5) * 1.8;
       const theta = Math.random() * Math.PI * 2;
-      const ox = r * Math.cos(theta);
-      const oz = r * Math.sin(theta) * 0.9;
+      const x = r * Math.cos(theta);
+      const z = (r * Math.sin(theta)) * 0.6;
       
-      // Mound height peaks in center
-      const moundH = Math.max(0, 0.5 - (ox*ox + oz*oz) * 0.25);
-      const oy = Math.random() * moundH; 
-      
-      // Staggered release: front (+Z) and top (+Y) leave first
-      const zFactor = (oz + 1.3) / 2.6; 
-      const yFactor = oy / 0.5;
-      const releaseOrder = 1 - ((zFactor + yFactor) / 2); 
-      const launchSp = 0.33 + releaseOrder * 0.08 + Math.random() * 0.02;
-      
-      // Individual flight drift to spread the stream out
-      const flightDriftX = (Math.random() - 0.5) * 8.0;
-      const flightDriftY = (Math.random() - 0.5) * 6.0;
-      const flightDriftZ = (Math.random() - 0.5) * 8.0;
+      const moundHeight = Math.max(0, 0.8 - (x*x + z*z) * 0.25);
+      const y = Math.random() * moundHeight; 
 
-      // Individual tumble
+      // Staggered launch timing (0.35 to 0.45) based on original logic
+      const launchSp = 0.35 + Math.random() * 0.10; 
+      
+      // Individual flight drift (to create volume around the main stream)
+      const flightDriftX = (Math.random() - 0.5) * 6.0;
+      const flightDriftY = (Math.random() - 0.5) * 4.0;
+      const flightDriftZ = (Math.random() - 0.5) * 6.0;
+
+      // Individual grain rotations
       const initialRot = new THREE.Vector3(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
       const rotSpeed = new THREE.Vector3(
-        (Math.random() - 0.5) * 30,
-        (Math.random() - 0.5) * 30,
-        (Math.random() - 0.5) * 30
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
       );
 
-      data.push({ ox, oy, oz, launchSp, flightDriftX, flightDriftY, flightDriftZ, initialRot, rotSpeed });
+      // Distinguish chaff-like vs heavy (from original implementation)
+      const isChaff = Math.random() > 0.8; 
+
+      data.push({ 
+        x, y, z, 
+        launchSp, flightDriftX, flightDriftY, flightDriftZ,
+        initialRot, rotSpeed, isChaff 
+      });
     }
     return data;
   }, [riceCount]);
 
+  // Reverted to the original geometry that looked realistic!
   const riceGeometry = useMemo(() => {
-    // A sphere scaled heavily on one axis creates a perfect natural rice grain shape!
-    // It's tapered/pointed at the ends and thick in the middle.
-    const geom = new THREE.SphereGeometry(0.02, 12, 12);
-    geom.scale(0.35, 0.35, 2.0); 
+    const geom = new THREE.CylinderGeometry(0.015, 0.015, 0.1, 6);
+    geom.rotateX(Math.PI / 2);
     return geom;
   }, []);
 
   useFrame(() => {
     const sp = scrollProgress.current || 0;
     
-    // Get live supa matrix
-    const supaState = getSupaState(sp);
-    const currentSupaMatrix = new THREE.Matrix4().compose(
-      new THREE.Vector3(0, supaState.y, supaState.z),
-      new THREE.Quaternion().setFromEuler(new THREE.Euler(supaState.rotX, 0, supaState.rotZ)),
-      new THREE.Vector3(1, 1, 1)
-    );
+    // Supa pile syncing
+    let pileOffsetY = 0;
+    let pileRotationX = 0;
+    
+    if (sp > 0.15 && sp < 0.30) {
+      const p = (sp - 0.15) / 0.15;
+      pileOffsetY = -p * 0.1;
+      pileRotationX = -p * 0.05;
+    } else if (sp >= 0.30 && sp < 0.45) {
+      const p = (sp - 0.30) / 0.15;
+      pileOffsetY = -0.1 + Math.sin(p * Math.PI * 0.5) * 0.5;
+      pileRotationX = -0.05 + Math.sin(p * Math.PI * 0.5) * 0.2;
+    }
 
     if (riceMeshRef.current) {
       for (let i = 0; i < riceCount; i++) {
         const data = riceData[i];
         
         if (sp < data.launchSp) {
-          // Locked inside the basket
-          const localPos = new THREE.Vector3(data.ox, data.oy, data.oz);
-          localPos.applyMatrix4(currentSupaMatrix);
-          
-          dummy.position.copy(localPos);
-          dummy.rotation.set(data.initialRot.x + supaState.rotX, data.initialRot.y, data.initialRot.z);
+          // Resting in pile exactly like original
+          dummy.position.set(
+            launchOrigin.x + data.x, 
+            launchOrigin.y + data.y + pileOffsetY, 
+            launchOrigin.z + data.z
+          );
+          dummy.rotation.set(
+            pileRotationX + data.initialRot.x, 
+            data.initialRot.y, 
+            data.initialRot.z
+          );
           dummy.scale.setScalar(1);
         } else {
-          // Airborne Flight
-          // 1. Calculate where it launched from
-          const launchState = getSupaState(data.launchSp);
-          const launchMatrix = new THREE.Matrix4().compose(
-            new THREE.Vector3(0, launchState.y, launchState.z),
-            new THREE.Quaternion().setFromEuler(new THREE.Euler(launchState.rotX, 0, launchState.rotZ)),
-            new THREE.Vector3(1, 1, 1)
-          );
-          const startPos = new THREE.Vector3(data.ox, data.oy, data.oz).applyMatrix4(launchMatrix);
-
-          // 2. Trajectory Math
+          // Airborne Flight (using the new Massive Spatial Arc requested by user)
           const t = (sp - data.launchSp) / (1.0 - data.launchSp); 
           
-          // Massive 360 Arc Stream (Applies to the whole swarm)
-          // Stream sweeps wide left/right, arcs extremely high, and blasts forward
-          const streamX = Math.sin(t * Math.PI * 2.0) * (t * 12.0); 
-          const streamY = Math.sin(t * Math.PI * 0.9) * 12.0; 
-          const streamZ = t * 18.0; 
+          // Massive 360 Arc Stream
+          const streamX = Math.sin(t * Math.PI * 2.0) * (t * 10.0); 
+          const streamY = Math.sin(t * Math.PI * 0.9) * 10.0; 
+          const streamZ = t * 15.0; 
           
           dummy.position.set(
-            startPos.x + streamX + (data.flightDriftX * Math.pow(t, 1.2)),
-            startPos.y + streamY + (data.flightDriftY * Math.pow(t, 1.2)),
-            startPos.z + streamZ + (data.flightDriftZ * Math.pow(t, 1.2))
+            launchOrigin.x + data.x + streamX + (data.flightDriftX * Math.pow(t, 1.2)),
+            launchOrigin.y + data.y + pileOffsetY + streamY + (data.flightDriftY * Math.pow(t, 1.2)),
+            launchOrigin.z + data.z + streamZ + (data.flightDriftZ * Math.pow(t, 1.2))
           );
 
-          // Individual grain tumbling
+          // Tumbling rotation
           dummy.rotation.set(
             data.initialRot.x + data.rotSpeed.x * t,
             data.initialRot.y + data.rotSpeed.y * t,
             data.initialRot.z + data.rotSpeed.z * t
           );
+
+          if (data.isChaff) {
+            dummy.scale.setScalar(Math.max(0, 1 - t * 0.8)); // Fades out
+          } else {
+            dummy.scale.setScalar(1);
+          }
         }
         
         dummy.updateMatrix();
@@ -216,55 +181,56 @@ function WinnowingParticles({ scrollProgress }: { scrollProgress: React.RefObjec
 
   return (
     <instancedMesh ref={riceMeshRef} args={[riceGeometry, undefined, riceCount]} castShadow receiveShadow>
-      <meshStandardMaterial color="#Fdfbf7" roughness={1.0} metalness={0.0} />
+      <meshStandardMaterial color="#F9F6F0" roughness={0.6} />
     </instancedMesh>
   );
 }
 
 // --------------------------------------------------------
-// Cinematic Camera
+// Camera Control
 // --------------------------------------------------------
 function SceneCamera({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
   useFrame((state) => {
     const sp = scrollProgress.current || 0;
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     
+    // Base camera position
     const baseZ = isMobile ? 8 : 6;
-    let targetX = 0;
-    let targetY = 0;
     let targetZ = baseZ;
+    let targetY = 2;
+    let targetX = 0;
 
-    if (sp <= 0.50) {
-      // 0-50%: Establish supa and prepare
-      const p = sp / 0.50;
-      targetZ = baseZ - p * 1.5;
-      targetY = p * 0.5;
-    } else if (sp <= 0.70) {
-      // 50-70%: Look UP and follow the rising rice stream
-      const p = (sp - 0.50) / 0.20;
-      targetZ = baseZ - 1.5 - p * 2.0;
-      targetY = 0.5 + p * 6.0; 
-    } else if (sp <= 0.90) {
-      // 70-90%: Fly FORWARD heavily into the 360 arc
-      const p = (sp - 0.70) / 0.20;
-      targetZ = baseZ - 3.5 - p * 8.0; 
-      targetY = 6.5 + p * 2.0;
-      targetX = Math.sin(p * Math.PI) * 2.0; // slight weave
+    // 0.0 - 0.15: Rest
+    // 0.15 - 0.45: Prepare and Throw (push slightly in)
+    // 0.45 - 0.75: Follow rice up
+    // 0.75 - 1.00: Travel THROUGH the rice cloud forward
+    
+    if (sp < 0.15) {
+      targetZ = baseZ;
+    } else if (sp < 0.45) {
+      const p = (sp - 0.15) / 0.30;
+      targetZ = baseZ - p * 1.5; 
+    } else if (sp < 0.75) {
+      const p = (sp - 0.45) / 0.30;
+      targetZ = baseZ - 1.5;
+      targetY = 2 + p * 3.0; // Pan up significantly to follow the rice
     } else {
-      // 90-100%: Pierce through the cloud completely to reveal next section
-      const p = (sp - 0.90) / 0.10;
-      targetZ = baseZ - 11.5 - p * 10.0; 
-      targetY = 8.5 + p * 1.0;
+      const p = (sp - 0.75) / 0.25;
+      // Fly completely forward into the cloud
+      targetZ = baseZ - 1.5 - p * 12.0; 
+      targetY = 5 + p * 1.0;
+      targetX = p * 1.0; // slight drift
     }
     
-    // Smooth dampening
     state.camera.position.x += (targetX - state.camera.position.x) * 0.1;
     state.camera.position.y += (targetY - state.camera.position.y) * 0.1;
     state.camera.position.z += (targetZ - state.camera.position.z) * 0.1;
-    
-    // Look slightly upward and forward to see the majestic arc
-    state.camera.lookAt(targetX * 0.5, targetY + 2, targetZ - 10);
+    state.camera.lookAt(targetX, targetY - 2, targetZ - 5);
   });
+  return null;
+}
+
+function FallbackLoader() {
   return null;
 }
 
@@ -279,21 +245,33 @@ export default function PranshHeroScene({ scrollProgress }: { scrollProgress: Re
   }, []);
 
   if (!mounted) return null;
+
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
     <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
       <Canvas shadows dpr={[1, 2]}>
-        <PerspectiveCamera makeDefault fov={isMobile ? 55 : 45} position={[0, 0, 6]} />
+        <PerspectiveCamera makeDefault fov={isMobile ? 55 : 45} position={[0, 2, 6]} />
         <SceneCamera scrollProgress={scrollProgress} />
         
-        {/* Cinematic warm agricultural lighting */}
-        <ambientLight intensity={1.5} color="#fff4e6" />
-        <directionalLight position={[10, 15, 10]} intensity={3.5} color="#ffd8a8" />
-        <directionalLight position={[-10, 5, -5]} intensity={1.5} color="#f0d5a3" />
-        <pointLight position={[0, 5, 5]} intensity={2.0} color="#ffebcc" distance={20} />
+        <ambientLight intensity={1.5} color="#FFF1E0" />
         
-        <ProceduralSupa scrollProgress={scrollProgress} />
+        <directionalLight 
+          position={[5, 10, 5]} 
+          intensity={3.0} 
+          color="#FFDAB9"
+        />
+
+        <directionalLight 
+          position={[-5, 5, -5]} 
+          intensity={1.0} 
+          color="#E6C280" 
+        />
+        
+        <Suspense fallback={<FallbackLoader />}>
+          <SupaBackground scrollProgress={scrollProgress} />
+        </Suspense>
+        
         <WinnowingParticles scrollProgress={scrollProgress} />
       </Canvas>
     </div>
