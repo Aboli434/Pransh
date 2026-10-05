@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Locale } from '@/i18n/config';
 import { productsData } from '@/data/products';
 import Container from '@/components/ui/Container';
+import RiceClusterScene from '@/components/three/RiceClusterScene';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function OurRiceClient({ dict }: { locale: Locale, dict: any }) {
@@ -50,22 +51,15 @@ export default function OurRiceClient({ dict }: { locale: Locale, dict: any }) {
             </div>
           </motion.div>
 
-          {/* Floating Detail Grain Image */}
+          {/* Floating 3D WebGL Grain Cluster */}
           <motion.div 
-            className="absolute right-[5%] bottom-[15%] w-48 h-64 z-10 hidden lg:block border-4 border-[var(--color-ivory)] shadow-2xl"
+            className="absolute right-0 bottom-[15%] w-[400px] h-[500px] z-10 hidden lg:block"
             animate={{ 
               y: isHovered && !prefersReducedMotion ? -30 : 0,
-              x: isHovered && !prefersReducedMotion ? -10 : 0,
-              rotateZ: isHovered && !prefersReducedMotion ? 4 : 0,
             }}
             transition={{ duration: 2, ease: "easeOut" }}
           >
-            <Image 
-              src="/images/rice/rice-grain-macro.jpg"
-              alt="Rice Grain Detail"
-              fill
-              className="object-cover"
-            />
+            <RiceClusterScene />
           </motion.div>
 
           {/* Floating Editorial Information Card */}

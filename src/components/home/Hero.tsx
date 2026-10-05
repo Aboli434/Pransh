@@ -1,68 +1,97 @@
 'use client';
-import { useRef } from 'react';
-import Image from 'next/image';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Locale } from '@/i18n/config';
 import { getDictionary } from '@/lib/i18n';
+import PranshHeroScene from '../three/PranshHeroScene';
 
 export default function Hero({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const containerRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const scrollRef = useRef(0);
+  
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    // Update raw scroll ref for WebGL performance
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const progress = -rect.top / rect.height;
+      scrollRef.current = Math.max(0, Math.min(1, progress));
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
 
-  const zoomY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "30%"]);
-  const zoomScale = useTransform(scrollYProgress, [0, 1], [1, prefersReducedMotion ? 1 : 1.15]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "-40%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "-60%"]);
   const smallTextX = useTransform(scrollYProgress, [0, 1], ["0px", prefersReducedMotion ? "0px" : "100px"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  // Using CSS perspective for depth
+  // Subtle mouse tracking for typography
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  useEffect(() => {
+    const handleMouse = (e: MouseEvent) => {
+      if (prefersReducedMotion) return;
+      setMousePos({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: -(e.clientY / window.innerHeight) * 2 + 1
+      });
+    };
+    window.addEventListener('mousemove', handleMouse);
+    return () => window.removeEventListener('mousemove', handleMouse);
+  }, [prefersReducedMotion]);
+
   return (
     <section 
       ref={containerRef} 
-      className="relative h-[100svh] w-full overflow-hidden bg-[var(--color-ivory)] perspective-[1000px]"
+      className="relative h-[100svh] w-full overflow-hidden bg-[var(--color-charcoal)]"
     >
+      {/* Real WebGL 3D Layer */}
+      {mounted && <PranshHeroScene scrollProgress={scrollRef} />}
+      
+      {/* HTML Typographic Layer */}
       <motion.div 
         style={{ y: textY, opacity }}
-        className="absolute inset-0 w-full h-full flex flex-col justify-end pb-12 px-6 md:px-12 transform-style-3d z-10"
+        className="absolute inset-0 w-full h-full flex flex-col justify-end pb-12 px-6 md:px-12 z-10 pointer-events-none"
       >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between w-full h-full relative">
           
           {/* Typographic Object */}
-          <div className="absolute top-[25vh] md:top-[15vh] lg:top-auto lg:bottom-[5vh] left-0 md:left-12 z-20 pointer-events-none translate-z-[40px]">
-            <h1 className="text-[12vw] md:text-[140px] leading-[0.85] font-serif text-[var(--color-charcoal)] mix-blend-difference tracking-tighter">
+          <motion.div 
+            animate={{ 
+              x: mousePos.x * -12,
+              y: mousePos.y * 8
+            }}
+            transition={{ type: "spring", stiffness: 50, damping: 20 }}
+            className="absolute top-[25vh] md:top-[15vh] lg:top-auto lg:bottom-[5vh] left-0 md:left-12 z-20 pointer-events-auto"
+          >
+            <h1 className="text-[12vw] md:text-[140px] leading-[0.85] font-serif text-[var(--color-charcoal)] mix-blend-difference tracking-tighter drop-shadow-lg">
               <span className="block text-[var(--color-ivory)]">GROWN</span>
               <span className="block text-[6vw] md:text-[80px] italic font-light ml-[10vw] md:ml-[120px] text-[var(--color-champagne)]">WITH</span>
               <span className="block text-[var(--color-ivory)]">PURPOSE.</span>
             </h1>
-          </div>
-
-          {/* Main Editorial Image */}
-          <motion.div 
-            style={{ y: zoomY, scale: zoomScale }}
-            className="absolute top-[10vh] md:top-[5vh] right-0 md:right-[5vw] w-[100vw] md:w-[70vw] lg:w-[50vw] h-[60vh] md:h-[80vh] z-10 translate-z-[-20px] origin-top"
-          >
-            <Image 
-              src="/images/hero/hero-landscape.jpg"
-              alt="Farmer in the field"
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 70vw"
-            />
-            {/* Subtle photographic overlay */}
-            <div className="absolute inset-0 bg-[var(--color-earth-brown)]/10 mix-blend-overlay"></div>
           </motion.div>
 
           {/* Editorial Metadata */}
           <motion.div 
             style={{ x: smallTextX }}
-            className="absolute bottom-0 right-0 md:right-12 z-30 translate-z-[80px] max-w-[200px] text-right"
+            animate={{
+              x: mousePos.x * 6,
+              y: mousePos.y * -4
+            }}
+            transition={{ type: "spring", stiffness: 60, damping: 25 }}
+            className="absolute bottom-0 right-0 md:right-12 z-30 max-w-[200px] text-right pointer-events-auto"
           >
             <p className="text-[var(--color-charcoal)] font-sans text-xs uppercase tracking-[0.3em] font-semibold mb-2 mix-blend-difference">
               From the Land
@@ -77,6 +106,13 @@ export default function Hero({ locale }: { locale: Locale }) {
           
         </div>
       </motion.div>
+      
+      {/* Loading Fallback State */}
+      {!mounted && (
+        <div className="absolute inset-0 bg-[var(--color-charcoal)] z-0 flex items-center justify-center text-[var(--color-ivory)]">
+          <span className="font-serif tracking-[0.3em] uppercase text-sm animate-pulse">PRANSH</span>
+        </div>
+      )}
     </section>
   );
 }
