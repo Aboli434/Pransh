@@ -11,6 +11,7 @@ export default function Hero({ locale }: { locale: Locale }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const handleScroll = () => {
       if (!containerRef.current) return;

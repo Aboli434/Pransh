@@ -6,100 +6,75 @@ import { useTexture, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { journeyStagesData } from '@/data/journey';
 
-function PhotoPlane({ 
+const PLANE_SPACING = 30;
+const START_Z = -30;
+
+function CinematicImagePlane({ 
   index, 
-  total, 
-  textureUrl, 
-  scrollRef 
+  textureUrl 
 }: { 
   index: number, 
-  total: number, 
-  textureUrl: string,
-  scrollRef: React.RefObject<number> 
+  textureUrl: string 
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const texture = useTexture(textureUrl);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  
+  // High quality texture settings
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+  }, [texture]);
 
-  useFrame((state, delta) => {
-    if (!meshRef.current || scrollRef.current === undefined) return;
+  const zPosition = START_Z - (index * PLANE_SPACING);
+
+  useFrame((state) => {
+    if (!meshRef.current || !materialRef.current) return;
     
-    // progress goes from 0 to 1 over the whole page
-    const progress = scrollRef.current;
+    const camZ = state.camera.position.z; 
+    const dist = camZ - zPosition;
     
-    // Each photo represents a segment of the scroll
-    const segment = 1 / total;
-    const myCenterProgress = index * segment;
-    
-    // How far are we from this photo's optimal viewing point
-    const diff = progress - myCenterProgress;
-    
-    // Instead of showing all 8, we only show current and incoming/outgoing
-    // If diff is between -segment and +segment, it is active.
-    
-    // Target calculations
-    let targetZ = -20; // Default hidden far back
-    let targetX = 0;
-    let targetRotY = 0;
-    let targetOpacity = 0;
-    
-    if (diff > -segment * 2 && diff < segment * 2) {
-      // It's in view
-      // As diff approaches 0, z approaches 0
-      targetZ = -diff * 8; // If diff is negative (incoming), z is positive (behind). Wait, diff = progress - center.
-      // progress = 0, center = 0.125 -> diff = -0.125. targetZ = 1? No, we want negative Z for behind.
-      // targetZ = diff * 8 -> if diff is -0.125, targetZ = -1. This is correct.
-      targetZ = diff * 20; 
+    if (dist > 0.5) { // In front of camera
+      // Calculate exact dimensions to fill the camera frustum at this distance
+      const fov = 45; // Matching the PerspectiveCamera
+      const camera = state.camera as THREE.PerspectiveCamera;
+      const height = 2 * Math.tan((fov * Math.PI) / 360) * dist;
+      const width = height * camera.aspect;
       
-      // Rotation: incoming photo is slightly rotated, current is flat
-      targetRotY = diff * Math.PI; 
+      // Scale slightly larger than frustum (1.1x) to hide edges during parallax shake
+      meshRef.current.scale.set(width * 1.1, height * 1.1, 1);
       
-      // X drift
-      targetX = diff * 5;
-      
-      // Opacity
-      targetOpacity = 1 - Math.abs(diff) * (1 / segment);
-      targetOpacity = Math.max(0, Math.min(1, targetOpacity));
-      
-      // If it's outgoing (diff > 0), fade it out faster
-      if (diff > 0) {
-        targetOpacity = 1 - (diff * (2 / segment));
+      // Cinematic dissolve: Fade out smoothly as camera approaches
+      // Start fading when 15 units away, completely invisible at 2 units away
+      let opacity = 1.0;
+      if (dist < 15) {
+        opacity = Math.max(0, (dist - 2) / 13);
+        // Easing for smoother fade
+        opacity = opacity * opacity * (3.0 - 2.0 * opacity); // Smoothstep
       }
-    }
-    
-    // Interpolate towards targets for smoothness
-    meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, delta * 5);
-    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, delta * 5);
-    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, delta * 5);
-    
-    // Material opacity based on depth
-    const material = meshRef.current.material as THREE.MeshStandardMaterial;
-    if (material) {
-      material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, delta * 8);
-      material.transparent = true;
-      material.needsUpdate = true;
+      materialRef.current.opacity = opacity;
+    } else {
+      materialRef.current.opacity = 0; // Behind camera
     }
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, -20]} castShadow receiveShadow>
-      {/* 4:3 aspect ratio photo planes */}
-      <planeGeometry args={[5, 3.75, 32, 32]} />
-      <meshStandardMaterial 
+    <mesh ref={meshRef} position={[0, 0, zPosition]}>
+      {/* Dense geometry allows for slight curvature if desired later, but flat is perfect for photos */}
+      <planeGeometry args={[1, 1, 1, 1]} />
+      <meshBasicMaterial 
+        ref={materialRef}
         map={texture} 
-        roughness={0.8}
-        metalness={0.1}
-        side={THREE.DoubleSide}
+        transparent 
+        depthWrite={false} 
+        toneMapped={false} 
       />
-      {/* Backing layer for physical thickness feel */}
-      <mesh position={[0, 0, -0.02]} receiveShadow>
-        <planeGeometry args={[5.05, 3.8]} />
-        <meshBasicMaterial color="#1a1a1a" />
-      </mesh>
     </mesh>
   );
 }
 
-function SceneMouseTracker() {
+function SceneCameraManager({ scrollRef }: { scrollRef: React.RefObject<number> }) {
   const { camera } = useThree();
   const mouse = useRef(new THREE.Vector2());
 
@@ -112,15 +87,32 @@ function SceneMouseTracker() {
     return () => window.removeEventListener('mousemove', handleMouse);
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/immutability
   useFrame((state, delta) => {
-    // Subtle camera parallax
-    const targetX = mouse.current.x * 0.5;
-    const targetY = mouse.current.y * 0.3;
+    const progress = scrollRef.current || 0;
     
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 2);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 2);
-    camera.lookAt(0, 0, 0);
+    // Total camera travel distance
+    // Progress 0 = Camera Z 0
+    // Progress 1 = Camera Z reaches the final image (so it fills the screen perfectly)
+    // Final image is at START_Z - (7 * PLANE_SPACING).
+    // To make the final image stay on screen at progress=1, camera should stop 
+    // at a safe viewing distance (e.g., 20 units away from final plane).
+    const finalPlaneZ = START_Z - ((journeyStagesData.length - 1) * PLANE_SPACING);
+    const targetZ = - (progress * Math.abs(finalPlaneZ + 20)); // Stops 20 units before the last plane
+
+    // Mouse Parallax for subtle organic feeling
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const parallaxStrength = isMobile ? 0 : 0.5;
+    
+    const targetX = mouse.current.x * parallaxStrength;
+    const targetY = mouse.current.y * parallaxStrength;
+
+    // Smooth interpolation
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 4);
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 3);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 3);
+    
+    // Look straight ahead
+    camera.lookAt(camera.position.x, camera.position.y, camera.position.z - 10);
   });
 
   return null;
@@ -128,35 +120,23 @@ function SceneMouseTracker() {
 
 export default function Journey3DScene({ scrollRef }: { scrollRef: React.RefObject<number> }) {
   return (
-    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[var(--color-charcoal)]">
-      <Canvas shadows dpr={[1, 2]}>
-        <PerspectiveCamera makeDefault fov={35} position={[0, 0, 6]} />
-        
-        <ambientLight intensity={0.5} />
-        <directionalLight 
-          position={[5, 10, 5]} 
-          intensity={1.5} 
-          color="#DCCCB5" 
-          castShadow 
-          shadow-mapSize={[2048, 2048]}
-        />
-        <pointLight position={[-5, -5, -5]} intensity={0.5} color="#4A5A3F" />
+    <div className="absolute inset-0 w-full h-full z-0 bg-[#11100e]">
+      <Canvas dpr={[1, 2]}>
+        <PerspectiveCamera makeDefault fov={45} position={[0, 0, 0]} />
         
         <Suspense fallback={null}>
-          <group position={[2, 0, 0]}>
+          <group>
             {journeyStagesData.map((stage, i) => (
-              <PhotoPlane 
+              <CinematicImagePlane 
                 key={stage.id} 
                 index={i} 
-                total={journeyStagesData.length} 
                 textureUrl={stage.image} 
-                scrollRef={scrollRef} 
               />
             ))}
           </group>
         </Suspense>
 
-        <SceneMouseTracker />
+        <SceneCameraManager scrollRef={scrollRef} />
       </Canvas>
     </div>
   );

@@ -1,108 +1,263 @@
 'use client';
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import { journeyStagesData, RiceJourneyStage } from '@/data/journey';
-import Journey3DScene from '@/components/three/Journey3DScene';
-import { motion, useScroll, useTransform } from 'framer-motion';
 
-export default function JourneyPageClient() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef(0);
-  const [mounted, setMounted] = useState(false);
-  const [activeStage, setActiveStage] = useState(0);
+const customDescriptions = [
+  "Every journey begins with a seed.",
+  "The seed is placed into the soil, beginning the next stage of growth.",
+  "Through the season, the crop develops in the field.",
+  "When the crop reaches harvest, the field changes from green to gold.",
+  "After harvest, the crop is prepared for the next stage.",
+  "The harvested crop moves through processing to separate the grain.",
+  "The grains are cleaned and graded before becoming the final rice."
+];
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.max(0, Math.min(1, scrollY / maxScroll));
-      scrollRef.current = progress;
-      
-      const currentStage = Math.min(
-        journeyStagesData.length - 1, 
-        Math.floor(progress * journeyStagesData.length)
-      );
-      setActiveStage(currentStage);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+// The timeline component that draws down as you scroll
+function JourneyTimeline({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
+  // Smooth the scroll progress so the line feels organic
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <main ref={containerRef} className="relative w-full bg-[var(--color-ivory)] text-[var(--color-charcoal)]">
-      
-      {/* Header */}
-      <div className="pt-32 pb-12 px-4 md:px-12 max-w-[1600px] mx-auto text-center md:text-left">
-        <h1 className="text-4xl md:text-6xl font-serif leading-[1] tracking-tighter mb-4 text-[var(--color-charcoal)]">
-          THE JOURNEY<br />
-          <span className="text-[var(--color-champagne)] italic font-light">FROM SEED TO GRAIN</span>
-        </h1>
-        <p className="text-sm font-sans uppercase tracking-[0.3em] opacity-60">
-          8 Stages
-        </p>
-      </div>
-
-      <div className="flex flex-col md:flex-row max-w-[1600px] mx-auto px-4 md:px-12 relative pb-32">
-        
-        {/* LEFT / TOP: Sticky 3D Image Viewer */}
-        <div className="w-full md:w-1/2 h-[50vh] md:h-[70vh] sticky top-24 md:top-32 z-10 bg-[var(--color-charcoal)] overflow-hidden">
-          {mounted && <Journey3DScene scrollRef={scrollRef} />}
-        </div>
-
-        {/* RIGHT / BOTTOM: Scrollable Text Stages */}
-        <div className="w-full md:w-1/2 flex flex-col md:pl-12 lg:pl-24 relative z-20 mt-12 md:mt-0">
-          {journeyStagesData.map((stage, index) => (
-            <JourneyStageText 
-              key={stage.id} 
-              stage={stage} 
-              index={index} 
-              isActive={activeStage === index}
-            />
-          ))}
-        </div>
-        
-      </div>
-      
-    </main>
+    <>
+      {/* Background track (muted) */}
+      <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#8a7d6d]/20 -translate-x-1/2 z-0" />
+      {/* Active track (drawn by scroll) */}
+      <motion.div 
+        className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#8a7d6d] -translate-x-1/2 z-10 origin-top"
+        style={{ scaleY }}
+      />
+    </>
   );
 }
 
-function JourneyStageText({ stage, index, isActive }: { stage: RiceJourneyStage, index: number, isActive: boolean }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
+function StageBlock({ 
+  stage, 
+  index, 
+  isLast 
+}: { 
+  stage: RiceJourneyStage, 
+  index: number,
+  isLast: boolean
+}) {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start center", "end center"]
+    target: ref,
+    offset: ["start 80%", "center center"]
   });
+
+  const { scrollYProgress: exitProgress } = useScroll({
+    target: ref,
+    offset: ["center center", "end 20%"]
+  });
+
+  // Animations
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.05, 1]);
+  const clipPath = useTransform(scrollYProgress, [0, 1], ['inset(20% 0 0 0)', 'inset(0% 0 0 0)']);
   
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
+  // Marker animation (active when in center of screen)
+  const markerScale = useTransform(scrollYProgress, [0.8, 1], [0.8, 1.2]);
+  const markerOpacity = useTransform(exitProgress, [0, 1], [1, 0.4]);
+
+  const isEven = index % 2 === 0;
+
+  if (isLast) {
+    return (
+      <div ref={ref} className="relative w-full py-32 md:py-48 flex flex-col items-center justify-center">
+        {/* Final Stage Marker */}
+        <div className="absolute left-6 md:left-1/2 top-32 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 z-20" />
+        
+        <motion.div style={{ opacity, y }} className="w-full max-w-6xl mx-auto px-4 md:px-12 relative z-10">
+          <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden mb-12">
+            <motion.div style={{ scale }} className="w-full h-full">
+              <Image 
+                src={stage.image} 
+                alt="Final Indrayani Rice" 
+                fill 
+                className="object-cover"
+                sizes="100vw"
+              />
+            </motion.div>
+          </div>
+          
+          <div className="text-center md:text-left md:absolute md:bottom-0 md:left-24 bg-[#f2ede4] md:p-12 z-20">
+            <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-4 font-semibold">
+              08
+            </div>
+            <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4 text-[#2b2723]">
+              FINAL RICE
+            </h2>
+            <div className="text-xl md:text-3xl font-serif tracking-tight mb-8 text-[#4a433c]">
+              INDRAYANI RICE
+            </div>
+            <p className="text-sm font-sans uppercase tracking-[0.2em] mb-12 text-[#6b6255]">
+              10 KG · 25 KG
+            </p>
+            <a 
+              href="https://wa.me/919370943298"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-[#2b2723] text-[#2b2723] px-10 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[#2b2723] hover:text-[#f2ede4] transition-colors"
+            >
+              ENQUIRE TO ORDER
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Desktop widths: image takes 55-65%, text takes 35-45%
+  // To make it organic, we vary the image aspect ratios and widths slightly based on index
+  const imageAspects = ["aspect-[4/5]", "aspect-square", "aspect-[3/4]", "aspect-[16/10]", "aspect-[4/5]", "aspect-video", "aspect-[3/4]"];
+  const imageAspect = imageAspects[index % imageAspects.length];
 
   return (
-    <div ref={sectionRef} className="h-[80vh] md:h-[100vh] relative w-full flex items-center">
+    <div ref={ref} className="relative w-full py-20 md:py-32 flex flex-col md:flex-row items-center max-w-[1600px] mx-auto px-6 md:px-12">
+      
+      {/* Timeline Marker */}
       <motion.div 
-        style={{ opacity }} 
-        className="w-full pointer-events-auto"
-      >
-        <div className="text-xs font-sans uppercase tracking-[0.4em] text-[var(--color-champagne)] mb-4 font-semibold">
-          0{index + 1} / 08
-        </div>
-        <h2 className="text-4xl md:text-5xl font-serif leading-[1] tracking-tighter mb-6 text-[var(--color-charcoal)]">
-          {stage.title}
-        </h2>
-        <p className="text-base md:text-lg font-light text-[var(--color-charcoal)]/80 leading-relaxed max-w-sm mb-12">
-          {stage.desc}
-        </p>
+        style={{ scale: markerScale, opacity: markerOpacity }}
+        className="absolute left-6 md:left-1/2 top-1/2 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block"
+      />
+      <motion.div 
+        style={{ scale: markerScale, opacity: markerOpacity }}
+        className="absolute left-6 top-24 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 z-20 md:hidden"
+      />
 
-        {/* Mobile Next Stage Hint (visible mainly on mobile to guide scrolling) */}
-        {index < 7 && (
-          <div className="md:hidden flex items-center gap-4 text-xs font-sans uppercase tracking-[0.2em] text-[var(--color-charcoal)]/50 mt-12">
-            <span className="w-8 h-px bg-current"></span>
-            Scroll to Next Stage
+      {/* Mobile Layout (Always Text then Image) */}
+      <div className="w-full md:hidden flex flex-col pl-8">
+        <motion.div style={{ opacity, y }} className="mb-8">
+          <div className="text-xs font-sans uppercase tracking-[0.3em] text-[#8a7d6d] mb-4 font-semibold">
+            0{index + 1}
           </div>
+          <h2 className="text-4xl font-serif tracking-tighter mb-4 text-[#2b2723]">
+            {stage.title}
+          </h2>
+          <p className="text-base font-sans font-light text-[#4a433c] leading-relaxed">
+            {customDescriptions[index]}
+          </p>
+        </motion.div>
+        <motion.div style={{ opacity, clipPath }} className={`relative w-full ${imageAspect} overflow-hidden`}>
+          <motion.div style={{ scale }} className="w-full h-full">
+            <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="100vw" />
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Desktop Layout (Alternating) */}
+      <div className="hidden md:flex w-full items-center">
+        {isEven ? (
+          <>
+            <div className="w-[55%] pr-16 lg:pr-24 flex justify-end">
+              <motion.div style={{ opacity, clipPath }} className={`relative w-full max-w-2xl ${imageAspect} overflow-hidden`}>
+                <motion.div style={{ scale }} className="w-full h-full">
+                  <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="50vw" />
+                </motion.div>
+              </motion.div>
+            </div>
+            <div className="w-[45%] pl-16 lg:pl-24">
+              <motion.div style={{ opacity, y }} className="max-w-md">
+                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
+                  0{index + 1}
+                </div>
+                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[#2b2723]">
+                  {stage.title}
+                </h2>
+                <p className="text-lg font-sans font-light text-[#4a433c] leading-relaxed">
+                  {customDescriptions[index]}
+                </p>
+              </motion.div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="w-[45%] pr-16 lg:pr-24 flex justify-end">
+              <motion.div style={{ opacity, y }} className="max-w-md">
+                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
+                  0{index + 1}
+                </div>
+                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[#2b2723]">
+                  {stage.title}
+                </h2>
+                <p className="text-lg font-sans font-light text-[#4a433c] leading-relaxed">
+                  {customDescriptions[index]}
+                </p>
+              </motion.div>
+            </div>
+            <div className="w-[55%] pl-16 lg:pl-24">
+              <motion.div style={{ opacity, clipPath }} className={`relative w-full max-w-2xl ${imageAspect} overflow-hidden`}>
+                <motion.div style={{ scale }} className="w-full h-full">
+                  <Image src={stage.image} alt={stage.title} fill className="object-cover" sizes="50vw" />
+                </motion.div>
+              </motion.div>
+            </div>
+          </>
         )}
-      </motion.div>
+      </div>
+
     </div>
+  );
+}
+
+export default function JourneyPageClient() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Background transition: Stage 04 (Harvest) is exactly halfway through the 8 stages.
+  // We transition background color from earthy (#e6dfd3) to clean warm ivory (#f2ede4) around 50-60% scroll.
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.6, 1],
+    ["#e6dfd3", "#e6dfd3", "#f2ede4", "#f2ede4"]
+  );
+
+  return (
+    <motion.main 
+      ref={containerRef} 
+      style={{ backgroundColor }}
+      className="relative w-full min-h-screen text-[#2b2723] transition-colors duration-1000 ease-in-out"
+    >
+      
+      {/* Intro Section */}
+      <section className="pt-40 pb-20 md:pt-56 md:pb-32 px-6 md:px-12 max-w-[1200px] mx-auto text-center">
+        <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
+          THE RICE JOURNEY
+        </div>
+        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-serif leading-[0.9] tracking-tighter mb-10 text-[#2b2723]">
+          FROM FIELD<br/>TO GRAIN
+        </h1>
+        <p className="text-base md:text-xl font-serif italic text-[#6b6255] max-w-2xl mx-auto leading-relaxed">
+          &quot;Every grain passes through a journey of growth, harvest and preparation before it reaches the table.&quot;
+        </p>
+      </section>
+
+      {/* The Journey Timeline Container */}
+      <div className="relative w-full pb-32">
+        <JourneyTimeline scrollYProgress={scrollYProgress} />
+        
+        {/* Stages */}
+        {journeyStagesData.map((stage, index) => (
+          <StageBlock 
+            key={stage.id} 
+            stage={stage} 
+            index={index} 
+            isLast={index === journeyStagesData.length - 1}
+          />
+        ))}
+      </div>
+
+    </motion.main>
   );
 }
