@@ -1,41 +1,24 @@
 'use client';
 import Image from 'next/image';
-import { Locale } from '@/i18n/config';
+import Link from 'next/link';
 import { productsData } from '@/data/products';
+import { images } from '@/data/images';
 import RiceClusterScene from '@/components/three/RiceClusterScene';
 
 export default function OurRiceClient() {
   const product = productsData.find(p => p.id === "indrayani-rice") || productsData[0];
 
   return (
-    <main className="pt-32 pb-32 bg-[var(--color-ivory)] min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12">
+    <main className="pt-32 pb-32 bg-[var(--color-ivory)] min-h-screen text-[var(--color-charcoal)]">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12">
         
-        {/* Header Section */}
-        <div className="mb-24 md:mb-32 max-w-3xl">
-          <h1 className="text-6xl md:text-8xl lg:text-[100px] font-serif text-[var(--color-charcoal)] leading-[0.9] tracking-tighter mb-4">
-            INDRAYANI RICE
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-serif text-[var(--color-champagne)] italic mb-12">
-            {product.variety}
-          </h2>
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           
-          <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/60 mb-4">
-            What is Indrayani Rice?
-          </div>
-          <p className="text-lg md:text-xl text-[var(--color-charcoal)]/80 font-light leading-relaxed">
-            {product.description}
-          </p>
-        </div>
-
-        {/* Visual Section */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
-          
-          {/* Main Macro Image */}
-          <div className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] relative overflow-hidden">
+          {/* LEFT: Large rice macro photograph */}
+          <div className="w-full lg:w-1/2 h-[60vh] lg:h-[85vh] relative overflow-hidden">
             <Image 
-              src={product.image}
-              alt={product.name}
+              src={images.rice.v01_macro}
+              alt="Raw Indrayani rice grains macro"
               fill
               priority
               className="object-cover"
@@ -43,27 +26,80 @@ export default function OurRiceClient() {
             />
           </div>
 
-          {/* Interactive Grain 3D & Close-up */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-12 h-full justify-between">
+          {/* RIGHT: Product Information */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
             
-            <div className="relative w-full h-[300px] md:h-[400px] bg-[var(--color-charcoal)]/5">
-              {/* Floating 3D WebGL Grain Cluster */}
-              <RiceClusterScene />
-              <div className="absolute bottom-4 left-4 text-xs font-sans uppercase tracking-widest text-[var(--color-charcoal)]/50 pointer-events-none">
-                Interactive Grain View
+            <div className="text-xs uppercase tracking-[0.4em] font-semibold text-[var(--color-champagne)] mb-6">
+              OUR RICE / WHAT IS IT?
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-[90px] font-serif leading-[0.9] tracking-tighter mb-4">
+              INDRAYANI RICE
+            </h1>
+            <h2 className="text-2xl md:text-3xl font-serif text-[var(--color-charcoal)]/60 italic mb-10">
+              इंद्रायणी तांदूळ
+            </h2>
+            
+            <p className="text-lg md:text-xl text-[var(--color-charcoal)]/80 font-light leading-relaxed max-w-xl mb-16">
+              {product.description}
+            </p>
+
+            <div className="mb-16">
+              <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/50 mb-6">
+                AVAILABLE PACKING
+              </div>
+              <div className="flex gap-4">
+                <div className="border border-[var(--color-charcoal)]/20 px-8 py-4 text-xl font-serif tracking-widest text-[var(--color-charcoal)]">
+                  10 KG
+                </div>
+                <div className="border border-[var(--color-charcoal)]/20 px-8 py-4 text-xl font-serif tracking-widest text-[var(--color-charcoal)]">
+                  25 KG
+                </div>
               </div>
             </div>
 
-            <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden">
-              <Image 
-                src={product.grainImage || product.image}
-                alt="Grain Close-up"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <div className="mb-16">
+              <div className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/50 mb-6">
+                ORDER
+              </div>
+              <p className="text-base text-[var(--color-charcoal)]/70 mb-6">
+                Interested in Indrayani Rice? Enquire for availability and ordering details.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                <Link 
+                  href="../contact"
+                  className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-10 py-5 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] transition-colors inline-block"
+                >
+                  ENQUIRE TO ORDER →
+                </Link>
+                <div className="flex flex-col gap-1 text-sm tracking-widest opacity-80">
+                  <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">9370943298</a>
+                  <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">unmeshrisbud345@gmail.com</a>
+                </div>
+              </div>
             </div>
-            
+
+            {/* Secondary close-up image & 3D Interactive subtle hint */}
+            <div className="flex flex-col sm:flex-row gap-6 h-[250px] mt-auto">
+              <div className="relative w-full sm:w-1/2 h-full overflow-hidden">
+                <Image 
+                  src={images.rice.v03_cleanCloseUp}
+                  alt="Clean rice grains close-up"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+              </div>
+              <div className="relative w-full sm:w-1/2 h-full bg-[var(--color-charcoal)]/5 flex flex-col items-center justify-center">
+                <div className="absolute inset-0">
+                  <RiceClusterScene />
+                </div>
+                <div className="absolute bottom-4 left-4 text-[10px] uppercase tracking-[0.3em] text-[var(--color-charcoal)]/40 pointer-events-none font-semibold">
+                  INTERACTIVE GRAIN
+                </div>
+              </div>
+            </div>
+
           </div>
           
         </div>

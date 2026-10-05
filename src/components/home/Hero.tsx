@@ -41,42 +41,57 @@ export default function Hero({ locale }: { locale: Locale }) {
       {/* Real WebGL 3D Layer */}
       {mounted && <PranshHeroScene scrollProgress={scrollRef} />}
       
+      {/* Readability Overlay */}
+      <div className="absolute inset-0 bg-[var(--color-charcoal)]/30 z-[5] pointer-events-none mix-blend-multiply" />
+      
       {/* HTML Typographic Layer */}
       <motion.div 
         style={{ y: textY, opacity }}
-        className="absolute inset-0 w-full h-full flex flex-col justify-between p-6 md:p-12 z-10 pointer-events-none mix-blend-difference text-[var(--color-ivory)]"
+        className="absolute inset-0 w-full h-full flex flex-col justify-between p-6 md:p-12 z-10 pointer-events-none text-[var(--color-ivory)]"
       >
         {/* Top */}
         <div className="flex justify-between items-start w-full mt-24 md:mt-0">
-          <div className="text-sm font-sans tracking-[0.4em] uppercase">PRANSH</div>
+          <div className="text-sm font-sans tracking-[0.4em] uppercase text-[var(--color-champagne)]">
+            FROM THE FARM
+          </div>
         </div>
 
         {/* Center / Left */}
-        <div className="flex-1 flex flex-col justify-center">
-          <h1 className="text-[12vw] md:text-[130px] leading-[0.85] font-serif tracking-tighter mb-8">
-            <span className="block">GROWN</span>
-            <span className="block text-[var(--color-champagne)] italic font-light">WITH</span>
-            <span className="block">PURPOSE.</span>
+        <div className="flex-1 flex flex-col justify-center max-w-4xl">
+          <h1 className="text-[12vw] md:text-[100px] lg:text-[120px] leading-[0.9] font-serif tracking-tighter mb-6 drop-shadow-lg">
+            INDRAYANI RICE
           </h1>
-          <div className="flex flex-col md:flex-row gap-2 md:gap-8 text-xs font-sans uppercase tracking-widest opacity-80">
-            <span>INDRAYANI RICE</span>
-            <span className="hidden md:inline">•</span>
-            <span>DIRECT FROM THE FARM</span>
+          <p className="text-2xl md:text-3xl font-serif text-[var(--color-champagne)] italic mb-6">
+            Grown by a farmer. Prepared for your table.
+          </p>
+          <p className="text-base md:text-lg font-sans font-light opacity-90 max-w-xl leading-relaxed mb-10 drop-shadow-sm">
+            PRANSH brings Indrayani Rice directly from our farm in Pavnanagar, with the journey from seed to grain at the heart of the story.
+          </p>
+          
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
+            <Link 
+              href={`/${locale}/contact`}
+              className="bg-[var(--color-champagne)] text-[var(--color-charcoal)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-ivory)] transition-colors"
+            >
+              ENQUIRE TO ORDER
+            </Link>
+            <Link 
+              href={`/${locale}/journey`}
+              className="text-xs font-sans uppercase tracking-[0.2em] border-b border-[var(--color-ivory)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
+            >
+              EXPLORE THE JOURNEY
+            </Link>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full gap-8 md:gap-0 pointer-events-auto">
-          <Link 
-            href={`/${locale}/journey`}
-            className="text-xs font-sans uppercase tracking-[0.2em] border-b border-[var(--color-ivory)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
-          >
-            EXPLORE THE JOURNEY
-          </Link>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full gap-4 md:gap-0 mt-8">
+          <div className="text-xs font-sans uppercase tracking-[0.2em] opacity-90 text-[var(--color-champagne)] font-medium">
+            10 KG · 25 KG PACKING
+          </div>
 
-          <div className="text-right text-xs font-sans uppercase tracking-[0.2em] opacity-80 leading-relaxed">
-            <span className="block">PAVNANAGAR</span>
-            <span className="block">MAHARASHTRA</span>
+          <div className="text-left md:text-right text-xs font-sans uppercase tracking-[0.2em] opacity-80 leading-relaxed">
+            <span className="block">PAVNANAGAR, MAHARASHTRA</span>
           </div>
         </div>
       </motion.div>

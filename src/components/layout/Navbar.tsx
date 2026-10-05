@@ -1,24 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Locale } from '@/i18n/config';
-import { images } from '@/data/images';
 import LanguageSwitcher from './LanguageSwitcher';
-
-const navImages: Record<string, string> = {
-  home: images.hero,
-  story: images.farmer.portrait,
-  journey: images.journey.harvesting,
-  rice: images.rice.macro,
-  gallery: images.gallery[0],
-  contact: images.gallery[2]
-};
 
 export default function Navbar({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   useEffect(() => {
     if (menuOpen) document.body.style.overflow = 'hidden';
@@ -26,30 +14,52 @@ export default function Navbar({ locale }: { locale: Locale }) {
   }, [menuOpen]);
 
   const navLinks = [
-    { id: 'home', num: '01', name: 'HOME', href: `/${locale}` },
-    { id: 'story', num: '02', name: 'OUR STORY', href: `/${locale}/our-story` },
-    { id: 'journey', num: '03', name: 'THE JOURNEY', href: `/${locale}/journey` },
-    { id: 'rice', num: '04', name: 'OUR RICE', href: `/${locale}/our-rice` },
-    { id: 'gallery', num: '05', name: 'GALLERY', href: `/${locale}/gallery` },
-    { id: 'contact', num: '06', name: 'CONTACT', href: `/${locale}/contact` },
+    { id: 'story', num: '01', name: 'OUR STORY', href: `/${locale}/our-story` },
+    { id: 'journey', num: '02', name: 'THE JOURNEY', href: `/${locale}/journey` },
+    { id: 'rice', num: '03', name: 'OUR RICE', href: `/${locale}/our-rice` },
+    { id: 'gallery', num: '04', name: 'GALLERY', href: `/${locale}/gallery` },
+    { id: 'contact', num: '05', name: 'CONTACT', href: `/${locale}/contact` },
   ];
 
   return (
     <>
-      {/* Minimal Header */}
-      <header className="absolute top-0 left-0 w-full z-50 p-6 md:p-12 flex justify-between items-start pointer-events-none mix-blend-difference text-[var(--color-ivory)]">
+      {/* Desktop & Mobile Header */}
+      <header className="absolute top-0 left-0 w-full z-50 p-6 md:p-12 flex justify-between items-center pointer-events-none mix-blend-difference text-[var(--color-ivory)]">
         
+        {/* Left: Logo */}
         <Link href={`/${locale}`} className="pointer-events-auto">
           <span className="font-serif tracking-[0.2em] uppercase text-xl md:text-2xl font-medium">
             PRANSH
           </span>
         </Link>
         
+        {/* Desktop Navigation (Hidden on Mobile) */}
+        <div className="hidden lg:flex items-center gap-12 pointer-events-auto">
+          <nav className="flex items-center gap-8 text-xs font-sans uppercase tracking-[0.2em]">
+            {navLinks.slice(0, 4).map((link) => (
+              <Link key={link.id} href={link.href} className="hover:text-[var(--color-champagne)] transition-colors">
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+          
+          <div className="flex items-center gap-8">
+            <LanguageSwitcher currentLocale={locale} />
+            <Link 
+              href={`/${locale}/contact`}
+              className="border border-[var(--color-ivory)] px-6 py-2 text-xs font-sans uppercase tracking-[0.2em] hover:bg-[var(--color-ivory)] hover:text-[var(--color-charcoal)] transition-colors"
+            >
+              ENQUIRE
+            </Link>
+          </div>
+        </div>
+
+        {/* Mobile Hamburger (Hidden on Desktop) */}
         <button 
           onClick={() => setMenuOpen(true)}
-          className="pointer-events-auto group flex items-center justify-center w-12 h-12 rounded-full border border-current transition-transform duration-300 hover:scale-105 bg-transparent"
+          className="lg:hidden pointer-events-auto group flex items-center justify-center w-12 h-12 rounded-full border border-current transition-transform duration-300 bg-transparent"
         >
-          <div className="flex flex-col gap-[3px] w-5">
+          <div className="flex flex-col gap-[4px] w-5">
             <span className="h-[1px] bg-current w-full" />
             <span className="h-[1px] bg-current w-full" />
             <span className="h-[1px] bg-current w-full" />
@@ -58,74 +68,84 @@ export default function Navbar({ locale }: { locale: Locale }) {
         
       </header>
 
-      {/* Full-screen Navigation Panel */}
+      {/* Full-screen Mobile Navigation Panel */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-[60] bg-[var(--color-charcoal)] flex flex-col"
+            initial={{ y: '-100%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[60] bg-[var(--color-ivory)] flex flex-col text-[var(--color-forest)] overflow-y-auto"
           >
-            {/* Background Image Layer */}
-            <div className="absolute inset-0 z-0 opacity-20">
-              <Image 
-                src={hoveredItem ? navImages[hoveredItem] : navImages.home}
-                alt="Navigation Preview"
-                fill
-                className="object-cover transition-opacity duration-500"
-                sizes="100vw"
-                priority
-              />
-            </div>
-
             {/* Menu Header */}
-            <div className="relative z-10 p-6 md:p-12 flex justify-between items-center w-full">
-              <span className="font-serif tracking-[0.2em] uppercase text-xl text-[var(--color-ivory)]">
+            <div className="p-6 md:p-12 flex justify-between items-center w-full">
+              <span className="font-serif tracking-[0.2em] uppercase text-xl">
                 PRANSH
               </span>
               <button 
                 onClick={() => setMenuOpen(false)}
-                className="w-12 h-12 rounded-full border border-[var(--color-ivory)] text-[var(--color-ivory)] flex items-center justify-center transition-transform hover:scale-105"
+                className="w-12 h-12 flex items-center justify-center"
               >
-                <span className="text-xl font-light">✕</span>
+                <span className="text-3xl font-light">×</span>
               </button>
             </div>
 
             {/* Menu Links */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center px-6 md:px-24">
-              <nav className="flex flex-col gap-4 md:gap-6">
-                {navLinks.map((link) => (
-                  <div
+            <div className="flex-1 flex flex-col justify-center px-6 py-12">
+              <nav className="flex flex-col gap-6">
+                {navLinks.map((link, i) => (
+                  <motion.div
                     key={link.name}
-                    onMouseEnter={() => setHoveredItem(link.id)}
-                    onMouseLeave={() => setHoveredItem(null)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05 }}
                   >
                     <Link 
                       href={link.href}
                       onClick={() => setMenuOpen(false)}
-                      className="inline-flex items-center gap-6 md:gap-12 text-[var(--color-ivory)] group"
+                      className="inline-flex items-center gap-6 group"
                     >
-                      <span className="text-sm md:text-base font-sans tracking-widest opacity-50 group-hover:opacity-100 transition-opacity">
-                        {link.num}
+                      <span className="text-sm font-sans tracking-widest opacity-50 transition-opacity">
+                        {link.num} —
                       </span>
-                      <span className="text-4xl md:text-6xl lg:text-[80px] font-serif leading-none tracking-tighter transition-colors group-hover:text-[var(--color-champagne)]">
+                      <span className="text-4xl md:text-6xl font-serif leading-none tracking-tighter transition-colors">
                         {link.name}
                       </span>
                     </Link>
-                  </div>
+                  </motion.div>
                 ))}
               </nav>
+
+              {/* Mobile Contact Block */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-16 flex flex-col gap-4"
+              >
+                <div className="text-xl font-serif tracking-widest">
+                  INDRAYANI RICE
+                </div>
+                <div className="text-xs font-sans uppercase tracking-[0.2em] opacity-70">
+                  10 KG · 25 KG PACKING
+                </div>
+                <a href="tel:9370943298" className="text-xl font-serif tracking-widest mt-2 hover:opacity-70">
+                  9370943298
+                </a>
+                <Link 
+                  href={`/${locale}/contact`}
+                  onClick={() => setMenuOpen(false)}
+                  className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] transition-colors inline-block text-center mt-4 w-max"
+                >
+                  ENQUIRE TO ORDER
+                </Link>
+              </motion.div>
             </div>
 
             {/* Menu Footer */}
-            <div className="relative z-10 p-6 md:p-12 flex justify-between items-end border-t border-[var(--color-ivory)]/10 text-[var(--color-ivory)]">
+            <div className="p-6 md:p-12 border-t border-[var(--color-forest)]/10 flex justify-center">
               <LanguageSwitcher currentLocale={locale} />
-              <div className="flex gap-8 text-xs tracking-widest uppercase opacity-80 font-medium">
-                <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">EMAIL</a>
-                <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">CALL</a>
-              </div>
             </div>
             
           </motion.div>

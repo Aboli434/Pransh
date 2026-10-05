@@ -1,7 +1,6 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
-import { Locale } from '@/i18n/config';
-import { journeyStagesData } from '@/data/journey';
+import { journeyStagesData, RiceJourneyStage } from '@/data/journey';
 import Journey3DScene from '@/components/three/Journey3DScene';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -33,72 +32,76 @@ export default function JourneyPageClient() {
   }, []);
 
   return (
-    <main ref={containerRef} className="relative w-full bg-transparent">
+    <main ref={containerRef} className="relative w-full bg-[var(--color-ivory)] text-[var(--color-charcoal)]">
       
-      {/* 3D WebGL Background - Fixed */}
-      {mounted && <Journey3DScene scrollRef={scrollRef} />}
-
-      {/* Progress System - Fixed Left */}
-      <div className="fixed left-4 md:left-12 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-4 hidden md:flex mix-blend-difference text-[var(--color-ivory)]">
-        {journeyStagesData.map((_, i) => (
-          <div key={i} className="flex flex-col items-center">
-            <span className={`text-[10px] font-sans transition-opacity duration-300 ${activeStage === i ? 'opacity-100' : 'opacity-30'}`}>
-              0{i + 1}
-            </span>
-            <div className={`w-px transition-all duration-300 ${activeStage === i ? 'h-8 bg-[var(--color-champagne)]' : 'h-4 bg-[var(--color-ivory)]/30'}`} />
-          </div>
-        ))}
-      </div>
-
       {/* Header */}
-      <div className="h-[50vh] w-full flex flex-col justify-center px-4 md:px-24 relative z-10 text-[var(--color-ivory)] pointer-events-none mix-blend-difference mt-24">
-        <h1 className="text-4xl md:text-6xl font-serif leading-[1] tracking-tighter">
+      <div className="pt-32 pb-12 px-4 md:px-12 max-w-[1600px] mx-auto text-center md:text-left">
+        <h1 className="text-4xl md:text-6xl font-serif leading-[1] tracking-tighter mb-4 text-[var(--color-charcoal)]">
           THE JOURNEY<br />
           <span className="text-[var(--color-champagne)] italic font-light">FROM SEED TO GRAIN</span>
         </h1>
+        <p className="text-sm font-sans uppercase tracking-[0.3em] opacity-60">
+          8 Stages
+        </p>
       </div>
 
-      {/* Scrollable Text Track */}
-      <div className="relative w-full z-10 pointer-events-none">
-        {journeyStagesData.map((stage, index) => (
-          <JourneyStageText 
-            key={stage.id} 
-            stage={stage} 
-            index={index} 
-          />
-        ))}
+      <div className="flex flex-col md:flex-row max-w-[1600px] mx-auto px-4 md:px-12 relative pb-32">
+        
+        {/* LEFT / TOP: Sticky 3D Image Viewer */}
+        <div className="w-full md:w-1/2 h-[50vh] md:h-[70vh] sticky top-24 md:top-32 z-10 bg-[var(--color-charcoal)] overflow-hidden">
+          {mounted && <Journey3DScene scrollRef={scrollRef} />}
+        </div>
+
+        {/* RIGHT / BOTTOM: Scrollable Text Stages */}
+        <div className="w-full md:w-1/2 flex flex-col md:pl-12 lg:pl-24 relative z-20 mt-12 md:mt-0">
+          {journeyStagesData.map((stage, index) => (
+            <JourneyStageText 
+              key={stage.id} 
+              stage={stage} 
+              index={index} 
+              isActive={activeStage === index}
+            />
+          ))}
+        </div>
+        
       </div>
       
     </main>
   );
 }
 
-import { RiceJourneyStage } from '@/data/journey';
-
-function JourneyStageText({ stage, index }: { stage: RiceJourneyStage, index: number }) {
+function JourneyStageText({ stage, index, isActive }: { stage: RiceJourneyStage, index: number, isActive: boolean }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start center", "end center"]
   });
   
-  const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
 
   return (
-    <div ref={sectionRef} className="h-[120vh] relative w-full flex items-center">
+    <div ref={sectionRef} className="h-[80vh] md:h-[100vh] relative w-full flex items-center">
       <motion.div 
         style={{ opacity }} 
-        className="w-full px-4 md:px-24 lg:w-1/3 mix-blend-difference text-[var(--color-ivory)] pointer-events-auto"
+        className="w-full pointer-events-auto"
       >
-        <span className="text-lg md:text-2xl font-serif text-[var(--color-champagne)] mb-2 block">
+        <div className="text-xs font-sans uppercase tracking-[0.4em] text-[var(--color-champagne)] mb-4 font-semibold">
           0{index + 1} / 08
-        </span>
-        <h2 className="text-4xl md:text-5xl font-serif leading-[1] tracking-tighter mb-4">
+        </div>
+        <h2 className="text-4xl md:text-5xl font-serif leading-[1] tracking-tighter mb-6 text-[var(--color-charcoal)]">
           {stage.title}
         </h2>
-        <p className="text-base md:text-lg font-light opacity-90 leading-relaxed max-w-sm">
+        <p className="text-base md:text-lg font-light text-[var(--color-charcoal)]/80 leading-relaxed max-w-sm mb-12">
           {stage.desc}
         </p>
+
+        {/* Mobile Next Stage Hint (visible mainly on mobile to guide scrolling) */}
+        {index < 7 && (
+          <div className="md:hidden flex items-center gap-4 text-xs font-sans uppercase tracking-[0.2em] text-[var(--color-charcoal)]/50 mt-12">
+            <span className="w-8 h-px bg-current"></span>
+            Scroll to Next Stage
+          </div>
+        )}
       </motion.div>
     </div>
   );

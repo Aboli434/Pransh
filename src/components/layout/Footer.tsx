@@ -1,61 +1,80 @@
 import Link from 'next/link';
 import { Locale } from '@/i18n/config';
-import { getDictionary } from '@/lib/i18n';
-import { brandConfig } from '@/data/brand';
-import Container from '../ui/Container';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer({ locale }: { locale: Locale }) {
-  const dict = getDictionary(locale);
-
   return (
-    <footer className="bg-[var(--primary)] text-[var(--color-ivory)] py-16 mt-20">
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <div className="space-y-4">
-            <h3 className="text-3xl font-serif tracking-widest">{brandConfig.name}</h3>
-            <p className="text-[var(--color-sage)] text-sm max-w-sm leading-relaxed">
-              {brandConfig.description}
+    <footer className="bg-[var(--color-forest)] text-[var(--color-ivory)] pt-24 pb-12">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-12">
+        
+        <div className="flex flex-col lg:flex-row justify-between gap-16 mb-24">
+          
+          {/* Brand Info */}
+          <div className="flex flex-col max-w-sm">
+            <h3 className="text-6xl md:text-8xl font-serif tracking-tighter leading-none mb-4">
+              PRANSH
+            </h3>
+            <div className="text-xl md:text-2xl font-serif tracking-widest text-[var(--color-champagne)] mb-6">
+              INDRAYANI RICE
+            </div>
+            <p className="text-sm font-sans uppercase tracking-widest opacity-80 leading-relaxed">
+              From the farm to your table.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-sm uppercase tracking-widest mb-6 text-[var(--color-champagne)]">Navigation</h4>
-            <ul className="space-y-3 text-sm">
-              <li><Link href={`/${locale}`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.home}</Link></li>
-              <li><Link href={`/${locale}/our-story`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourStory}</Link></li>
-              <li><Link href={`/${locale}/journey`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.theJourney}</Link></li>
-              <li><Link href={`/${locale}/our-rice`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.ourRice}</Link></li>
-              <li><Link href={`/${locale}/gallery`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.gallery}</Link></li>
-              <li><Link href={`/${locale}/contact`} className="hover:text-[var(--color-champagne)] transition-colors">{dict.navigation.contact}</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm uppercase tracking-widest mb-6 text-[var(--color-champagne)]">Contact</h4>
-            <ul className="space-y-3 text-sm text-[var(--color-ivory)]/80">
-              <li>{brandConfig.contact.phone}</li>
-              <li>{brandConfig.contact.email}</li>
-              <li className="pt-2">{brandConfig.location}</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm uppercase tracking-widest mb-6 text-[var(--color-champagne)]">Language</h4>
-            <div className="flex gap-4 text-sm">
-              <LanguageSwitcher currentLocale={locale} />
+          <div className="flex flex-col sm:flex-row gap-12 lg:gap-24">
+            {/* Navigation */}
+            <div className="flex flex-col gap-6">
+              <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Navigation</h4>
+              <nav className="flex flex-col gap-4 text-sm font-sans tracking-widest uppercase opacity-90">
+                <Link href={`/${locale}/our-story`} className="hover:text-[var(--color-champagne)] transition-colors">Our Story</Link>
+                <Link href={`/${locale}/journey`} className="hover:text-[var(--color-champagne)] transition-colors">The Journey</Link>
+                <Link href={`/${locale}/our-rice`} className="hover:text-[var(--color-champagne)] transition-colors">Our Rice</Link>
+                <Link href={`/${locale}/gallery`} className="hover:text-[var(--color-champagne)] transition-colors">Gallery</Link>
+                <Link href={`/${locale}/contact`} className="hover:text-[var(--color-champagne)] transition-colors">Contact</Link>
+              </nav>
             </div>
+
+            {/* Contact & Packing */}
+            <div className="flex flex-col gap-12">
+              <div className="flex flex-col gap-6">
+                <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Contact</h4>
+                <div className="flex flex-col gap-4 text-sm font-sans tracking-widest uppercase opacity-90">
+                  <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">9370943298</a>
+                  <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">unmeshrisbud345@gmail.com</a>
+                  <span className="leading-relaxed">Pavnanagar<br/>Kale Colony<br/>410406</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-6">
+                <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Packing</h4>
+                <div className="text-sm font-sans tracking-widest uppercase opacity-90">
+                  10 KG · 25 KG
+                </div>
+              </div>
+            </div>
+
+            {/* Final CTA */}
+            <div className="flex flex-col gap-6">
+              <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Order</h4>
+              <Link 
+                href={`/${locale}/contact`}
+                className="bg-[var(--color-champagne)] text-[var(--color-charcoal)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-ivory)] transition-colors inline-block text-center mt-2"
+              >
+                ENQUIRE TO ORDER →
+              </Link>
+            </div>
+
           </div>
         </div>
 
-        <div className="pt-8 border-t border-[var(--color-deep-olive)] flex flex-col md:flex-row justify-between items-center text-xs text-[var(--color-sage)]">
-          <p>© {new Date().getFullYear()} {brandConfig.name}. All rights reserved.</p>
-          <div className="mt-4 md:mt-0 space-x-6">
-            <Link href="#" className="hover:text-[var(--color-ivory)]">Privacy Policy</Link>
-            <Link href="#" className="hover:text-[var(--color-ivory)]">Terms of Service</Link>
-          </div>
+        {/* Bottom */}
+        <div className="pt-8 border-t border-[var(--color-ivory)]/20 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs font-sans uppercase tracking-[0.2em] opacity-80">
+          <p>© {new Date().getFullYear()} PRANSH</p>
+          <LanguageSwitcher currentLocale={locale} />
         </div>
-      </Container>
+        
+      </div>
     </footer>
   );
 }

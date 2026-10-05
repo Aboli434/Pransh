@@ -17,8 +17,8 @@ export const productsData: RiceProduct[] = [
     name: "Indrayani Rice",
     variety: "इंद्रायणी तांदूळ",
     description: "Indrayani Rice is a well-known rice variety associated with Maharashtra, valued for its soft texture and distinct character when cooked. Its compact grain and familiar regional identity make it a popular choice for everyday Maharashtrian meals.",
-    image: images.rice.macro,
-    grainImage: images.rice.grains,
+    image: images.rice.v01_macro,
+    grainImage: images.rice.v03_cleanCloseUp,
     availability: "Available upon enquiry",
   }
 ];

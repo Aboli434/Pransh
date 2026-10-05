@@ -1,21 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest: #19352A;
-  --color-deep-olive: #35452D;
-  --color-sage: #7B8768;
-  --color-ivory: #F7F4ED;
-  --color-warm-beige: #E9E1D2;
-  --color-warm-sand: #DCCCB5;
-  --color-terracotta: #A86143;
-  --color-burnt-clay: #8C4F38;
-  --color-harvest-gold: #C49A55;
-  --color-golden-wheat: #D7B86A;
-  --color-muted-marigold: #C58A3A;
-  --color-earth-brown: #654936;
-  --color-champagne: #B99A5B;
-  --color-charcoal: #20231F;
-  --color-soft-sky: #A9B8B5;
+  --color-forest: #1D3329;
+  --color-ivory: #F6F2E9;
+  --color-terracotta: #A96548;
+  --color-earth-brown: #66503E;
+  --color-champagne: #B89452;
+  --color-charcoal: #24231F;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
@@ -23,17 +14,17 @@
 
 @layer base {
   :root {
-    --background: #F7F4ED; /* Ivory */
-    --foreground: #20231F; /* Charcoal */
+    --background: #F6F2E9; /* Ivory */
+    --foreground: #24231F; /* Charcoal */
     
-    --primary: #19352A; /* Forest */
-    --primary-foreground: #F7F4ED;
+    --primary: #1D3329; /* Forest */
+    --primary-foreground: #F6F2E9;
     
-    --secondary: #35452D; /* Deep Olive */
-    --secondary-foreground: #F7F4ED;
+    --secondary: #66503E; /* Earth Brown */
+    --secondary-foreground: #F6F2E9;
     
-    --accent: #B99A5B; /* Champagne */
-    --accent-foreground: #20231F;
+    --accent: #B89452; /* Champagne / Gold */
+    --accent-foreground: #24231F;
   }
 
 
