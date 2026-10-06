@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Locale } from '@/i18n/config';
-import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer({ locale }: { locale: Locale }) {
   return (
@@ -40,17 +39,12 @@ export default function Footer({ locale }: { locale: Locale }) {
                 <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Contact</h4>
                 <div className="flex flex-col gap-4 text-sm font-sans tracking-widest uppercase opacity-90">
                   <a href="tel:9370943298" className="hover:text-[var(--color-champagne)] transition-colors">9370943298</a>
-                  <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors">unmeshrisbud345@gmail.com</a>
+                  <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[var(--color-champagne)] transition-colors lowercase">unmeshrisbud345@gmail.com</a>
                   <span className="leading-relaxed">Pavnanagar<br/>Kale Colony<br/>410406</span>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-6">
-                <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Packing</h4>
-                <div className="text-sm font-sans tracking-widest uppercase opacity-90">
-                  10 KG · 25 KG
-                </div>
-              </div>
+
             </div>
 
             {/* Final CTA */}
@@ -70,9 +64,8 @@ export default function Footer({ locale }: { locale: Locale }) {
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-[var(--color-ivory)]/20 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs font-sans uppercase tracking-[0.2em] opacity-80">
+        <div className="pt-8 border-t border-[var(--color-ivory)]/20 flex flex-col justify-center items-center gap-6 text-xs font-sans uppercase tracking-[0.2em] opacity-80">
           <p>© {new Date().getFullYear()} PRANSH</p>
-          <LanguageSwitcher currentLocale={locale} />
         </div>
         
       </div>

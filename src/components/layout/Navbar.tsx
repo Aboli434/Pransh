@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Locale } from '@/i18n/config';
-import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,7 +42,6 @@ export default function Navbar({ locale }: { locale: Locale }) {
           </nav>
           
           <div className="flex items-center gap-8">
-            <LanguageSwitcher currentLocale={locale} />
             <a 
               href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
               target="_blank"
@@ -145,12 +143,6 @@ export default function Navbar({ locale }: { locale: Locale }) {
                 </a>
               </motion.div>
             </div>
-
-            {/* Menu Footer */}
-            <div className="p-6 md:p-12 border-t border-[var(--color-forest)]/10 flex justify-center">
-              <LanguageSwitcher currentLocale={locale} />
-            </div>
-            
           </motion.div>
         )}
       </AnimatePresence>
