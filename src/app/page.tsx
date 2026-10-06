@@ -1,7 +1,7 @@
 import { Locale } from "@/i18n/config";
 
 import Hero from "@/components/home/Hero";
-import FarmerStory from "@/components/home/FarmerStory";
+import Introduction from "@/components/home/Introduction";
 import RiceJourney from "@/components/home/RiceJourney";
 import RiceProduct from "@/components/home/RiceProduct";
 import FarmGallery from "@/components/home/FarmGallery";
@@ -13,11 +13,12 @@ export default function HomePage() {
   return (
     <>
       <Hero locale={typedLocale} />
-      <FarmerStory locale={typedLocale} />
-      <RiceJourney locale={typedLocale} />
+      <Introduction />
       <RiceProduct locale={typedLocale} />
+      <RiceJourney locale={typedLocale} />
       <FarmGallery locale={typedLocale} />
       <EnquiryCTA locale={typedLocale} />
+
     </>
   );
 }
