@@ -13,10 +13,10 @@ export default function Navbar({ locale }: { locale: Locale }) {
   }, [menuOpen]);
 
   const navLinks = [
-    { id: 'story', num: '01', name: 'OUR STORY', href: `/${locale}/our-story` },
-    { id: 'journey', num: '02', name: 'THE JOURNEY', href: `/${locale}/journey` },
-    { id: 'rice', num: '03', name: 'OUR RICE', href: `/${locale}/our-rice` },
-    { id: 'gallery', num: '04', name: 'GALLERY', href: `/${locale}/gallery` },
+    { id: 'story', num: '01', name: 'OUR STORY', href: `/our-story` },
+    { id: 'journey', num: '02', name: 'THE JOURNEY', href: `/journey` },
+    { id: 'rice', num: '03', name: 'OUR RICE', href: `/our-rice` },
+    { id: 'gallery', num: '04', name: 'GALLERY', href: `/gallery` },
   ];
 
   return (
@@ -25,7 +25,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
       <header className="absolute top-0 left-0 w-full z-50 p-6 md:p-12 flex justify-between items-center pointer-events-none mix-blend-difference text-[var(--color-ivory)]">
         
         {/* Left: Logo */}
-        <Link href={`/${locale}`} className="pointer-events-auto">
+        <Link href="/" className="pointer-events-auto">
           <span className="font-serif tracking-[0.2em] uppercase text-xl md:text-2xl font-medium">
             PRANSH
           </span>
