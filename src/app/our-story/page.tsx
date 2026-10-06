@@ -33,22 +33,9 @@ export default async function OurStoryPage({ params }: { params: Promise<{ local
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-            <div className="md:col-span-5 relative aspect-[3/4]">
-              <Image 
-                src={farmerData.portrait}
-                alt={farmerData.name}
-                fill
-                className="object-cover shadow-xl"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-            </div>
-            <div className="md:col-span-7 prose prose-lg text-[var(--color-charcoal)]/80">
-              <h2 className="text-3xl font-serif text-[var(--primary)] mb-4">{farmerData.name}</h2>
-              <p className="text-sm text-[var(--color-champagne)] tracking-widest uppercase mb-8">{farmerData.location}</p>
-              <p>{dict.farmer.storyPlaceholder}</p>
-              <p>This is where the real story of PRANSH will be written, explaining the authentic connection between the farmer, the land, and the Indrayani Rice cultivated here.</p>
-            </div>
+          <div className="prose prose-lg max-w-none text-[var(--color-charcoal)]/80 text-center mx-auto max-w-3xl">
+            <p className="mb-6">PRANSH represents a direct link between the fertile soils of Maval and your dining table. Our commitment to authentic agricultural practices ensures that every grain of Indrayani rice carries the true essence of its origin.</p>
+            <p>Our journey is rooted in respect for the land, honoring traditional methods while delivering premium quality directly from the source.</p>
           </div>
         </div>
       </Container>

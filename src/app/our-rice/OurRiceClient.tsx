@@ -122,7 +122,7 @@ export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<s
             {t.title}
           </h3>
           <Link 
-            href={`/${locale}/journey`}
+            href="/journey"
             className="inline-block border-b border-[#2b2723] text-[#2b2723] pb-1 text-sm font-sans uppercase tracking-[0.2em] hover:text-[#8a7d6d] hover:border-[#8a7d6d] transition-colors"
           >
             {t.exploreJourney}
@@ -131,49 +131,49 @@ export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<s
       </section>
 
       {/* 04 AVAILABLE PACKING & 05 PRODUCT INFORMATION */}
-      <section className="py-24 bg-[#2b2723] text-[#f2ede4]">
+      <section className="py-24 bg-[#f2ede4] text-[#2b2723] border-t border-[#8a7d6d]/20">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-24">
           
           <div className="w-full lg:w-1/2">
-            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#a89f91] mb-12 font-semibold">
+            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-12 font-semibold">
               {t.availablePacking}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-8">
-              <div className="flex-1 border border-[#f2ede4]/20 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#f2ede4]/5 transition-colors">
+              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors">
                 <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing10kg}</span>
-                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#a89f91]">{t.availablePacking}</span>
+                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#8a7d6d]">{t.availablePacking}</span>
               </div>
-              <div className="flex-1 border border-[#f2ede4]/20 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#f2ede4]/5 transition-colors">
+              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors">
                 <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing25kg}</span>
-                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#a89f91]">{t.availablePacking}</span>
+                <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#8a7d6d]">{t.availablePacking}</span>
               </div>
             </div>
           </div>
 
           <div className="w-full lg:w-1/2">
-            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#a89f91] mb-12 font-semibold">
+            <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-12 font-semibold">
               {t.productInfo}
             </div>
-            <div className="border-t border-[#f2ede4]/20 flex flex-col">
+            <div className="border-t border-[#8a7d6d]/30 flex flex-col">
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
-                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.varietyLabel}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#8a7d6d]/30">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#8a7d6d] mb-2 sm:mb-0">{t.varietyLabel}</span>
                 <span className="text-xl font-serif tracking-wide">{t.varietyValue}</span>
               </div>
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
-                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.regionLabel}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#8a7d6d]/30">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#8a7d6d] mb-2 sm:mb-0">{t.regionLabel}</span>
                 <span className="text-xl font-serif tracking-wide">{t.regionValue}</span>
               </div>
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
-                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.packingLabel}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#8a7d6d]/30">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#8a7d6d] mb-2 sm:mb-0">{t.packingLabel}</span>
                 <span className="text-xl font-serif tracking-wide">{t.packingValue}</span>
               </div>
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#f2ede4]/20">
-                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#a89f91] mb-2 sm:mb-0">{t.orderingLabel}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-[#8a7d6d]/30">
+                <span className="text-sm font-sans uppercase tracking-[0.2em] text-[#8a7d6d] mb-2 sm:mb-0">{t.orderingLabel}</span>
                 <span className="text-xl font-serif tracking-wide">{t.orderingValue}</span>
               </div>
 
@@ -205,7 +205,7 @@ export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<s
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm font-sans uppercase tracking-[0.2em] text-[#6b6255]">
             <a href="tel:9370943298" className="hover:text-[#2b2723] transition-colors">9370943298</a>
             <span className="hidden sm:inline">·</span>
-            <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[#2b2723] transition-colors">unmeshrisbud345@gmail.com</a>
+            <a href="mailto:unmeshrisbud345@gmail.com" className="hover:text-[#2b2723] transition-colors lowercase">unmeshrisbud345@gmail.com</a>
           </div>
         </div>
       </section>

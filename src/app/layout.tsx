@@ -1,3 +1,6 @@
+import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
@@ -44,7 +47,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${cormorant.variable} ${inter.variable} font-sans`}>
-        {children}
+        <SmoothScrollProvider>
+          <Navbar locale="en" />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer locale="en" />
+        </SmoothScrollProvider>
       </body>
     </html>
   );
