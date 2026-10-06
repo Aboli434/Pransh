@@ -40,7 +40,7 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
             </div>
             
             <p className="text-xl text-[var(--color-charcoal)]/70 font-light max-w-md mb-12 leading-relaxed">
-              Cultivated in the rich soils of Pavnanagar, this premium indigenous variety carries the exact fragrance and texture of authentic traditional farming.
+              Indrayani Rice from Pavnanagar, Maval.
             </p>
             
             <Link 

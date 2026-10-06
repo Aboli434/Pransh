@@ -57,8 +57,12 @@ export default function Hero({ locale }: { locale: Locale }) {
           className="absolute inset-0 w-full h-full flex flex-col justify-center p-6 md:p-16 md:pl-24 z-10 pointer-events-none text-[#f2ede4]"
         >
           <div className="max-w-lg md:max-w-xl">
-            <div className="text-xs font-sans tracking-[0.3em] uppercase text-[#f2ede4]/80 font-semibold mb-6">
-              INDRAYANI RICE
+            <div className="text-xs font-sans tracking-[0.3em] uppercase text-[#f2ede4]/80 font-semibold mb-2">
+              PRANSH
+            </div>
+            <div className="text-sm font-sans tracking-[0.3em] uppercase text-[#f2ede4] font-semibold mb-6 flex flex-col gap-1">
+              <span>INDRAYANI RICE</span>
+              <span className="text-xs text-[#f2ede4]/80">MAVAL · PAVNANAGAR</span>
             </div>
             
             {/* Elegant, moderately sized typography to leave negative space for the 3D scene */}
@@ -66,26 +70,34 @@ export default function Hero({ locale }: { locale: Locale }) {
               className="text-5xl md:text-7xl lg:text-8xl leading-[1.0] font-serif tracking-tight mb-8 text-white drop-shadow-lg"
               style={{ fontFamily: 'var(--font-cormorant), serif' }}
             >
-              From Our Fields<br/>To Your Table.
+              From the farm<br/>to your table.
             </h1>
             
-
+            <div className="text-sm font-sans uppercase tracking-[0.2em] font-medium text-white mb-8 flex flex-col gap-2">
+              <span>10 KG — ₹600</span>
+              <span>25 KG — ₹1,500</span>
+            </div>
             
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
               <a 
-                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#f2ede4] text-[#2b2723] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-white hover:scale-[1.02] transition-all"
+                className="bg-[#f2ede4] text-[#2b2723] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-white hover:scale-[1.02] transition-all text-center"
               >
-                ENQUIRE TO ORDER
+                ORDER ON WHATSAPP
               </a>
-              <Link 
-                href="/journey"
-                className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-[#f2ede4]/50 pb-1 hover:text-white hover:border-white transition-colors font-semibold"
-              >
-                EXPLORE THE JOURNEY
-              </Link>
+              <div className="flex flex-col items-start gap-2">
+                <a href="tel:9370943298" className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-transparent hover:border-[#f2ede4] transition-colors font-semibold">
+                  9370943298
+                </a>
+                <Link 
+                  href="/journey"
+                  className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-[#f2ede4]/50 pb-1 hover:text-white hover:border-white transition-colors font-semibold"
+                >
+                  EXPLORE THE JOURNEY
+                </Link>
+              </div>
             </div>
           </div>
         </motion.div>

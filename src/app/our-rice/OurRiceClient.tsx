@@ -11,25 +11,27 @@ export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<s
     eyebrow: "OUR RICE",
     title: "INDRAYANI RICE",
     subtitle: "इंद्रायणी तांदूळ",
-    description: "Indrayani Rice is a rice variety associated with Maharashtra, known for its soft texture and familiar regional character.",
+    description: "Indrayani Rice from Pavnanagar, Maval.",
     visualStory: "From the fields to the final grain, the story continues in every handful.",
     fromJourney: "FROM THE JOURNEY",
     exploreJourney: "EXPLORE THE JOURNEY →",
     availablePacking: "AVAILABLE PACKING",
     packing10kg: "10 KG",
+    price10kg: "₹600",
     packing25kg: "25 KG",
+    price25kg: "₹1,500",
     productInfo: "PRODUCT INFORMATION",
     varietyLabel: "Variety",
     varietyValue: "Indrayani",
     regionLabel: "Region",
-    regionValue: "Maharashtra",
+    regionValue: "Pavnanagar, Maval",
     packingLabel: "Packing",
     packingValue: "10 KG / 25 KG",
     orderingLabel: "Ordering",
     orderingValue: "Enquiry based",
     enquireHeading: "LOOKING FOR INDRAYANI RICE?",
     enquireDesc: "Tell us what you need and get in touch directly.",
-    enquireBtn: "ENQUIRE TO ORDER"
+    enquireBtn: "ORDER ON WHATSAPP"
   };
 
   const params = useParams();
@@ -140,12 +142,14 @@ export default function OurRiceClient({ dict }: { dict: { ourRicePage?: Record<s
             </div>
             
             <div className="flex flex-col sm:flex-row gap-8">
-              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors">
-                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing10kg}</span>
+              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors text-center">
+                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-2">{t.packing10kg}</span>
+                <span className="text-2xl font-serif tracking-wide text-[#4a433c] mb-6">{t.price10kg}</span>
                 <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#8a7d6d]">{t.availablePacking}</span>
               </div>
-              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors">
-                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-4">{t.packing25kg}</span>
+              <div className="flex-1 border border-[#8a7d6d]/30 p-12 flex flex-col items-center justify-center min-h-[250px] hover:bg-[#e6dfd3] transition-colors text-center">
+                <span className="text-5xl md:text-6xl font-serif tracking-tighter mb-2">{t.packing25kg}</span>
+                <span className="text-2xl font-serif tracking-wide text-[#4a433c] mb-6">{t.price25kg}</span>
                 <span className="text-xs font-sans uppercase tracking-[0.2em] text-[#8a7d6d]">{t.availablePacking}</span>
               </div>
             </div>

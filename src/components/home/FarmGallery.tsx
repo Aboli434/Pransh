@@ -19,7 +19,7 @@ export default function FarmGallery({ locale }: { locale: Locale }) {
         
         <div className="text-center mb-24">
           <h2 className="text-5xl md:text-7xl font-serif text-[var(--color-charcoal)] tracking-tight mb-8">
-            Visual Proof.
+            From Pavnanagar.
           </h2>
           <Link 
             href="/gallery"

@@ -42,8 +42,8 @@ export default function RiceJourney({ locale }: { locale: Locale }) {
         {/* Visual Sequence */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 h-auto lg:h-[500px]">
           {previewStages.map((stage, idx) => {
-            const stepNum = idx === 0 ? "01" : idx === 1 ? "03" : idx === 2 ? "04" : "08";
-            const shortTitle = idx === 0 ? "SEED" : idx === 1 ? "FIELD" : idx === 2 ? "HARVEST" : "RICE";
+            const stepNum = idx === 0 ? "01" : idx === 1 ? "02" : idx === 2 ? "03" : "04";
+            const shortTitle = idx === 0 ? "SOW" : idx === 1 ? "GROW" : idx === 2 ? "HARVEST" : "RICE";
 
             return (
               <div key={stage.id} className="relative w-full h-[400px] lg:h-full overflow-hidden group border border-[var(--color-ivory)]/10">
