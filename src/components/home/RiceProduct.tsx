@@ -28,34 +28,40 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
           {/* Typographic Split */}
           <motion.div 
             style={{ y: textY }}
-            className="w-full lg:w-1/2 flex flex-col justify-center order-2 lg:order-1 pt-16 lg:pt-0 lg:pr-12"
+            className="w-full lg:w-[40%] flex flex-col justify-center order-2 lg:order-1 pt-16 lg:pt-0 lg:pr-16"
           >
-            <div className="mb-8">
-              <span className="text-xs uppercase tracking-[0.4em] font-medium text-[var(--color-charcoal)]/50 block mb-2">
-                The Result
+            <div className="mb-12">
+              <span className="text-[10px] font-sans uppercase tracking-[0.4em] font-semibold text-[var(--color-charcoal)]/50 block mb-6">
+                THE GRAIN
               </span>
-              <h2 className="text-6xl md:text-8xl lg:text-[100px] font-serif text-[var(--color-charcoal)] leading-none tracking-tighter">
-                Indrayani<span className="text-[var(--color-champagne)]">.</span>
+              <h2 className="text-6xl md:text-8xl lg:text-[110px] font-serif text-[var(--color-charcoal)] leading-[0.9] tracking-tighter">
+                INDRAYANI<br/>RICE
               </h2>
             </div>
             
-            <p className="text-xl text-[var(--color-charcoal)]/70 font-light max-w-md mb-12 leading-relaxed">
-              Indrayani Rice from Pavnanagar, Maval.
-            </p>
+            <div className="flex flex-col gap-4 text-sm md:text-base font-sans uppercase tracking-[0.2em] text-[var(--color-charcoal)]/90 mb-16 font-medium">
+              <div className="flex justify-between items-center max-w-[200px] border-b border-[var(--color-charcoal)]/10 pb-4">
+                <span>10 KG</span>
+                <span>₹600</span>
+              </div>
+              <div className="flex justify-between items-center max-w-[200px] border-b border-[var(--color-charcoal)]/10 pb-4">
+                <span>25 KG</span>
+                <span>₹1,500</span>
+              </div>
+            </div>
             
-            <Link 
-              href="/our-rice"
-              className="group inline-flex items-center gap-6"
+            <a 
+              href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-8 py-4 text-[10px] font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-charcoal)] hover:text-[var(--color-ivory)] transition-colors text-center self-start"
             >
-              <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-charcoal)] group-hover:text-[var(--color-champagne)] transition-colors font-medium">
-                See the Rice
-              </span>
-              <span className="w-12 h-px bg-[var(--color-charcoal)]/30 group-hover:bg-[var(--color-champagne)] group-hover:w-24 transition-all duration-500 ease-out" />
-            </Link>
+              ORDER TO ENQUIRE
+            </a>
           </motion.div>
 
           {/* Macro Image Split */}
-          <div className="w-full lg:w-1/2 h-[60vh] lg:h-[90vh] relative order-1 lg:order-2 overflow-hidden bg-[var(--color-charcoal)]">
+          <div className="w-full lg:w-[60%] h-[60vh] lg:h-[90vh] relative order-1 lg:order-2 overflow-hidden bg-[var(--color-charcoal)]">
             <motion.div style={{ y: imageY }} className="absolute inset-[-10%] w-[120%] h-[120%]">
               <Image 
                 src={product.image}

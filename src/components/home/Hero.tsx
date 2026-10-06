@@ -51,52 +51,61 @@ export default function Hero({ locale }: { locale: Locale }) {
           className="absolute inset-0 bg-gradient-to-r from-[#1a1714]/80 via-[#1a1714]/30 to-transparent z-[5] pointer-events-none" 
         />
         
-        {/* HTML Typographic Layer - Minimal and Elegant */}
+        {/* HTML Typographic Layer - Premium Editorial */}
         <motion.div 
           style={{ opacity, y }}
           className="absolute inset-0 w-full h-full flex flex-col justify-center p-6 md:p-16 md:pl-24 z-10 pointer-events-none text-[#f2ede4]"
         >
-          <div className="max-w-lg md:max-w-xl">
-            <div className="text-xs font-sans tracking-[0.3em] uppercase text-[#f2ede4]/80 font-semibold mb-2">
+          {/* PRANSH Brand Mark - Top Left or Absolute */}
+          <div className="absolute top-8 left-6 md:top-12 md:left-12 lg:left-24">
+            <span className="text-xs font-sans tracking-[0.4em] uppercase text-white font-bold opacity-80">
               PRANSH
-            </div>
-            <div className="text-sm font-sans tracking-[0.3em] uppercase text-[#f2ede4] font-semibold mb-6 flex flex-col gap-1">
-              <span>INDRAYANI RICE</span>
-              <span className="text-xs text-[#f2ede4]/80">MAVAL · PAVNANAGAR</span>
+            </span>
+          </div>
+
+          <div className="max-w-xl md:max-w-2xl mt-16 md:mt-0">
+            {/* Small eyebrow */}
+            <div className="text-[10px] md:text-xs font-sans tracking-[0.4em] uppercase text-[#f2ede4]/80 font-medium mb-6">
+              MAVAL · PAVNANAGAR
             </div>
             
-            {/* Elegant, moderately sized typography to leave negative space for the 3D scene */}
+            {/* Large serif */}
             <h1 
-              className="text-5xl md:text-7xl lg:text-8xl leading-[1.0] font-serif tracking-tight mb-8 text-white drop-shadow-lg"
+              className="text-6xl md:text-8xl lg:text-[110px] leading-[0.9] font-serif tracking-tighter mb-8 text-white drop-shadow-lg"
               style={{ fontFamily: 'var(--font-cormorant), serif' }}
             >
-              From the farm<br/>to your table.
+              INDRAYANI<br/>RICE
             </h1>
             
-            <div className="text-sm font-sans uppercase tracking-[0.2em] font-medium text-white mb-8 flex flex-col gap-2">
+            {/* Small supporting line */}
+            <div className="text-sm md:text-base font-serif italic text-[#f2ede4]/90 mb-12 max-w-sm">
+              From the farm to your table.
+            </div>
+            
+            {/* Refined price line */}
+            <div className="text-[11px] md:text-xs font-sans uppercase tracking-[0.3em] font-medium text-white/90 mb-10 flex items-center gap-4">
               <span>10 KG — ₹600</span>
+              <span className="opacity-50">·</span>
               <span>25 KG — ₹1,500</span>
             </div>
             
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
+            {/* CTAs */}
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 pointer-events-auto">
               <a 
                 href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#f2ede4] text-[#2b2723] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-white hover:scale-[1.02] transition-all text-center"
+                className="bg-[#f2ede4] text-[#1a1714] px-8 py-4 text-[10px] md:text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-white hover:scale-[1.02] transition-all text-center min-w-[220px]"
               >
                 ORDER ON WHATSAPP
               </a>
-              <div className="flex flex-col items-start gap-2">
-                <a href="tel:9370943298" className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-transparent hover:border-[#f2ede4] transition-colors font-semibold">
+              <div className="flex flex-col gap-2">
+                <a 
+                  href="tel:9370943298" 
+                  className="text-[10px] md:text-xs font-sans uppercase tracking-[0.3em] text-[#f2ede4]/80 hover:text-white transition-colors"
+                >
                   9370943298
                 </a>
-                <Link 
-                  href="/journey"
-                  className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-[#f2ede4]/50 pb-1 hover:text-white hover:border-white transition-colors font-semibold"
-                >
-                  EXPLORE THE JOURNEY
-                </Link>
               </div>
             </div>
           </div>

@@ -40,26 +40,34 @@ export default function RiceJourney({ locale }: { locale: Locale }) {
         </div>
 
         {/* Visual Sequence */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 h-auto lg:h-[500px]">
+        <div className="flex flex-col lg:flex-row items-stretch justify-between gap-12 lg:gap-8 mt-12">
           {previewStages.map((stage, idx) => {
             const stepNum = idx === 0 ? "01" : idx === 1 ? "02" : idx === 2 ? "03" : "04";
             const shortTitle = idx === 0 ? "SOW" : idx === 1 ? "GROW" : idx === 2 ? "HARVEST" : "RICE";
 
             return (
-              <div key={stage.id} className="relative w-full h-[400px] lg:h-full overflow-hidden group border border-[var(--color-ivory)]/10">
-                <Image 
-                  src={stage.image}
-                  alt={stage.title}
-                  fill
-                  className="object-cover transition-transform duration-[2s] group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-                <div className="absolute bottom-6 left-6 z-10">
-                  <span className="block text-xs font-sans uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)] mb-2">
+              <div key={stage.id} className="flex-1 flex flex-col group">
+                <div className="relative w-full aspect-[3/4] overflow-hidden mb-6">
+                  <Image 
+                    src={stage.image}
+                    alt={stage.title}
+                    fill
+                    className="object-cover transition-transform duration-[2s] group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  {/* Remove the dark gradient overlay since the text is now below */}
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <span className="text-3xl font-serif italic text-[var(--color-ivory)]/30 leading-none">
                     {stepNum}
                   </span>
-                  <span className="block font-serif text-3xl tracking-wide">{shortTitle}</span>
+                  <div>
+                    <h3 className="font-serif text-3xl tracking-wide mb-2 text-[var(--color-ivory)]">{shortTitle}</h3>
+                    <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[var(--color-ivory)]/60 font-medium max-w-[200px]">
+                      {stage.desc.split('.')[0]}.
+                    </p>
+                  </div>
                 </div>
               </div>
             );

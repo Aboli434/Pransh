@@ -42,18 +42,11 @@ export default function FarmerStory({ locale }: { locale: Locale }) {
     <section id="story" className="w-full bg-[var(--color-ivory)] pb-24 md:pb-48 overflow-hidden">
       <div className="w-full px-4 md:px-12 mx-auto max-w-[1800px]">
         
-        {/* Header Question */}
-        <div className="mb-12">
-          <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">
-            WHO IS BEHIND PRANSH?
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row h-auto lg:h-[75vh]">
+        <div className="flex flex-col lg:flex-row h-auto lg:min-h-[80vh] items-stretch border-t border-[var(--color-charcoal)]/10 pt-16">
           
           {/* LEFT: large real farmer photograph */}
-          <div className="w-full lg:w-[60%] h-[60vh] lg:h-full relative [perspective:2000px] flex items-center justify-start p-4 lg:p-0 lg:pr-12">
-            <Link href="/our-story" className="w-full h-full block cursor-none group">
+          <div className="w-full lg:w-1/2 relative min-h-[60vh] lg:min-h-[80vh] overflow-hidden group">
+            <Link href="/our-story" className="w-full h-full block cursor-none">
               <motion.div 
                 ref={containerRef}
                 className="w-full h-full relative"
@@ -69,63 +62,65 @@ export default function FarmerStory({ locale }: { locale: Locale }) {
                   transformStyle: "preserve-3d"
                 }}
                 animate={{
-                  scale: isHovered && !prefersReducedMotion ? 1.02 : 1,
+                  scale: isHovered && !prefersReducedMotion ? 1.03 : 1,
                 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
               >
-                <div 
-                  className="absolute inset-0 bg-[var(--color-charcoal)] opacity-20 blur-2xl transform-gpu transition-transform duration-500"
-                  style={{ transform: "translateZ(-50px) scale(0.95)" }}
-                />
+                <motion.div 
+                  className="absolute inset-[-5%] w-[110%] h-[110%]"
+                  style={{ x: imageX, y: imageY }}
+                >
+                  <Image
+                    src={farmerData.portrait}
+                    alt={farmerData.name}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover object-[center_30%]"
+                  />
+                </motion.div>
                 
-                <div className="absolute inset-0 bg-white border border-[var(--color-charcoal)]/10 shadow-xl overflow-hidden pointer-events-none z-10">
-                  <motion.div 
-                    className="absolute inset-[-5%] w-[110%] h-[110%]"
-                    style={{ x: imageX, y: imageY }}
-                  >
-                    <Image
-                      src={farmerData.portrait}
-                      alt={farmerData.name}
-                      fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                      className="object-cover object-[center_30%]"
-                    />
-                  </motion.div>
-                  
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 mix-blend-overlay" />
-                  
-                  <motion.div 
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--color-charcoal)] text-[var(--color-ivory)] px-6 py-3 rounded-full text-xs uppercase tracking-widest pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ transform: "translateZ(100px) translateX(-50%) translateY(-50%)" }}
-                  >
-                    MEET THE FARMER
-                  </motion.div>
-                </div>
+                {/* Subtle overlay for text contrast if needed */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent mix-blend-multiply opacity-50" />
+                
+                <motion.div 
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--color-ivory)] text-[var(--color-charcoal)] px-8 py-4 rounded-full text-xs font-sans uppercase tracking-[0.3em] font-medium pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-xl"
+                  style={{ transform: "translateZ(50px) translateX(-50%) translateY(-50%)" }}
+                >
+                  MEET THE FARMER
+                </motion.div>
               </motion.div>
             </Link>
           </div>
 
           {/* RIGHT: THE FARMER BEHIND PRANSH */}
-          <div className="w-full lg:w-[40%] h-full flex flex-col justify-center pt-12 lg:pt-0">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-charcoal)] leading-[1.1] mb-12">
-              THE FARMER<br/>BEHIND PRANSH
-            </h2>
-            
-            <p className="text-lg md:text-xl font-light leading-relaxed opacity-80 mb-12 max-w-md">
-              Before the rice reaches the plate, it lives in the hands of the farmer. PRANSH represents a direct link to the source.
-            </p>
-
-            <div className="flex flex-col gap-2 mb-12 text-sm uppercase tracking-widest text-[var(--color-charcoal)]/80 font-medium">
-              <span>PAVNANAGAR</span>
-              <span>KALE COLONY</span>
-              <span>410406</span>
+          <div className="w-full lg:w-1/2 flex flex-col justify-between py-12 lg:py-8 lg:pl-24">
+            <div>
+              <div className="flex flex-col gap-2 mb-16">
+                <span className="text-sm font-serif italic text-[var(--color-charcoal)]/60">01</span>
+                <span className="text-[10px] uppercase tracking-[0.4em] font-sans font-semibold text-[var(--color-charcoal)]/60">
+                  WHO IS BEHIND PRANSH?
+                </span>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-[var(--color-charcoal)] leading-[1.0] tracking-tighter mb-12">
+                &ldquo;From a field in Maval,<br/>
+                to a grain on your table.&rdquo;
+              </h2>
+              
+              <p className="text-base md:text-lg font-sans font-light leading-relaxed text-[var(--color-charcoal)]/80 max-w-sm mb-16">
+                Before the rice reaches the plate, it lives in the hands of the farmer. PRANSH represents a direct link to the source, bringing you pure Indrayani rice from local fields.
+              </p>
             </div>
 
-            <div>
+            <div className="pt-12 border-t border-[var(--color-charcoal)]/10 flex flex-col items-start gap-8">
+              <div className="flex flex-col gap-1 text-[10px] font-sans uppercase tracking-[0.4em] text-[var(--color-charcoal)]/70 font-medium">
+                <span>PAVNANAGAR · MAVAL</span>
+              </div>
+
               <Link 
                 href="/our-story"
-                className="inline-block text-xs uppercase tracking-[0.2em] text-[var(--color-charcoal)] border-b border-[var(--color-charcoal)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
+                className="inline-block text-[10px] font-sans uppercase tracking-[0.3em] font-bold text-[var(--color-charcoal)] border-b border-[var(--color-charcoal)]/30 pb-1 hover:border-[var(--color-charcoal)] transition-colors"
               >
                 MEET THE FARMER
               </Link>
