@@ -17,7 +17,7 @@ export default function EnquiryCTA({ locale }: { locale: Locale }) {
 
         <div className="flex flex-col items-center gap-12 mt-16">
           <Link 
-            href={`/${locale}/contact`}
+            href="/contact"
             className="bg-[var(--color-forest)] text-[var(--color-ivory)] px-12 py-5 text-sm font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-ivory)] hover:text-[var(--color-forest)] transition-colors inline-block"
           >
             ENQUIRE TO ORDER

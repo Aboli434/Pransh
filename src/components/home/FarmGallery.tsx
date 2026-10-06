@@ -22,7 +22,7 @@ export default function FarmGallery({ locale }: { locale: Locale }) {
             Visual Proof.
           </h2>
           <Link 
-            href={`/${locale}/gallery`}
+            href="/gallery"
             className="group inline-flex flex-col items-center gap-2"
           >
             <span className="text-xs uppercase tracking-[0.2em] text-[var(--color-charcoal)] border-b border-[var(--color-charcoal)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors">

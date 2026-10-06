@@ -53,7 +53,7 @@ export default function FarmerStory({ locale }: { locale: Locale }) {
           
           {/* LEFT: large real farmer photograph */}
           <div className="w-full lg:w-[60%] h-[60vh] lg:h-full relative [perspective:2000px] flex items-center justify-start p-4 lg:p-0 lg:pr-12">
-            <Link href={`/${locale}/our-story`} className="w-full h-full block cursor-none group">
+            <Link href="/our-story" className="w-full h-full block cursor-none group">
               <motion.div 
                 ref={containerRef}
                 className="w-full h-full relative"
@@ -124,7 +124,7 @@ export default function FarmerStory({ locale }: { locale: Locale }) {
 
             <div>
               <Link 
-                href={`/${locale}/our-story`}
+                href="/our-story"
                 className="inline-block text-xs uppercase tracking-[0.2em] text-[var(--color-charcoal)] border-b border-[var(--color-charcoal)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
               >
                 MEET THE FARMER

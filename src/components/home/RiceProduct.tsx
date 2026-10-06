@@ -44,7 +44,7 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
             </p>
             
             <Link 
-              href={`/${locale}/our-rice`}
+              href="/our-rice"
               className="group inline-flex items-center gap-6"
             >
               <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-charcoal)] group-hover:text-[var(--color-champagne)] transition-colors font-medium">

@@ -31,7 +31,7 @@ export default function RiceJourney({ locale }: { locale: Locale }) {
               8 STAGES
             </span>
             <Link 
-              href={`/${locale}/journey`}
+              href="/journey"
               className="inline-block text-xs uppercase tracking-[0.2em] border-b border-[var(--color-ivory)] pb-1 hover:text-[var(--color-champagne)] hover:border-[var(--color-champagne)] transition-colors"
             >
               EXPLORE THE FULL JOURNEY →

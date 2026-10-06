@@ -63,7 +63,7 @@ export default function DirectFromFarm({ locale }: { locale: Locale }) {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 items-start">
-                <Link href={`/${locale}/contact`} className="w-full sm:w-auto">
+                <Link href="/contact" className="w-full sm:w-auto">
                   <Button variant="outline" className="w-full bg-transparent border-[var(--color-ivory)] text-[var(--color-ivory)] hover:bg-[var(--color-ivory)] hover:text-[var(--color-terracotta)]">
                     {dict.directFromFarm.primaryCta}
                   </Button>

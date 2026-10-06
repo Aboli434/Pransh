@@ -26,10 +26,10 @@ export default function Footer({ locale }: { locale: Locale }) {
             <div className="flex flex-col gap-6">
               <h4 className="text-xs uppercase tracking-[0.3em] font-semibold text-[var(--color-champagne)]">Navigation</h4>
               <nav className="flex flex-col gap-4 text-sm font-sans tracking-widest uppercase opacity-90">
-                <Link href={`/${locale}/our-story`} className="hover:text-[var(--color-champagne)] transition-colors">Our Story</Link>
-                <Link href={`/${locale}/journey`} className="hover:text-[var(--color-champagne)] transition-colors">The Journey</Link>
-                <Link href={`/${locale}/our-rice`} className="hover:text-[var(--color-champagne)] transition-colors">Our Rice</Link>
-                <Link href={`/${locale}/gallery`} className="hover:text-[var(--color-champagne)] transition-colors">Gallery</Link>
+                <Link href="/our-story" className="hover:text-[var(--color-champagne)] transition-colors">Our Story</Link>
+                <Link href="/journey" className="hover:text-[var(--color-champagne)] transition-colors">The Journey</Link>
+                <Link href="/our-rice" className="hover:text-[var(--color-champagne)] transition-colors">Our Rice</Link>
+                <Link href="/gallery" className="hover:text-[var(--color-champagne)] transition-colors">Gallery</Link>
               </nav>
             </div>
 

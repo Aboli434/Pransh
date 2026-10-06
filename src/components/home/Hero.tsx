@@ -45,44 +45,44 @@ export default function Hero({ locale }: { locale: Locale }) {
         {/* Real WebGL 3D Layer - Cinematic Rice Field */}
         {mounted && <PranshHeroScene scrollProgress={scrollRef} />}
         
-        {/* Very subtle readability gradient (removed heavy overlays) */}
+        {/* Stronger readability gradient to make white text pop */}
         <motion.div 
           style={{ opacity }}
-          className="absolute inset-0 bg-gradient-to-r from-[#3a352f]/40 to-transparent z-[5] pointer-events-none" 
+          className="absolute inset-0 bg-gradient-to-r from-[#1a1714]/80 via-[#1a1714]/30 to-transparent z-[5] pointer-events-none" 
         />
         
         {/* HTML Typographic Layer - Minimal and Elegant */}
         <motion.div 
           style={{ opacity, y }}
-          className="absolute inset-0 w-full h-full flex flex-col justify-center p-6 md:p-16 md:pl-24 z-10 pointer-events-none text-[#3a352f]"
+          className="absolute inset-0 w-full h-full flex flex-col justify-center p-6 md:p-16 md:pl-24 z-10 pointer-events-none text-[#f2ede4]"
         >
           <div className="max-w-lg md:max-w-xl">
-            <div className="text-xs font-sans tracking-[0.3em] uppercase text-[#6b6255] font-semibold mb-6">
+            <div className="text-xs font-sans tracking-[0.3em] uppercase text-[#f2ede4]/80 font-semibold mb-6">
               INDRAYANI RICE
             </div>
             
             {/* Elegant, moderately sized typography to leave negative space for the 3D scene */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[1.0] font-serif tracking-tight mb-8 text-[#2b2723]">
+            <h1 
+              className="text-5xl md:text-7xl lg:text-8xl leading-[1.0] font-serif tracking-tight mb-8 text-white drop-shadow-lg"
+              style={{ fontFamily: 'var(--font-cormorant), serif' }}
+            >
               From Our Fields<br/>To Your Table.
             </h1>
             
-            <p className="text-sm md:text-base font-sans font-normal opacity-90 leading-relaxed mb-10 text-[#4a433c]">
-              Indrayani Rice<br/>
-              10 KG · 25 KG
-            </p>
+
             
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
               <a 
                 href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#2b2723] text-[#f2ede4] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[#4a433c] transition-colors"
+                className="bg-[#f2ede4] text-[#2b2723] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-white hover:scale-[1.02] transition-all"
               >
                 ENQUIRE TO ORDER
               </a>
               <Link 
-                href={`/${locale}/journey`}
-                className="text-xs font-sans uppercase tracking-[0.2em] text-[#4a433c] border-b border-[#4a433c] pb-1 hover:text-[#2b2723] hover:border-[#2b2723] transition-colors font-semibold"
+                href="/journey"
+                className="text-xs font-sans uppercase tracking-[0.2em] text-[#f2ede4] border-b border-[#f2ede4]/50 pb-1 hover:text-white hover:border-white transition-colors font-semibold"
               >
                 EXPLORE THE JOURNEY
               </Link>
@@ -90,28 +90,7 @@ export default function Hero({ locale }: { locale: Locale }) {
           </div>
         </motion.div>
         
-        {/* Subtle Scroll Indicator */}
-        <motion.div 
-          style={{ opacity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 pointer-events-none z-20"
-        >
-          <span className="text-[0.55rem] font-sans uppercase tracking-[0.3em] text-[#4a433c] font-semibold">
-            SCROLL TO EXPLORE
-          </span>
-          <div className="w-[1px] h-10 overflow-hidden flex flex-col items-center bg-[#d6ccbd]/30">
-            <motion.div 
-              className="w-full h-full bg-[#4a433c] origin-top"
-              animate={{ 
-                translateY: ['-100%', '100%']
-              }}
-              transition={{ 
-                duration: 2, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-            />
-          </div>
-        </motion.div>
+
 
         {/* Loading Fallback State */}
         {!mounted && (
