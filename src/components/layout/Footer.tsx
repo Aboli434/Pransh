@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Locale } from '@/i18n/config';
+import Logo from '@/components/ui/Logo';
 
 export default function Footer({ locale }: { locale: Locale }) {
   return (
@@ -10,9 +11,9 @@ export default function Footer({ locale }: { locale: Locale }) {
           
           {/* Brand Info */}
           <div className="flex flex-col max-w-sm">
-            <h3 className="text-6xl md:text-8xl font-serif tracking-tighter leading-none mb-4">
-              PRANSH
-            </h3>
+            <div className="mb-4 -ml-4">
+              <Logo className="w-48 md:w-64 h-auto" />
+            </div>
             <div className="text-xl md:text-2xl font-serif tracking-widest text-[var(--color-champagne)] mb-6">
               INDRAYANI RICE
             </div>

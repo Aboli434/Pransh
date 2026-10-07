@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Locale } from '@/i18n/config';
-
+import Logo from '@/components/ui/Logo';
 export default function Navbar({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -26,9 +26,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
         
         {/* Left: Logo */}
         <Link href="/" className="pointer-events-auto">
-          <span className="font-serif tracking-[0.2em] uppercase text-xl md:text-2xl font-medium">
-            PRANSH
-          </span>
+          <Logo className="w-24 md:w-32 h-auto" />
         </Link>
         
         {/* Desktop Navigation (Hidden on Mobile) */}
@@ -79,9 +77,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
           >
             {/* Menu Header */}
             <div className="p-6 md:p-12 flex justify-between items-center w-full">
-              <span className="font-serif tracking-[0.2em] uppercase text-xl">
-                PRANSH
-              </span>
+              <Logo className="w-24 h-auto" />
               <button 
                 onClick={() => setMenuOpen(false)}
                 className="w-12 h-12 flex items-center justify-center"

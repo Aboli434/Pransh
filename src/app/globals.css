@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest: #1D3329;
-  --color-ivory: #F6F2E9;
-  --color-terracotta: #A96548;
-  --color-earth-brown: #66503E;
-  --color-champagne: #B89452;
-  --color-charcoal: #24231F;
+  /* Refined, sophisticated editorial palette */
+  --color-forest: #152219; /* Deeper, richer pine */
+  --color-ivory: #EAE6DB; /* Muted, stone-like ivory for a high-end print feel */
+  --color-terracotta: #9C5435; /* Deeper baked clay */
+  --color-earth-brown: #483B32; /* Grounded umber */
+  --color-champagne: #A69066; /* Elegant dusty wheat/gold */
+  --color-charcoal: #12110F; /* Deep rich espresso-black, softer than pure black */
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
@@ -14,17 +15,17 @@
 
 @layer base {
   :root {
-    --background: #F6F2E9; /* Ivory */
-    --foreground: #24231F; /* Charcoal */
+    --background: #EAE6DB; /* Ivory */
+    --foreground: #12110F; /* Charcoal */
     
-    --primary: #1D3329; /* Forest */
-    --primary-foreground: #F6F2E9;
+    --primary: #152219; /* Forest */
+    --primary-foreground: #EAE6DB;
     
-    --secondary: #66503E; /* Earth Brown */
-    --secondary-foreground: #F6F2E9;
+    --secondary: #483B32; /* Earth Brown */
+    --secondary-foreground: #EAE6DB;
     
-    --accent: #B89452; /* Champagne / Gold */
-    --accent-foreground: #24231F;
+    --accent: #A69066; /* Champagne / Gold */
+    --accent-foreground: #12110F;
   }
 
 
