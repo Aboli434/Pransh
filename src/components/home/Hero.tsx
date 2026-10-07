@@ -45,24 +45,23 @@ export default function Hero({ locale }: { locale: Locale }) {
         {/* Real WebGL 3D Layer - Cinematic Rice Field */}
         {mounted && <PranshHeroScene scrollProgress={scrollRef} />}
         
-        {/* Stronger readability gradient to make white text pop */}
+        {/* Top Sky Gradient for Navbar contrast & Bottom gradient for typography */}
         <motion.div 
           style={{ opacity }}
-          className="absolute inset-0 bg-gradient-to-r from-[#1a1714]/80 via-[#1a1714]/30 to-transparent z-[5] pointer-events-none" 
-        />
+          className="absolute inset-0 z-[5] pointer-events-none" 
+        >
+          {/* Top sky/dark gradient for Navbar */}
+          <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#87A29E]/80 via-[#87A29E]/30 to-transparent" />
+          
+          {/* Bottom/Left gradient for main text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1714]/90 via-[#1a1714]/40 to-transparent" />
+        </motion.div>
         
         {/* HTML Typographic Layer - Premium Editorial */}
         <motion.div 
           style={{ opacity, y }}
           className="absolute inset-0 w-full h-full flex flex-col justify-center p-6 md:p-16 md:pl-24 z-10 pointer-events-none text-[#f2ede4]"
         >
-          {/* PRANSH Brand Mark - Top Left or Absolute */}
-          <div className="absolute top-8 left-6 md:top-12 md:left-12 lg:left-24">
-            <span className="text-xs font-sans tracking-[0.4em] uppercase text-white font-bold opacity-80">
-              PRANSH
-            </span>
-          </div>
-
           <div className="max-w-xl md:max-w-2xl mt-16 md:mt-0">
             {/* Small eyebrow */}
             <div className="text-[10px] md:text-xs font-sans tracking-[0.4em] uppercase text-[#f2ede4]/80 font-medium mb-6">

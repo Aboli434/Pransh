@@ -11,8 +11,8 @@ import * as THREE from 'three';
 function RiceField({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
-  // Dramatically reduced count for "fewer, better looking" plants
-  const clumpsCount = isMobile ? 300 : 800; 
+  // Increased density for a fuller, more lush field
+  const clumpsCount = isMobile ? 800 : 3500; 
   
   const leavesRef = useRef<THREE.InstancedMesh>(null);
   const paniclesRef = useRef<THREE.InstancedMesh>(null);
@@ -288,8 +288,8 @@ export default function PranshHeroScene({ scrollProgress }: { scrollProgress: Re
       <Canvas shadows dpr={[1, 2]}>
         <PerspectiveCamera makeDefault fov={isMobile ? 55 : 45} position={[0, 1.0, 6]} />
         
-        {/* Subtle Warm Skyline, NOT Orange. Earthy/Neutral. */}
-        <color attach="background" args={['#d6ccbd']} />
+        {/* Gentle Sky color to contrast with the white navbar text */}
+        <color attach="background" args={['#9AAEA9']} />
         
         <SceneCamera scrollProgress={scrollProgress} />
         
