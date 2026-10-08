@@ -4,15 +4,6 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import { journeyStagesData, RiceJourneyStage } from '@/data/journey';
 
-const customDescriptions = [
-  "Every journey begins with a seed.",
-  "The seed is placed into the soil, beginning the next stage of growth.",
-  "Through the season, the crop develops in the field.",
-  "When the crop reaches harvest, the field changes from green to gold.",
-  "After harvest, the crop is prepared for the next stage.",
-  "The harvested crop moves through processing to separate the grain.",
-  "The grains are cleaned and graded before becoming the final rice."
-];
 
 // The timeline component that draws down as you scroll
 function JourneyTimeline({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
@@ -26,10 +17,10 @@ function JourneyTimeline({ scrollYProgress }: { scrollYProgress: MotionValue<num
   return (
     <>
       {/* Background track (muted) */}
-      <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#8a7d6d]/20 -translate-x-1/2 z-0" />
+      <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[var(--color-gold)]/20 -translate-x-1/2 z-0" />
       {/* Active track (drawn by scroll) */}
       <motion.div 
-        className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#8a7d6d] -translate-x-1/2 z-10 origin-top"
+        className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[var(--color-gold)] -translate-x-1/2 z-10 origin-top"
         style={{ scaleY }}
       />
     </>
@@ -72,7 +63,7 @@ function StageBlock({
     return (
       <div ref={ref} className="relative w-full py-32 md:py-48 flex flex-col items-center justify-center">
         {/* Final Stage Marker */}
-        <div className="absolute left-6 md:left-1/2 top-32 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 z-20" />
+        <div className="absolute left-6 md:left-1/2 top-32 w-3 h-3 rounded-full bg-[var(--color-gold)] -translate-x-1/2 z-20" />
         
         <motion.div style={{ opacity, y }} className="w-full max-w-6xl mx-auto px-4 md:px-12 relative z-10">
           <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden mb-12">
@@ -87,24 +78,24 @@ function StageBlock({
             </motion.div>
           </div>
           
-          <div className="text-center md:text-left md:absolute md:bottom-0 md:left-24 bg-[#f2ede4] md:p-12 z-20">
-            <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-4 font-semibold">
-              08
+          <div className="text-center md:text-left md:absolute md:bottom-0 md:left-24 bg-[var(--color-parchment)] md:p-12 z-20">
+            <div className="text-sm font-sans uppercase tracking-[0.4em] text-[var(--color-gold)] mb-4 font-semibold">
+              10
             </div>
-            <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4 text-[#2b2723]">
+            <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4 text-[var(--color-charcoal)]">
               FINAL RICE
             </h2>
-            <div className="text-xl md:text-3xl font-serif tracking-tight mb-8 text-[#4a433c]">
+            <div className="text-xl md:text-3xl font-serif tracking-tight mb-8 text-[var(--color-charcoal)]/80">
               INDRAYANI RICE
             </div>
-            <p className="text-sm font-sans uppercase tracking-[0.2em] mb-12 text-[#6b6255]">
+            <p className="text-sm font-sans uppercase tracking-[0.2em] mb-12 text-[var(--color-charcoal)]/60">
               10 KG · 25 KG
             </p>
             <a 
               href="https://wa.me/919370943298"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-[#2b2723] text-[#2b2723] px-10 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[#2b2723] hover:text-[#f2ede4] transition-colors"
+              className="inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] hover:text-[var(--color-parchment)] transition-colors"
             >
               ENQUIRE TO ORDER
             </a>
@@ -125,24 +116,24 @@ function StageBlock({
       {/* Timeline Marker */}
       <motion.div 
         style={{ scale: markerScale, opacity: markerOpacity }}
-        className="absolute left-6 md:left-1/2 top-1/2 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block"
+        className="absolute left-6 md:left-1/2 top-1/2 w-3 h-3 rounded-full bg-[var(--color-gold)] -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block"
       />
       <motion.div 
         style={{ scale: markerScale, opacity: markerOpacity }}
-        className="absolute left-6 top-24 w-3 h-3 rounded-full bg-[#8a7d6d] -translate-x-1/2 z-20 md:hidden"
+        className="absolute left-6 top-24 w-3 h-3 rounded-full bg-[var(--color-gold)] -translate-x-1/2 z-20 md:hidden"
       />
 
       {/* Mobile Layout (Always Text then Image) */}
       <div className="w-full md:hidden flex flex-col pl-8">
         <motion.div style={{ opacity, y }} className="mb-8">
-          <div className="text-xs font-sans uppercase tracking-[0.3em] text-[#8a7d6d] mb-4 font-semibold">
-            0{index + 1}
+          <div className="text-xs font-sans uppercase tracking-[0.3em] text-[var(--color-gold)] mb-4 font-semibold">
+            {index + 1 < 10 ? `0${index + 1}` : index + 1}
           </div>
-          <h2 className="text-4xl font-serif tracking-tighter mb-4 text-[#2b2723]">
+          <h2 className="text-4xl font-serif tracking-tighter mb-4 text-[var(--color-charcoal)]">
             {stage.title}
           </h2>
-          <p className="text-base font-sans font-light text-[#4a433c] leading-relaxed">
-            {customDescriptions[index]}
+          <p className="text-base font-sans font-light text-[var(--color-charcoal)]/80 leading-relaxed">
+            {stage.desc}
           </p>
         </motion.div>
         <motion.div style={{ opacity, clipPath }} className={`relative w-full ${imageAspect} overflow-hidden`}>
@@ -165,14 +156,14 @@ function StageBlock({
             </div>
             <div className="w-[45%] pl-16 lg:pl-24">
               <motion.div style={{ opacity, y }} className="max-w-md">
-                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
-                  0{index + 1}
+                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[var(--color-gold)] mb-6 font-semibold">
+                  {index + 1 < 10 ? `0${index + 1}` : index + 1}
                 </div>
-                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[#2b2723]">
+                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[var(--color-charcoal)]">
                   {stage.title}
                 </h2>
-                <p className="text-lg font-sans font-light text-[#4a433c] leading-relaxed">
-                  {customDescriptions[index]}
+                <p className="text-lg font-sans font-light text-[var(--color-charcoal)]/80 leading-relaxed">
+                  {stage.desc}
                 </p>
               </motion.div>
             </div>
@@ -181,14 +172,14 @@ function StageBlock({
           <>
             <div className="w-[45%] pr-16 lg:pr-24 flex justify-end">
               <motion.div style={{ opacity, y }} className="max-w-md">
-                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
-                  0{index + 1}
+                <div className="text-sm font-sans uppercase tracking-[0.4em] text-[var(--color-gold)] mb-6 font-semibold">
+                  {index + 1 < 10 ? `0${index + 1}` : index + 1}
                 </div>
-                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[#2b2723]">
+                <h2 className="text-5xl lg:text-6xl font-serif tracking-tighter mb-6 text-[var(--color-charcoal)]">
                   {stage.title}
                 </h2>
-                <p className="text-lg font-sans font-light text-[#4a433c] leading-relaxed">
-                  {customDescriptions[index]}
+                <p className="text-lg font-sans font-light text-[var(--color-charcoal)]/80 leading-relaxed">
+                  {stage.desc}
                 </p>
               </motion.div>
             </div>
@@ -220,25 +211,25 @@ export default function JourneyPageClient() {
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.4, 0.6, 1],
-    ["#e6dfd3", "#e6dfd3", "#f2ede4", "#f2ede4"]
+    ["var(--color-sand)", "var(--color-sand)", "var(--color-parchment)", "var(--color-parchment)"]
   );
 
   return (
     <motion.main 
       ref={containerRef} 
       style={{ backgroundColor }}
-      className="relative w-full min-h-screen text-[#2b2723] transition-colors duration-1000 ease-in-out"
+      className="relative w-full min-h-screen text-[var(--color-charcoal)] transition-colors duration-1000 ease-in-out"
     >
       
       {/* Intro Section */}
       <section className="pt-40 pb-20 md:pt-56 md:pb-32 px-6 md:px-12 max-w-[1200px] mx-auto text-center">
-        <div className="text-xs font-sans uppercase tracking-[0.4em] text-[#8a7d6d] mb-6 font-semibold">
+        <div className="text-xs font-sans uppercase tracking-[0.4em] text-[var(--color-gold)] mb-6 font-semibold">
           THE RICE JOURNEY
         </div>
-        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-serif leading-[0.9] tracking-tighter mb-10 text-[#2b2723]">
+        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-serif leading-[0.9] tracking-tighter mb-10 text-[var(--color-charcoal)]">
           FROM FIELD<br/>TO GRAIN
         </h1>
-        <p className="text-base md:text-xl font-serif italic text-[#6b6255] max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base md:text-xl font-serif italic text-[var(--color-charcoal)]/60 max-w-2xl mx-auto leading-relaxed">
           &quot;Every grain passes through a journey of growth, harvest and preparation before it reaches the table.&quot;
         </p>
       </section>

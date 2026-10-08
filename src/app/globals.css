@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Refined, sophisticated editorial palette */
-  --color-forest: #152219; /* Deeper, richer pine */
-  --color-ivory: #EAE6DB; /* Muted, stone-like ivory for a high-end print feel */
-  --color-terracotta: #9C5435; /* Deeper baked clay */
-  --color-earth-brown: #483B32; /* Grounded umber */
-  --color-champagne: #A69066; /* Elegant dusty wheat/gold */
-  --color-charcoal: #12110F; /* Deep rich espresso-black, softer than pure black */
+  --color-parchment: #F3EBDD;
+  --color-sand: #E8DDC9;
+  --color-charcoal: #25251F;
+  --color-earth: #3A3429;
+  --color-terracotta: #B56A43;
+  --color-gold: #C49A52;
+  --color-walnut: #7A6245;
+  --color-botanical: #66705A;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
@@ -15,20 +16,9 @@
 
 @layer base {
   :root {
-    --background: #EAE6DB; /* Ivory */
-    --foreground: #12110F; /* Charcoal */
-    
-    --primary: #152219; /* Forest */
-    --primary-foreground: #EAE6DB;
-    
-    --secondary: #483B32; /* Earth Brown */
-    --secondary-foreground: #EAE6DB;
-    
-    --accent: #A69066; /* Champagne / Gold */
-    --accent-foreground: #12110F;
+    --background: #F3EBDD;
+    --foreground: #25251F;
   }
-
-
 
   body {
     @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
@@ -36,7 +26,7 @@
   }
   
   ::selection {
-    @apply bg-[var(--primary)] text-[var(--primary-foreground)];
+    @apply bg-[var(--color-charcoal)] text-[var(--color-parchment)];
   }
 }
 

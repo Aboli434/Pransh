@@ -5,34 +5,39 @@ export const images = {
     farm: "/images/gallery/landscape-1.jpg",
   },
   journey: {
-    seed: "/images/journey/01-seed-v2.jpg",
-    sowing: "/images/journey/02-sowing-v2.jpg",
-    growing: "/images/journey/03-growing-v2.jpg",
-    harvesting: "/images/journey/04-harvesting-v2.jpg",
-    drying: "/images/journey/05-drying-v3.jpg",
-    processing: "/images/journey/06-processing-v3.jpg",
-    cleaning: "/images/journey/07-cleaning-v3.jpg",
-    finalRice: "/images/journey/08-rice-v2.jpg",
+    seed: "/images/journey/01_seed_selection.jpg",
+    nursery: "/images/journey/02_nursery.jpg",
+    fieldPrep: "/images/journey/03_field_preparation.jpg",
+    lavni: "/images/journey/04_lavni_transplanting.jpg",
+    growing: "/images/journey/05_crop_growth.jpg",
+    harvesting: "/images/journey/06_harvesting.jpg",
+    drying: "/images/journey/07_threshing_drying.jpg",
+    milling: "/images/journey/08_milling.jpg",
+    cleaning: "/images/journey/09_cleaning_grading.jpg",
+    finalRice: "/images/journey/10_indrayani_rice.jpg",
   },
   rice: {
-    // Phase 16 Complete Rice Imagery Mapping
-    v01_macro: "/images/rice/rice-product.jpg", // Raw Indrayani rice grains macro
-    v02_inHand: "/images/journey/02-sowing-v2.jpg", // Rice grains in hand placeholder
-    v03_cleanCloseUp: "/images/rice/rice-grain-macro.jpg", // Clean rice grains close-up
-    v04_cooked: "/images/gallery/detail-1.jpg", // Cooked rice serving context
-    v05_paddyCrop: "/images/journey/03-growing-v2.jpg", // Paddy crop before harvesting
-    v06_harvested: "/images/journey/04-harvesting-v2.jpg", // Harvested paddy
-    v07_drying: "/images/journey/05-drying-v3.jpg", // Rice drying
-    v08_processing: "/images/journey/06-processing-v3.jpg", // Rice processing/milling
-    v09_cleaning: "/images/journey/07-cleaning-v3.jpg", // Cleaning/grading
-    v10_packing: "/images/rice/rice-product.jpg", // Rice packing/sack placeholder
+    v01_macro: "/images/journey/10_indrayani_rice.jpg",
+    v02_inHand: "/images/journey/01_seed_selection.jpg",
+    v03_cleanCloseUp: "/images/journey/10_indrayani_rice.jpg",
+    v04_cooked: "/images/gallery/detail-1.jpg",
+    v05_paddyCrop: "/images/journey/05_crop_growth.jpg",
+    v06_harvested: "/images/journey/06_harvesting.jpg",
+    v07_drying: "/images/journey/07_threshing_drying.jpg",
+    v08_processing: "/images/journey/08_milling.jpg",
+    v09_cleaning: "/images/journey/09_cleaning_grading.jpg",
+    v10_packing: "/images/journey/10_indrayani_rice.jpg",
   },
   gallery: [
-    "/images/gallery/landscape-1.jpg",
-    "/images/gallery/harvest-1.jpg",
-    "/images/gallery/detail-1.jpg",
-    "/images/farmer/farmer-portrait.jpg",
-    "/images/hero/hero-bg.jpg",
-    "/images/rice/rice-grain-macro.jpg",
+    "/images/journey/01_seed_selection.jpg",
+    "/images/journey/02_nursery.jpg",
+    "/images/journey/03_field_preparation.jpg",
+    "/images/journey/04_lavni_transplanting.jpg",
+    "/images/journey/05_crop_growth.jpg",
+    "/images/journey/06_harvesting.jpg",
+    "/images/journey/07_threshing_drying.jpg",
+    "/images/journey/08_milling.jpg",
+    "/images/journey/09_cleaning_grading.jpg",
+    "/images/journey/10_indrayani_rice.jpg",
   ],
 };

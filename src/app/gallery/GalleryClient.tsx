@@ -58,7 +58,7 @@ export default function GalleryClient() {
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.4, 0.8],
-    ['var(--color-ivory)', 'var(--color-champagne)', '#faf9f6'] // Assuming champagne is a warm clay/earth tone, ivory is warm white
+    ['var(--color-parchment)', 'var(--color-terracotta)', 'var(--color-charcoal)']
   );
 
   return (
@@ -74,8 +74,8 @@ export default function GalleryClient() {
           PRANSH / VISUAL ARCHIVE
         </span>
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-tighter leading-tight mb-8">
-          THE LAND.<br/>
-          THE HANDS.<br/>
+          THE BEGINNING.<br/>
+          THE FIELD.<br/>
           THE GRAIN.
         </h1>
         <p className="text-lg md:text-xl font-serif tracking-wide opacity-80 max-w-md mx-auto italic">
@@ -84,11 +84,11 @@ export default function GalleryClient() {
       </section>
 
       {/* Sticky Chapter Navigation */}
-      <div className="sticky top-24 z-40 w-full px-4 md:px-12 flex justify-center pointer-events-none mix-blend-difference text-[var(--color-ivory)]">
+      <div className="sticky top-24 z-40 w-full px-4 md:px-12 flex justify-center pointer-events-none mix-blend-difference text-[var(--color-parchment)]">
         <nav className="inline-flex items-center gap-8 md:gap-16 text-xs font-sans uppercase tracking-[0.2em] font-semibold pointer-events-auto">
           {[
-            { num: 1, label: 'THE LAND' },
-            { num: 2, label: 'THE HANDS' },
+            { num: 1, label: 'THE BEGINNING' },
+            { num: 2, label: 'THE FIELD' },
             { num: 3, label: 'THE GRAIN' }
           ].map((chap) => (
             <button
@@ -102,84 +102,91 @@ export default function GalleryClient() {
         </nav>
       </div>
 
-      {/* CHAPTER 01: THE LAND */}
+      {/* CHAPTER 01: THE BEGINNING */}
       <section ref={landRef} className="pt-24 pb-32 flex flex-col items-center w-full">
-        <div className="w-full px-4 md:px-12 relative mb-32">
-          <GalleryImage 
-            src={images.hero} 
-            alt="Rice fields in Maval, Maharashtra" 
-            aspectRatio="aspect-[16/9] md:aspect-[21/9]"
-            width="w-full"
-            label="01 THE LAND"
-            caption="Where the journey begins."
-            overlayTitle
-          />
+        <div className="text-center mb-24 px-6">
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4">
+            01<br/>THE BEGINNING
+          </h2>
+          <p className="text-lg font-serif italic opacity-80">
+            “The foundation of every harvest.”
+          </p>
         </div>
         
-        {/* Land Visual Sequence */}
+        {/* Sequence */}
         <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 md:gap-24 items-center md:items-start justify-center">
           <GalleryImage 
-            src={images.gallery[0]} // landscape-1.jpg
-            alt="Maval landscape"
-            aspectRatio="aspect-[3/4]"
+            src={images.journey.seed}
+            alt="Seed selection"
+            aspectRatio="aspect-[4/3]"
             width="w-full md:w-5/12"
-            label="THE LAND"
-            caption="MAVAL · PAVNANAGAR"
+            label="THE BEGINNING"
+            caption="SEED SELECTION"
           />
           <div className="w-full md:w-6/12 flex flex-col gap-24 md:mt-48">
             <GalleryImage 
-              src={images.journey.growing} // rice plants
-              alt="Rice plants growing in the field"
-              aspectRatio="aspect-square"
+              src={images.journey.nursery}
+              alt="Rice nursery"
+              aspectRatio="aspect-[4/3]"
               width="w-full md:w-10/12 ml-auto"
-              label="THE LAND"
-              caption="AGRICULTURAL ENVIRONMENT"
+              label="THE BEGINNING"
+              caption="THE NURSERY"
             />
           </div>
         </div>
+
+        <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 mt-24 md:mt-32">
+          <GalleryImage 
+            src={images.journey.fieldPrep}
+            alt="Field preparation"
+            aspectRatio="aspect-[21/9]"
+            width="w-full"
+            label="THE BEGINNING"
+            caption="FIELD PREPARATION"
+          />
+        </div>
       </section>
 
-      {/* CHAPTER 02: THE HANDS */}
+      {/* CHAPTER 02: THE FIELD */}
       <section ref={handsRef} className="pt-32 pb-32 flex flex-col items-center w-full bg-[var(--color-charcoal)]/5">
         <div className="text-center mb-24 px-6">
           <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4">
-            02<br/>THE HANDS
+            02<br/>THE FIELD
           </h2>
           <p className="text-lg font-serif italic opacity-80">
-            “Behind every field is human work.”
+            “The work of the season.”
           </p>
         </div>
 
         <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col gap-32">
-          {/* Hands sequence */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <GalleryImage 
-              src={images.journey.sowing} 
-              alt="Hands sowing rice seeds in wet soil"
-              aspectRatio="aspect-[4/3]"
+              src={images.journey.lavni} 
+              alt="Transplanting rice seedlings"
+              aspectRatio="aspect-[16/9]"
               width="w-full md:w-7/12"
-              label="THE HANDS"
-              caption="SOWING SEEDS"
+              label="THE FIELD"
+              caption="LAVNI / TRANSPLANTING"
             />
             <div className="w-full md:w-4/12 flex justify-center md:justify-end">
               <GalleryImage 
-                src={images.farmer.portrait} 
-                alt="Portrait of a farmer working"
+                src={images.journey.growing} 
+                alt="Growing paddy crop"
                 aspectRatio="aspect-[3/4]"
                 width="w-3/4 md:w-full"
-                label="THE HANDS"
-                caption="HUMAN WORK"
+                label="THE FIELD"
+                caption="CROP GROWTH"
               />
             </div>
           </div>
           
           <div className="flex justify-center w-full">
             <GalleryImage 
-              src={images.gallery[1]} // harvest-1.jpg
-              alt="Farmers harvesting rice in the field"
-              aspectRatio="aspect-[16/9]"
-              width="w-full md:w-9/12"
-              label="THE HANDS"
+              src={images.journey.harvesting}
+              alt="Harvesting mature rice"
+              aspectRatio="aspect-[21/9]"
+              width="w-full"
+              label="THE FIELD"
               caption="THE HARVEST"
             />
           </div>
@@ -201,31 +208,33 @@ export default function GalleryClient() {
           
           <div className="flex flex-col md:flex-row gap-12 w-full justify-center items-center md:items-end">
             <GalleryImage 
-              src={images.rice.v05_paddyCrop} 
-              alt="Rice panicles ready for harvest"
-              aspectRatio="aspect-[3/4]"
-              width="w-full md:w-5/12"
+              src={images.journey.drying} 
+              alt="Threshing and drying"
+              aspectRatio="aspect-[16/9]"
+              width="w-full md:w-6/12"
               label="THE GRAIN"
-              caption="PANICLES"
+              caption="THRESHING & DRYING"
             />
             <GalleryImage 
-              src={images.rice.v07_drying} 
-              alt="Harvested rice drying in the sun"
+              src={images.journey.milling} 
+              alt="Milling process"
               aspectRatio="aspect-square"
-              width="w-10/12 md:w-4/12 mb-12 md:mb-0"
+              width="w-10/12 md:w-5/12 mb-12 md:mb-0"
               label="THE GRAIN"
-              caption="DRYING"
+              caption="MILLING / DEHUSKING"
             />
           </div>
 
-          <GalleryImage 
-            src={images.rice.v08_processing} 
-            alt="Rice processing and milling"
-            aspectRatio="aspect-[16/9]"
-            width="w-full md:w-8/12"
-            label="THE GRAIN"
-            caption="PROCESSING"
-          />
+          <div className="flex flex-col md:flex-row gap-12 w-full justify-center items-start">
+            <GalleryImage 
+              src={images.journey.cleaning} 
+              alt="Cleaning and grading"
+              aspectRatio="aspect-[16/9]"
+              width="w-full md:w-8/12"
+              label="THE GRAIN"
+              caption="CLEANING & GRADING"
+            />
+          </div>
 
         </div>
       </section>
@@ -242,7 +251,7 @@ export default function GalleryClient() {
           />
           <div className="absolute inset-0 bg-black/30 mix-blend-multiply" />
           
-          <div className="relative z-10 text-center flex flex-col items-center text-[var(--color-ivory)] px-6">
+          <div className="relative z-10 text-center flex flex-col items-center text-[var(--color-parchment)] px-6">
             <h2 className="text-6xl md:text-9xl font-serif tracking-widest mb-4">
               PRANSH
             </h2>

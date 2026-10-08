@@ -34,7 +34,7 @@ export default function JourneyVisual({ image, alt, priority = false }: JourneyV
       </AnimatePresence>
       
       {/* Cinematic overlay gradient to ensure depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-forest)]/30 to-transparent mix-blend-multiply pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)]/30 to-transparent mix-blend-multiply pointer-events-none" />
       <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.1)] pointer-events-none" />
     </div>
   );

@@ -2,38 +2,59 @@ import Container from '@/components/ui/Container';
 
 export default async function ContactPage() {
   return (
-    <main className="pt-32 pb-32 bg-[var(--color-charcoal)] min-h-screen flex items-center justify-center text-[var(--color-ivory)]">
-      <Container>
-        <div className="max-w-[1000px] mx-auto text-center flex flex-col items-center">
-          
-          <p className="text-xs uppercase tracking-[0.4em] font-semibold text-[var(--color-champagne)] mb-8">
-            LOOKING FOR INDRAYANI RICE?
-          </p>
+    <main className="pt-32 md:pt-48 pb-32 bg-[var(--color-parchment)] min-h-screen flex items-center justify-center text-[var(--color-charcoal)] relative overflow-hidden">
+      
+      <div className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.03] bg-[url('/images/hero/hero-bg.jpg')] bg-cover bg-center mix-blend-multiply" />
 
-          <h1 className="text-5xl md:text-7xl lg:text-[100px] font-serif leading-[1] tracking-tighter mb-16">
-            START AN ENQUIRY
-          </h1>
+      <Container>
+        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
           
-          <div className="flex flex-col gap-6 text-xl md:text-2xl font-light">
+          <div className="w-full md:w-1/2 flex flex-col items-start">
+            <h1 className="text-6xl md:text-8xl lg:text-[110px] font-serif leading-[0.85] tracking-tighter mb-8">
+              LET'S TALK<br/>
+              <span className="italic font-light opacity-90 text-[var(--color-gold)]">RICE.</span>
+            </h1>
+            <p className="text-base md:text-lg font-sans uppercase tracking-[0.1em] text-[var(--color-charcoal)]/70 max-w-sm mb-12">
+              For Indrayani rice enquiries, orders and availability.
+            </p>
+          </div>
+
+          <div className="w-full md:w-1/2 flex flex-col items-start md:items-end md:text-right">
+            
             <a 
               href="tel:9370943298" 
-              className="hover:text-[var(--color-champagne)] transition-colors inline-block"
+              className="text-4xl md:text-5xl font-serif hover:text-[var(--color-gold)] transition-colors inline-block mb-4"
             >
-              Phone: 9370943298
+              9370943298
             </a>
             <a 
               href="mailto:unmeshrisbud345@gmail.com" 
-              className="hover:text-[var(--color-champagne)] transition-colors inline-block"
+              className="text-2xl md:text-3xl font-serif hover:text-[var(--color-gold)] transition-colors inline-block mb-12 lowercase"
             >
-              Email: unmeshrisbud345@gmail.com
+              unmeshrisbud345@gmail.com
             </a>
             
-            <div className="mt-8 text-lg opacity-80 uppercase tracking-widest text-[var(--color-ivory)]">
-              <span className="block mb-2">Location:</span>
-              <span className="block">Pavnanagar</span>
-              <span className="block">Kale Colony</span>
-              <span className="block">410406</span>
+            <div className="text-xs font-sans uppercase tracking-[0.3em] font-semibold text-[var(--color-charcoal)]/50 mb-12">
+              PAVNANAGAR · MAVAL
             </div>
+
+            <div className="flex flex-col sm:flex-row gap-6 items-center md:items-end justify-end w-full">
+              <a 
+                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-[var(--color-charcoal)] bg-[var(--color-charcoal)] text-[var(--color-parchment)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-parchment)] hover:text-[var(--color-charcoal)] transition-colors text-center w-full sm:w-auto"
+              >
+                ORDER ON WHATSAPP
+              </a>
+              <a 
+                href="tel:9370943298" 
+                className="inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-charcoal)] hover:text-[var(--color-parchment)] transition-colors text-center w-full sm:w-auto"
+              >
+                CALL
+              </a>
+            </div>
+
           </div>
 
         </div>

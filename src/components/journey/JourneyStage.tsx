@@ -44,7 +44,7 @@ export default function JourneyStage({ index, number, title, description, onActi
         viewport={{ once: true, margin: "-10%" }}
         variants={variants}
       >
-        <span className="text-xl md:text-3xl font-serif text-[var(--color-champagne)] mb-4 block">
+        <span className="text-xl md:text-3xl font-serif text-[var(--color-gold)] mb-4 block">
           {number}
         </span>
         <h3 className="text-3xl md:text-5xl font-serif text-[var(--primary)] mb-6 leading-tight">
