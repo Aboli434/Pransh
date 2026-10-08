@@ -202,29 +202,24 @@ export default function Navbar({ locale }: { locale?: string }) {
             {/* Desktop Enquire */}
             <div className="hidden lg:block">
               <MagneticEffect disabled={isScrolled}>
-                <a 
-                  href="/contact"
-                  className="group relative flex items-center gap-2 font-sans uppercase text-[11px] tracking-[0.14em] font-medium py-2 focus:outline-none"
+                <motion.div
+                  className="rounded-[6px] overflow-hidden"
+                  whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <motion.span
-                    animate={{ y: 0 }}
-                    whileHover={{ y: -2 }}
-                    className="relative z-10"
+                  <Link 
+                    href="/contact"
+                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F3EBDD] bg-[#B56A43] hover:bg-[#C8754A] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
                   >
-                    ENQUIRE
-                  </motion.span>
-                  <motion.span 
-                    className="relative z-10 text-[#B56A43]"
-                    initial={{ x: 0, y: 0 }}
-                    whileHover={{ x: 4, y: -4 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                  >
-                    ↗
-                  </motion.span>
-                  
-                  {/* Hover Line */}
-                  <div className="absolute bottom-1 left-0 w-full h-[1px] bg-[#B56A43] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
-                </a>
+                    <span className="relative z-10">ENQUIRE</span>
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                      initial={{ x: "-150%" }}
+                      whileHover={{ x: "150%" }}
+                      transition={{ duration: 0.7, ease: "easeInOut" }}
+                    />
+                  </Link>
+                </motion.div>
               </MagneticEffect>
             </div>
 
@@ -330,13 +325,13 @@ export default function Navbar({ locale }: { locale?: string }) {
                   MAVAL
                 </span>
               </div>
-              <a 
+              <Link 
                 href="/contact"
                 onClick={closeMenu}
-                className="group flex items-center gap-2 font-sans uppercase text-[11px] tracking-[0.14em] font-semibold text-[#B56A43] mt-2"
+                className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F3EBDD] bg-[#B56A43] px-8 py-[12px] rounded-[6px] min-h-[44px] w-full max-w-[200px] mt-2 focus:outline-none"
               >
-                LET&apos;S TALK RICE ↗
-              </a>
+                ENQUIRE
+              </Link>
             </motion.div>
           </motion.nav>
         )}
