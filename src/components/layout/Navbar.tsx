@@ -1,248 +1,344 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Locale } from '@/i18n/config';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
-export default function Navbar({ locale }: { locale: Locale }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+// Magnetic wrapper component for subtle hover interactions
+function MagneticEffect({ children, disabled = false }: { children: React.ReactNode, disabled?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const prefersReducedMotion = useReducedMotion();
+
+  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (disabled || prefersReducedMotion) return;
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current!.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    // Subtle movement max 3-5px
+    setPosition({ x: middleX * 0.1, y: middleY * 0.1 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="relative z-10"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const navLinks = [
+  { id: 'story', num: '01', name: 'OUR STORY', href: `/our-story` },
+  { id: 'journey', num: '02', name: 'JOURNEY', href: `/journey` },
+  { id: 'rice', num: '03', name: 'OUR RICE', href: `/our-rice` },
+  { id: 'gallery', num: '04', name: 'GALLERY', href: `/gallery` },
+];
+
+export default function Navbar({ locale }: { locale?: string }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isHoveringLink, setIsHoveringLink] = useState<string | null>(null);
   const pathname = usePathname();
+  const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (menuOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-  }, [menuOpen]);
-
+  // Scroll handler
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 80);
     };
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { id: 'story', num: '01', name: 'OUR STORY', href: `/our-story` },
-    { id: 'journey', num: '02', name: 'JOURNEY', href: `/journey` },
-    { id: 'rice', num: '03', name: 'OUR RICE', href: `/our-rice` },
-    { id: 'gallery', num: '04', name: 'GALLERY', href: `/gallery` },
-    { id: 'contact', num: '05', name: 'CONTACT', href: `/contact` },
-  ];
+  // Lock body scroll and Escape key for mobile menu
+  const closeMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+  }, []);
 
-  // Colors based on scroll state
-  const navBg = isScrolled ? 'rgba(243, 235, 221, 0.94)' : 'transparent';
-  const navColor = isScrolled ? 'var(--color-charcoal)' : 'var(--color-parchment)';
-  const navBorder = isScrolled ? 'rgba(37,37,31,0.12)' : 'transparent';
-  const navHeight = isScrolled ? '72px' : '96px';
-  const mobileNavHeight = isScrolled ? '72px' : '82px';
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closeMenu();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [mobileMenuOpen, closeMenu]);
+
+  // Framer Motion Variants for page load animation
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } }
+  };
+
+  // Split logo letters for subtle hover effect
+  const logoText = "PRANSH";
 
   return (
     <>
+      {/* 
+        DESKTOP & MOBILE NAVBAR
+        Transitions smoothly on scroll
+      */}
       <motion.header
-        initial={false}
-        animate={{
-          backgroundColor: navBg,
-          color: navColor,
-          borderColor: navBorder,
-          height: navHeight
-        }}
-        transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-        className={`fixed top-0 left-0 w-full z-50 border-b hidden lg:flex items-center justify-between px-12`}
-        style={{ backdropFilter: isScrolled ? 'blur(8px)' : 'none' }}
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out flex items-center justify-between px-6 md:px-12 bg-[#25251F] ${
+          isScrolled 
+            ? "py-4 md:py-5 shadow-lg shadow-black/20"
+            : "py-6 md:py-8 shadow-none border-b border-[#F3EBDD]/10"
+        }`}
+        style={{ color: '#F3EBDD' }}
       >
-        {/* DESKTOP LEFT: BRAND */}
-        <Link href="/" className="flex flex-col justify-center items-start group">
-          <span className="font-serif uppercase text-3xl tracking-[0.08em] leading-none mb-1">
-            PRANSH
-          </span>
-          <span className="font-sans uppercase text-[8px] tracking-[0.3em] opacity-60 group-hover:opacity-100 transition-opacity">
-            PAVNANAGAR · MAVAL
-          </span>
-        </Link>
-
-        {/* DESKTOP CENTER: NAV */}
-        <nav className="flex items-center gap-12">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link 
-                key={link.id} 
-                href={link.href} 
-                className="relative group py-2 flex flex-col items-center"
-              >
-                <span className={`font-sans uppercase text-[11px] tracking-[0.2em] transition-colors ${isActive ? 'opacity-100 font-semibold' : 'opacity-70 group-hover:opacity-100'}`}>
-                  {link.name}
-                </span>
-                
-                {/* Active Indicator Line */}
-                <motion.div
-                  initial={false}
-                  animate={{
-                    width: isActive ? '100%' : '0%',
-                    opacity: isActive ? 1 : 0
-                  }}
-                  className="absolute bottom-0 h-px bg-[var(--color-terracotta)]"
-                  transition={{ duration: 0.4, ease: "circOut" }}
-                />
-                
-                {/* Hover Indicator Line (only visible when not active) */}
-                {!isActive && (
-                  <div className="absolute bottom-0 h-px w-0 bg-[var(--color-terracotta)]/50 group-hover:w-full transition-all duration-300 ease-out" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* DESKTOP RIGHT: ORDER */}
-        <div className="flex justify-end min-w-[150px]">
-          <a
-            href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`border px-8 py-3 text-[11px] font-sans uppercase tracking-[0.25em] font-medium transition-colors duration-300 ${
-              isScrolled 
-                ? 'border-[var(--color-charcoal)] text-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] hover:text-[var(--color-parchment)]' 
-                : 'border-[var(--color-parchment)] text-[var(--color-parchment)] hover:bg-[var(--color-parchment)] hover:text-[var(--color-charcoal)]'
-            }`}
-            style={{ borderRadius: '2px' }}
-          >
-            ORDER
-          </a>
-        </div>
-      </motion.header>
-
-      {/* MOBILE HEADER */}
-      <motion.header
-        initial={false}
-        animate={{
-          backgroundColor: navBg,
-          color: navColor,
-          borderColor: navBorder,
-          height: mobileNavHeight
-        }}
-        transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-        className={`fixed top-0 left-0 w-full z-50 border-b lg:hidden flex items-center justify-between px-6`}
-        style={{ backdropFilter: isScrolled ? 'blur(8px)' : 'none' }}
-      >
-        <Link href="/" className="font-serif uppercase text-2xl tracking-[0.08em] leading-none relative z-[61]">
-          PRANSH
-        </Link>
-        
-        <button
-          onClick={() => setMenuOpen(true)}
-          aria-label="Open menu"
-          className="relative z-50 group flex flex-col items-end gap-1"
+        <motion.div 
+          className="w-full max-w-[1600px] mx-auto flex items-center justify-between"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
         >
-          <span className="font-sans uppercase text-[10px] tracking-[0.25em] font-medium mb-1">
-            MENU
-          </span>
-          <span className="h-px bg-current w-8 group-hover:w-10 transition-all duration-300" />
-          <span className="h-px bg-current w-6 group-hover:w-10 transition-all duration-300" />
-        </button>
+          {/* LEFT: PRANSH (with letter hover micro-interaction) */}
+          <motion.div variants={itemVariants}>
+            <MagneticEffect disabled={isScrolled}>
+              <Link href="/" className="group flex flex-col items-start focus:outline-none">
+                <div className="flex font-serif text-2xl md:text-3xl tracking-[0.08em] leading-none mb-1 overflow-hidden">
+                  {logoText.split('').map((char, index) => (
+                    <motion.span 
+                      key={index}
+                      className="inline-block relative"
+                      whileHover={{ y: -2, opacity: 0.8 }}
+                      transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </div>
+                <div className="h-[1px] w-0 bg-[#B56A43] group-hover:w-full transition-all duration-500 ease-out" />
+              </Link>
+            </MagneticEffect>
+          </motion.div>
+
+          {/* CENTER: DESKTOP NAVIGATION LINKS */}
+          <div className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              const isHovered = isHoveringLink === link.id;
+
+              return (
+                <motion.div key={link.id} variants={itemVariants} className="relative flex flex-col items-center justify-center">
+                  
+                  {/* Traveling Active Indicator */}
+                  {isActive && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="absolute -top-3 w-1.5 h-1.5 rounded-full bg-[#B56A43]"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+
+                  <Link 
+                    href={link.href}
+                    onMouseEnter={() => setIsHoveringLink(link.id)}
+                    onMouseLeave={() => setIsHoveringLink(null)}
+                    className="relative py-2 px-1 focus:outline-none group"
+                  >
+                    <motion.span 
+                      animate={{ 
+                        y: isHovered ? -3 : 0,
+                        letterSpacing: isHovered ? '0.14em' : '0.1em'
+                      }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className={`block font-sans uppercase text-[11px] font-medium transition-colors duration-300 ${isActive ? 'text-[#F3EBDD]' : 'text-[#F3EBDD]/70'}`}
+                    >
+                      {link.name}
+                    </motion.span>
+
+                    {/* Left-to-Right Draw Hover Line */}
+                    <motion.div 
+                      initial={{ scaleX: 0, originX: 0 }}
+                      animate={{ scaleX: isHovered ? 1 : 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="absolute bottom-1 left-0 right-0 h-[1px] bg-[#B56A43]"
+                    />
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* RIGHT: DESKTOP ENQUIRE & MOBILE MENU */}
+          <motion.div variants={itemVariants} className="flex items-center">
+            
+            {/* Desktop Enquire */}
+            <div className="hidden lg:block">
+              <MagneticEffect disabled={isScrolled}>
+                <a 
+                  href="/contact"
+                  className="group relative flex items-center gap-2 font-sans uppercase text-[11px] tracking-[0.14em] font-medium py-2 focus:outline-none"
+                >
+                  <motion.span
+                    animate={{ y: 0 }}
+                    whileHover={{ y: -2 }}
+                    className="relative z-10"
+                  >
+                    ENQUIRE
+                  </motion.span>
+                  <motion.span 
+                    className="relative z-10 text-[#B56A43]"
+                    initial={{ x: 0, y: 0 }}
+                    whileHover={{ x: 4, y: -4 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  >
+                    ↗
+                  </motion.span>
+                  
+                  {/* Hover Line */}
+                  <div className="absolute bottom-1 left-0 w-full h-[1px] bg-[#B56A43] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                </a>
+              </MagneticEffect>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden group flex flex-col items-end justify-center py-2 gap-1 focus:outline-none"
+              aria-label="Open menu"
+            >
+              <span className="font-sans uppercase text-[10px] tracking-[0.14em] font-medium mb-1">
+                MENU
+              </span>
+              <div className="h-[1px] bg-current w-6 group-hover:w-8 transition-all duration-300 ease-out" />
+              <div className="h-[1px] bg-current w-4 group-hover:w-8 transition-all duration-300 ease-out" />
+            </button>
+            
+          </motion.div>
+
+        </motion.div>
       </motion.header>
 
-      {/* FULLSCREEN MOBILE MENU */}
+      {/* 
+        MOBILE FULLSCREEN NAVIGATION 
+      */}
       <AnimatePresence>
-        {menuOpen && (
-          <motion.div
+        {mobileMenuOpen && (
+          <motion.nav
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-            className="fixed inset-0 z-[60] bg-[var(--color-charcoal)] text-[var(--color-parchment)] flex flex-col justify-between overflow-y-auto"
+            transition={{ duration: 0.5, ease: "easeOut" as any }}
+            className="fixed inset-0 z-[100] bg-[#F3EBDD] text-[#25251F] flex flex-col overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
           >
-            {/* Top Bar for Menu */}
-            <div className="flex justify-between items-start px-6 pt-6 h-[82px]">
-              <div className="flex flex-col">
-                <span className="font-serif uppercase text-2xl tracking-[0.08em] leading-none mb-1">
-                  PRANSH
-                </span>
-                <span className="font-sans uppercase text-[8px] tracking-[0.3em] opacity-60">
-                  PAVNANAGAR · MAVAL
-                </span>
+            {/* Mobile Top Bar */}
+            <div className="flex justify-between items-start px-6 py-8">
+              <div className="font-serif text-2xl tracking-[0.08em] leading-none">
+                PRANSH
               </div>
-              <button
-                onClick={() => setMenuOpen(false)}
+              <button 
+                onClick={closeMenu}
+                className="group flex flex-col items-end py-1 gap-1 focus:outline-none"
                 aria-label="Close menu"
-                className="group flex flex-col items-end gap-1 pt-1"
               >
-                <span className="font-sans uppercase text-[10px] tracking-[0.25em] font-medium mb-1">
+                <span className="font-sans uppercase text-[10px] tracking-[0.14em] font-semibold mb-1 opacity-80 group-hover:opacity-100 transition-opacity">
                   CLOSE
                 </span>
-                <span className="h-px bg-current w-8" />
+                <div className="h-[1px] bg-[#B56A43] w-6 group-hover:w-8 transition-all duration-300 ease-out" />
               </button>
             </div>
 
-            {/* Menu Links */}
-            <nav className="flex flex-col items-start px-8 py-10 gap-6 md:gap-8 my-auto">
-              {navLinks.map((link, i) => {
-                const isActive = pathname === link.href;
-                return (
-                  <motion.div
+            {/* Mobile Links */}
+            <div className="flex-1 flex flex-col justify-center px-8 py-8">
+              <ul className="flex flex-col gap-8">
+                {[...navLinks, { id: 'contact-mobile', num: '05', name: 'CONTACT', href: '/contact' }].map((link, i) => (
+                  <motion.li 
                     key={link.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10, transition: { duration: 0.2, delay: 0 } }}
-                    transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.33, 1, 0.68, 1] }}
+                    initial={{ opacity: 0, y: 30, clipPath: 'inset(100% 0 0 0)' }}
+                    animate={{ opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)' }}
+                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                    transition={{ duration: 0.7, delay: 0.1 + (i * 0.1), ease: "easeOut" as any }}
                   >
-                    <Link
+                    <Link 
                       href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="flex items-start gap-4 relative"
+                      onClick={closeMenu}
+                      className="group flex items-baseline gap-4 w-fit focus:outline-none"
                     >
-                      <span className="font-sans text-[10px] md:text-xs tracking-widest opacity-50 pt-1.5 md:pt-3">
+                      <span className="font-sans text-[11px] tracking-widest opacity-40 group-hover:-translate-y-1 transition-transform duration-300">
                         {link.num}
                       </span>
-                      <div className="flex flex-col">
-                        <span className="font-serif text-[34px] md:text-5xl tracking-tighter leading-none hover:text-[var(--color-gold)] transition-colors">
+                      <div className="flex items-center overflow-hidden">
+                        <span className="font-serif text-4xl tracking-tighter group-hover:translate-x-2 transition-transform duration-400 ease-out group-hover:text-[#B56A43]">
                           {link.name}
                         </span>
-                        {/* Active Accent */}
-                        {isActive && (
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: '100%' }}
-                            transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
-                            className="h-px bg-[var(--color-terracotta)] mt-2"
-                          />
-                        )}
+                        {/* Slide in arrow */}
+                        <motion.span 
+                          initial={{ x: -20, opacity: 0 }}
+                          whileHover={{ x: 0, opacity: 1 }}
+                          className="ml-4 text-[#B56A43] text-2xl"
+                        >
+                          →
+                        </motion.span>
                       </div>
                     </Link>
-                  </motion.div>
-                );
-              })}
-            </nav>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
 
-            {/* Bottom CTA Area */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.5, ease: [0.33, 1, 0.68, 1] }}
-              className="px-8 pb-12 flex flex-col items-start w-full border-t border-[var(--color-parchment)]/10 pt-8 mt-auto"
+            {/* Mobile Footer */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="px-8 pb-12 flex flex-col gap-4 border-t border-[#25251F]/10 pt-8"
             >
-              <div className="font-sans uppercase text-[10px] tracking-[0.3em] opacity-60 mb-6">
-                INDRAYANI RICE FROM MAVAL
+              <div className="flex flex-col">
+                <span className="font-sans uppercase text-[10px] tracking-[0.14em] font-semibold">
+                  INDRAYANI RICE
+                </span>
+                <span className="font-sans uppercase text-[10px] tracking-[0.14em] opacity-60">
+                  MAVAL
+                </span>
               </div>
-              <a
-                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-3 bg-[var(--color-terracotta)] text-[var(--color-parchment)] px-8 py-4 font-sans uppercase text-xs tracking-[0.2em] font-semibold hover:bg-[var(--color-gold)] hover:text-[var(--color-charcoal)] transition-colors w-full justify-center max-w-sm mb-4"
+              <a 
+                href="/contact"
+                onClick={closeMenu}
+                className="group flex items-center gap-2 font-sans uppercase text-[11px] tracking-[0.14em] font-semibold text-[#B56A43] mt-2"
               >
-                ORDER ON WHATSAPP &rarr;
-              </a>
-              <a href="tel:9370943298" className="font-sans text-xs tracking-[0.2em] opacity-80 pl-1">
-                9370943298
+                LET&apos;S TALK RICE ↗
               </a>
             </motion.div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </>
