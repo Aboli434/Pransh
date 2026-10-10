@@ -54,18 +54,25 @@ export default function GalleryClient() {
   });
 
   // Background color interpolation for narrative progression
-  // Land (green/earth) -> Hands (brown/clay) -> Grain (ivory/white)
+  // The Beginning (Parchment) -> The Field (Sand) -> The Grain (Charcoal)
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.4, 0.8],
-    ['var(--color-parchment)', 'var(--color-terracotta)', 'var(--color-charcoal)']
+    ['var(--color-parchment)', 'var(--color-sand)', 'var(--color-charcoal)']
+  );
+
+  // Text color interpolation to ensure contrast
+  const color = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.8],
+    ['var(--color-charcoal)', 'var(--color-charcoal)', 'var(--color-parchment)']
   );
 
   return (
     <motion.main 
       ref={containerRef}
-      style={{ backgroundColor }}
-      className="min-h-screen relative text-[var(--color-charcoal)] transition-colors duration-1000 ease-out"
+      style={{ backgroundColor, color }}
+      className="min-h-screen relative transition-colors duration-1000 ease-out"
     >
       
       {/* Editorial Intro */}
@@ -84,7 +91,7 @@ export default function GalleryClient() {
       </section>
 
       {/* Sticky Chapter Navigation */}
-      <div className="sticky top-24 z-40 w-full px-4 md:px-12 flex justify-center pointer-events-none mix-blend-difference text-[var(--color-parchment)]">
+      <div className="sticky top-24 z-40 w-full px-4 md:px-12 flex justify-center pointer-events-none">
         <nav className="inline-flex items-center gap-8 md:gap-16 text-xs font-sans uppercase tracking-[0.2em] font-semibold pointer-events-auto">
           {[
             { num: 1, label: 'THE BEGINNING' },
@@ -148,7 +155,7 @@ export default function GalleryClient() {
       </section>
 
       {/* CHAPTER 02: THE FIELD */}
-      <section ref={handsRef} className="pt-32 pb-32 flex flex-col items-center w-full bg-[var(--color-charcoal)]/5">
+      <section ref={handsRef} className="pt-32 pb-32 flex flex-col items-center w-full">
         <div className="text-center mb-24 px-6">
           <h2 className="text-4xl md:text-6xl font-serif tracking-tighter mb-4">
             02<br/>THE FIELD
