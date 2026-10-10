@@ -210,20 +210,8 @@ export default function JourneyPageClient() {
     offset: ["start start", "end end"]
   });
 
-  // Background transition: Stage 04 (Harvest) is exactly halfway through the 8 stages.
-  // We transition background color from earthy (#e6dfd3) to clean warm ivory (#f2ede4) around 50-60% scroll.
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.6, 1],
-    ["var(--color-sand)", "var(--color-sand)", "var(--color-parchment)", "var(--color-parchment)"]
-  );
-
   return (
-    <motion.main 
-      ref={containerRef} 
-      style={{ backgroundColor }}
-      className="relative w-full min-h-screen text-[var(--color-charcoal)] transition-colors duration-1000 ease-in-out"
-    >
+    <main className="relative w-full min-h-screen text-[var(--color-charcoal)] bg-[var(--color-sand)]">
       
       {/* Intro Section */}
       <section className="pt-40 pb-20 md:pt-56 md:pb-32 px-6 md:px-12 max-w-[1200px] mx-auto text-center">
@@ -253,6 +241,6 @@ export default function JourneyPageClient() {
         ))}
       </div>
 
-    </motion.main>
+    </main>
   );
 }

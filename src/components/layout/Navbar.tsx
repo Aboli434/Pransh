@@ -114,12 +114,12 @@ export default function Navbar({ locale }: { locale?: string }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out flex items-center justify-between px-6 md:px-12 bg-[#1B2B1F] ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out flex items-center justify-between px-6 md:px-12 bg-[#EAE5D9] ${
           isScrolled 
-            ? "py-4 md:py-5 shadow-lg shadow-black/20"
-            : "py-6 md:py-8 shadow-none border-b border-[#F5F3EB]/10"
+            ? "py-4 md:py-5 shadow-lg shadow-black/5"
+            : "py-6 md:py-8 shadow-none border-b border-[#1B2B1F]/10"
         }`}
-        style={{ color: '#F5F3EB' }}
+        style={{ color: '#1B2B1F' }}
       >
         <motion.div 
           className="w-full max-w-[1600px] mx-auto flex items-center justify-between"
@@ -167,7 +167,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                         letterSpacing: isHovered ? '0.14em' : '0.1em'
                       }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className={`block font-sans uppercase text-[11px] font-medium transition-colors duration-300 ${isActive ? 'text-[#F5F3EB]' : 'text-[#F5F3EB]/70'}`}
+                      className={`block font-sans uppercase text-[11px] font-medium transition-colors duration-300 ${isActive ? 'text-[#1B2B1F]' : 'text-[#1B2B1F]/70'}`}
                     >
                       {link.name}
                     </motion.span>
@@ -198,11 +198,11 @@ export default function Navbar({ locale }: { locale?: string }) {
                 >
                   <Link 
                     href="/contact"
-                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-[#EAE5D9] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
+                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F5F3EB] bg-[#1B2B1F] hover:bg-[#334A38] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
                   >
                     <span className="relative z-10">ENQUIRE</span>
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
                       initial={{ x: "-150%" }}
                       whileHover={{ x: "150%" }}
                       transition={{ duration: 0.7, ease: "easeInOut" }}

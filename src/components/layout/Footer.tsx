@@ -6,7 +6,7 @@ import Logo from '@/components/ui/Logo';
 
 export default function Footer({ locale }: { locale: Locale }) {
   return (
-    <footer className="bg-[var(--color-charcoal)] text-[var(--color-parchment)] pt-24 pb-12 border-t border-[var(--color-parchment)]/10">
+    <footer className="bg-[var(--color-sand)] text-[var(--color-charcoal)] pt-24 pb-12 border-t border-[var(--color-charcoal)]/10">
       <div className="max-w-[1600px] mx-auto px-4 md:px-12">
         
         <div className="flex flex-col lg:flex-row justify-between gap-16 mb-24">
