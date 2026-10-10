@@ -11,8 +11,8 @@ import * as THREE from 'three';
 function RiceField({ scrollProgress }: { scrollProgress: React.RefObject<number> }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
-  // Increased density for a fuller, more lush field
-  const clumpsCount = isMobile ? 800 : 3500; 
+  // Drastically increased density for a much fuller, more lush field
+  const clumpsCount = isMobile ? 2500 : 9000; 
   
   const leavesRef = useRef<THREE.InstancedMesh>(null);
   const paniclesRef = useRef<THREE.InstancedMesh>(null);
