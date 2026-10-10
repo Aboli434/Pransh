@@ -24,11 +24,11 @@ export default function EnquiryCTA({ locale }: { locale: Locale }) {
           <div className="flex flex-col gap-6 text-sm md:text-base font-sans uppercase tracking-[0.2em] font-medium w-full max-w-sm mb-16">
             <div className="flex justify-between items-end">
               <span className="opacity-80 text-xs">10 KG</span>
-              <span className="text-3xl font-serif">₹600</span>
+              <span className="text-3xl font-serif">₹700</span>
             </div>
             <div className="flex justify-between items-end">
               <span className="opacity-80 text-xs">25 KG</span>
-              <span className="text-3xl font-serif">₹1,500</span>
+              <span className="text-3xl font-serif">₹1,750</span>
             </div>
           </div>
 

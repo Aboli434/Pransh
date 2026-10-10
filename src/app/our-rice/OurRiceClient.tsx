@@ -58,11 +58,11 @@ export default function OurRiceClient({ dict }: { dict: any }) {
             <div className="flex flex-col gap-8 w-full max-w-sm mb-16">
               <div className="flex justify-between items-end border-b border-[var(--color-parchment)]/20 pb-4">
                 <span className="opacity-80 text-xs font-sans uppercase tracking-[0.2em]">10 KG PACKING</span>
-                <span className="text-4xl font-serif text-[var(--color-gold)]">₹600</span>
+                <span className="text-4xl font-serif text-[var(--color-gold)]">₹700</span>
               </div>
               <div className="flex justify-between items-end border-b border-[var(--color-parchment)]/20 pb-4">
                 <span className="opacity-80 text-xs font-sans uppercase tracking-[0.2em]">25 KG PACKING</span>
-                <span className="text-4xl font-serif text-[var(--color-gold)]">₹1,500</span>
+                <span className="text-4xl font-serif text-[var(--color-gold)]">₹1,750</span>
               </div>
             </div>
 

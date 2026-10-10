@@ -42,12 +42,12 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
             <div className="flex items-center gap-8 md:gap-16 mb-12">
               <div className="flex flex-col">
                 <span className="text-[10px] font-sans uppercase tracking-[0.2em] opacity-60 mb-2">10 KG</span>
-                <span className="text-4xl md:text-5xl font-serif text-[var(--color-gold)]">₹600</span>
+                <span className="text-4xl md:text-5xl font-serif text-[var(--color-gold)]">₹700</span>
               </div>
               <div className="w-px h-16 bg-[var(--color-parchment)]/20"></div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-sans uppercase tracking-[0.2em] opacity-60 mb-2">25 KG</span>
-                <span className="text-4xl md:text-5xl font-serif text-[var(--color-gold)]">₹1,500</span>
+                <span className="text-4xl md:text-5xl font-serif text-[var(--color-gold)]">₹1,750</span>
               </div>
             </div>
 

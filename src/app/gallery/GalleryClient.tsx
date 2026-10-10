@@ -267,8 +267,8 @@ export default function GalleryClient() {
             </p>
             <div className="flex flex-col items-center gap-8">
               <div className="flex flex-col items-center gap-2 text-sm font-sans uppercase tracking-[0.3em] font-medium opacity-90">
-                <span>10 KG — ₹600</span>
-                <span>25 KG — ₹1,500</span>
+                <span>10 KG — ₹700</span>
+                <span>25 KG — ₹1,750</span>
               </div>
               
               <a 

@@ -83,9 +83,9 @@ export default function Hero({ locale }: { locale: Locale }) {
             
             {/* Refined price line */}
             <div className="text-[11px] md:text-xs font-sans uppercase tracking-[0.3em] font-medium text-white/90 mb-10 flex items-center gap-4">
-              <span>10 KG — ₹600</span>
+              <span>10 KG — ₹700</span>
               <span className="opacity-50">·</span>
-              <span>25 KG — ₹1,500</span>
+              <span>25 KG — ₹1,750</span>
             </div>
             
             {/* CTAs */}

@@ -9,8 +9,7 @@ export default function Introduction() {
           FROM PAVNANAGAR · MAVAL
         </span>
 
-        {/* Thin vertical line */}
-        <div className="w-px h-16 md:h-24 bg-[var(--color-charcoal)]/20 mb-12"></div>
+        {/* Thin vertical line removed as requested */}
         
         {/* Huge serif statement */}
         <h2 className="text-4xl md:text-6xl lg:text-8xl font-serif leading-[1.1] tracking-tighter text-[var(--color-charcoal)] max-w-5xl mx-auto mb-16">
