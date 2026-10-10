@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Logo from '@/components/ui/Logo';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 // Magnetic wrapper component for subtle hover interactions
@@ -126,23 +127,12 @@ export default function Navbar({ locale }: { locale?: string }) {
           initial="hidden"
           animate="show"
         >
-          {/* LEFT: PRANSH (with letter hover micro-interaction) */}
+          {/* LEFT: LOGO */}
           <motion.div variants={itemVariants}>
             <MagneticEffect disabled={isScrolled}>
               <Link href="/" className="group flex flex-col items-start focus:outline-none">
-                <div className="flex font-serif text-2xl md:text-3xl tracking-[0.08em] leading-none mb-1 overflow-hidden">
-                  {logoText.split('').map((char, index) => (
-                    <motion.span 
-                      key={index}
-                      className="inline-block relative"
-                      whileHover={{ y: -2, opacity: 0.8 }}
-                      transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 20 }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </div>
-                <div className="h-[1px] w-0 bg-[#1B2B1F] group-hover:w-full transition-all duration-500 ease-out" />
+                <Logo className="w-24 md:w-32 h-auto" />
+                <div className="h-[1px] w-0 bg-[#1B2B1F] group-hover:w-full transition-all duration-500 ease-out mt-1" />
               </Link>
             </MagneticEffect>
           </motion.div>
@@ -256,8 +246,8 @@ export default function Navbar({ locale }: { locale?: string }) {
           >
             {/* Mobile Top Bar */}
             <div className="flex justify-between items-start px-6 py-8">
-              <div className="font-serif text-2xl tracking-[0.08em] leading-none">
-                PRANSH
+              <div>
+                <Logo className="w-24 h-auto" />
               </div>
               <button 
                 onClick={closeMenu}
