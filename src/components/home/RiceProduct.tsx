@@ -51,14 +51,18 @@ export default function RiceProduct({ locale }: { locale: Locale }) {
               </div>
             </div>
 
-            <a 
+            <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<a 
               href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold hover:bg-[var(--color-gold)] hover:text-[var(--color-charcoal)] transition-colors"
+              className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] inline-block border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold   "
             >
-              ORDER ON WHATSAPP
-            </a>
+<span className="relative z-10">ORDER ON WHATSAPP</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</a>
+</motion.div>
           </div>
 
         </div>

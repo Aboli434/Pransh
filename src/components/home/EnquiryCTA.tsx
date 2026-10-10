@@ -1,4 +1,5 @@
 'use client';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Locale } from '@/i18n/config';
 import Image from 'next/image';
@@ -32,14 +33,18 @@ export default function EnquiryCTA({ locale }: { locale: Locale }) {
             </div>
           </div>
 
-          <a 
+          <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<a 
             href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block border border-[var(--color-parchment)] text-[var(--color-parchment)] px-12 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-parchment)] hover:text-[var(--color-terracotta)] transition-colors text-center mb-16"
+            className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] inline-block border border-[var(--color-parchment)] text-[var(--color-parchment)] px-12 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold    text-center mb-16"
           >
-            ORDER ON WHATSAPP
-          </a>
+<span className="relative z-10">ORDER ON WHATSAPP</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</a>
+</motion.div>
 
           <div className="flex flex-col gap-4 text-xs font-sans tracking-[0.3em] uppercase opacity-90">
             <a href="tel:9370943298" className="hover:opacity-60 transition-opacity">9370943298</a>

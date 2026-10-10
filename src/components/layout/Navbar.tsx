@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -209,7 +208,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                 >
                   <Link 
                     href="/contact"
-                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-white transition-colors duration-300 px-8 py-[10px] focus:outline-none"
+                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-[#EAE5D9] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
                   >
                     <span className="relative z-10">ENQUIRE</span>
                     <motion.div 

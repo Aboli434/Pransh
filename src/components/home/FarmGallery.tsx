@@ -57,12 +57,16 @@ export default function FarmGallery({ locale }: { locale: Locale }) {
           <h2 className="text-4xl md:text-6xl font-serif tracking-tighter">
             A VISUAL ARCHIVE
           </h2>
-          <Link 
+          <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<Link 
             href="/gallery"
-            className="hidden md:inline-block border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold hover:bg-[var(--color-gold)] hover:text-[var(--color-charcoal)] transition-colors"
+            className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] hidden md:inline-block border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold   "
           >
-            EXPLORE THE FULL ARCHIVE
-          </Link>
+<span className="relative z-10">EXPLORE THE FULL ARCHIVE</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</Link>
+</motion.div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
@@ -112,12 +116,16 @@ export default function FarmGallery({ locale }: { locale: Locale }) {
         </div>
 
         <div className="mt-16 md:hidden w-full flex justify-center">
-          <Link 
+          <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<Link 
             href="/gallery"
-            className="w-full text-center border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold hover:bg-[var(--color-gold)] hover:text-[var(--color-charcoal)] transition-colors"
+            className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] w-full text-center border border-[var(--color-gold)] text-[var(--color-gold)] px-8 py-4 text-xs font-sans uppercase tracking-[0.2em] font-bold   "
           >
-            EXPLORE THE FULL ARCHIVE
-          </Link>
+<span className="relative z-10">EXPLORE THE FULL ARCHIVE</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</Link>
+</motion.div>
         </div>
 
       </div>

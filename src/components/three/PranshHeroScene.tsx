@@ -1,5 +1,5 @@
-/* eslint-disable */
 'use client';
+/* eslint-disable */
 import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
@@ -12,7 +12,7 @@ function RiceField({ scrollProgress }: { scrollProgress: React.RefObject<number>
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
   // Drastically increased density for a much fuller, more lush field
-  const clumpsCount = isMobile ? 2500 : 9000; 
+  const clumpsCount = isMobile ? 4500 : 9000; 
   
   const leavesRef = useRef<THREE.InstancedMesh>(null);
   const paniclesRef = useRef<THREE.InstancedMesh>(null);

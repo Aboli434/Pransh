@@ -1,3 +1,5 @@
+'use client';
+import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
 
 export default async function ContactPage() {
@@ -39,20 +41,28 @@ export default async function ContactPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-6 items-center md:items-end justify-end w-full">
-              <a 
+              <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<a 
                 href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20enquire%20about%20ordering%20Indrayani%20Rice."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block border border-[var(--color-charcoal)] bg-[var(--color-charcoal)] text-[var(--color-parchment)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-parchment)] hover:text-[var(--color-charcoal)] transition-colors text-center w-full sm:w-auto"
+                className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] inline-block border border-[var(--color-charcoal)] bg-[var(--color-charcoal)] text-[var(--color-parchment)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold    text-center w-full sm:w-auto"
               >
-                ORDER ON WHATSAPP
-              </a>
-              <a 
+<span className="relative z-10">ORDER ON WHATSAPP</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</a>
+</motion.div>
+              <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<a 
                 href="tel:9370943298" 
-                className="inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-[var(--color-charcoal)] hover:text-[var(--color-parchment)] transition-colors text-center w-full sm:w-auto"
+                className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-5 text-xs font-sans uppercase tracking-[0.3em] font-bold    text-center w-full sm:w-auto"
               >
-                CALL
-              </a>
+<span className="relative z-10">CALL</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</a>
+</motion.div>
             </div>
 
           </div>

@@ -89,23 +89,46 @@ export default function Hero({ locale }: { locale: Locale }) {
             </div>
             
             {/* CTAs */}
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 pointer-events-auto">
-              <a 
-                href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#f2ede4] text-[#1a1714] px-8 py-4 text-[10px] md:text-xs font-sans uppercase tracking-[0.3em] font-bold hover:bg-white hover:scale-[1.02] transition-all text-center min-w-[220px]"
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pointer-events-auto">
+              <motion.div
+                className="rounded-[6px] overflow-hidden"
+                whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                ORDER ON WHATSAPP
-              </a>
-              <div className="flex flex-col gap-2">
+                <a 
+                  href="https://wa.me/919370943298?text=Hello,%20I%20would%20like%20to%20order%20PRANSH%20Indrayani%20Rice."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-[#EAE5D9] transition-colors duration-300 px-8 py-[12px] min-w-[220px] focus:outline-none"
+                >
+                  <span className="relative z-10">ORDER ON WHATSAPP</span>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12"
+                    initial={{ x: "-150%" }}
+                    whileHover={{ x: "150%" }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                  />
+                </a>
+              </motion.div>
+              
+              <motion.div
+                className="rounded-[6px] overflow-hidden"
+                whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
                 <a 
                   href="tel:9370943298" 
-                  className="text-[10px] md:text-xs font-sans uppercase tracking-[0.3em] text-[#f2ede4]/80 hover:text-white transition-colors"
+                  className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-[#EAE5D9] transition-colors duration-300 px-8 py-[12px] min-w-[220px] focus:outline-none"
                 >
-                  9370943298
+                  <span className="relative z-10">CALL NOW</span>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12"
+                    initial={{ x: "-150%" }}
+                    whileHover={{ x: "150%" }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                  />
                 </a>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>

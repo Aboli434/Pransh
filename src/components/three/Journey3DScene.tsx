@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/immutability */
 'use client';
+/* eslint-disable react-hooks/immutability */
 import { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useTexture, PerspectiveCamera } from '@react-three/drei';

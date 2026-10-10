@@ -91,14 +91,18 @@ function StageBlock({
             <p className="text-sm font-sans uppercase tracking-[0.2em] mb-12 text-[var(--color-charcoal)]/60">
               10 KG · 25 KG
             </p>
-            <a 
+            <motion.div className="rounded-[6px] overflow-hidden inline-block" whileHover={{ y: -2, boxShadow: "0 6px 16px -4px rgba(0,0,0,0.3)" }} transition={{ duration: 0.3, ease: "easeOut" }}>
+<a 
               href="https://wa.me/919370943298"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold hover:bg-[var(--color-charcoal)] hover:text-[var(--color-parchment)] transition-colors"
+              className="relative flex items-center justify-center rounded-[6px] transition-colors duration-300 focus:outline-none hover:bg-[#EAE5D9] hover:text-[#1B2B1F] inline-block border border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-10 py-4 text-xs font-sans uppercase tracking-[0.2em] font-semibold   "
             >
-              ENQUIRE TO ORDER
-            </a>
+<span className="relative z-10">ENQUIRE TO ORDER</span>
+<motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12" initial={{ x: "-150%" }} whileHover={{ x: "150%" }} transition={{ duration: 0.7, ease: "easeInOut" }} />
+
+</a>
+</motion.div>
           </div>
         </motion.div>
       </div>
