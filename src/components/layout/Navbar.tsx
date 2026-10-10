@@ -209,11 +209,11 @@ export default function Navbar({ locale }: { locale?: string }) {
                 >
                   <Link 
                     href="/contact"
-                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F5F3EB] bg-[#1B2B1F] hover:bg-[#334A38] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
+                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#1B2B1F] bg-[#F5F3EB] hover:bg-white transition-colors duration-300 px-8 py-[10px] focus:outline-none"
                   >
                     <span className="relative z-10">ENQUIRE</span>
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1B2B1F]/10 to-transparent skew-x-12"
                       initial={{ x: "-150%" }}
                       whileHover={{ x: "150%" }}
                       transition={{ duration: 0.7, ease: "easeInOut" }}
