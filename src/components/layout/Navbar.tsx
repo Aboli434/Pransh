@@ -114,12 +114,12 @@ export default function Navbar({ locale }: { locale?: string }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out flex items-center justify-between px-6 md:px-12 bg-[#25251F] ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out flex items-center justify-between px-6 md:px-12 bg-[#1B2B1F] ${
           isScrolled 
             ? "py-4 md:py-5 shadow-lg shadow-black/20"
-            : "py-6 md:py-8 shadow-none border-b border-[#F3EBDD]/10"
+            : "py-6 md:py-8 shadow-none border-b border-[#F5F3EB]/10"
         }`}
-        style={{ color: '#F3EBDD' }}
+        style={{ color: '#F5F3EB' }}
       >
         <motion.div 
           className="w-full max-w-[1600px] mx-auto flex items-center justify-between"
@@ -143,7 +143,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                     </motion.span>
                   ))}
                 </div>
-                <div className="h-[1px] w-0 bg-[#B56A43] group-hover:w-full transition-all duration-500 ease-out" />
+                <div className="h-[1px] w-0 bg-[#1B2B1F] group-hover:w-full transition-all duration-500 ease-out" />
               </Link>
             </MagneticEffect>
           </motion.div>
@@ -161,7 +161,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                   {isActive && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="absolute -top-3 w-1.5 h-1.5 rounded-full bg-[#B56A43]"
+                      className="absolute -top-3 w-1.5 h-1.5 rounded-full bg-[#1B2B1F]"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -178,7 +178,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                         letterSpacing: isHovered ? '0.14em' : '0.1em'
                       }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className={`block font-sans uppercase text-[11px] font-medium transition-colors duration-300 ${isActive ? 'text-[#F3EBDD]' : 'text-[#F3EBDD]/70'}`}
+                      className={`block font-sans uppercase text-[11px] font-medium transition-colors duration-300 ${isActive ? 'text-[#F5F3EB]' : 'text-[#F5F3EB]/70'}`}
                     >
                       {link.name}
                     </motion.span>
@@ -188,7 +188,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                       initial={{ scaleX: 0, originX: 0 }}
                       animate={{ scaleX: isHovered ? 1 : 0 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="absolute bottom-1 left-0 right-0 h-[1px] bg-[#B56A43]"
+                      className="absolute bottom-1 left-0 right-0 h-[1px] bg-[#1B2B1F]"
                     />
                   </Link>
                 </motion.div>
@@ -209,7 +209,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                 >
                   <Link 
                     href="/contact"
-                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F3EBDD] bg-[#B56A43] hover:bg-[#C8754A] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
+                    className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F5F3EB] bg-[#1B2B1F] hover:bg-[#334A38] transition-colors duration-300 px-8 py-[10px] focus:outline-none"
                   >
                     <span className="relative z-10">ENQUIRE</span>
                     <motion.div 
@@ -251,7 +251,7 @@ export default function Navbar({ locale }: { locale?: string }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" as any }}
-            className="fixed inset-0 z-[100] bg-[#F3EBDD] text-[#25251F] flex flex-col overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-[#F5F3EB] text-[#1B2B1F] flex flex-col overflow-y-auto"
             role="dialog"
             aria-modal="true"
           >
@@ -268,7 +268,7 @@ export default function Navbar({ locale }: { locale?: string }) {
                 <span className="font-sans uppercase text-[10px] tracking-[0.14em] font-semibold mb-1 opacity-80 group-hover:opacity-100 transition-opacity">
                   CLOSE
                 </span>
-                <div className="h-[1px] bg-[#B56A43] w-6 group-hover:w-8 transition-all duration-300 ease-out" />
+                <div className="h-[1px] bg-[#1B2B1F] w-6 group-hover:w-8 transition-all duration-300 ease-out" />
               </button>
             </div>
 
@@ -292,14 +292,14 @@ export default function Navbar({ locale }: { locale?: string }) {
                         {link.num}
                       </span>
                       <div className="flex items-center overflow-hidden">
-                        <span className="font-serif text-4xl tracking-tighter group-hover:translate-x-2 transition-transform duration-400 ease-out group-hover:text-[#B56A43]">
+                        <span className="font-serif text-4xl tracking-tighter group-hover:translate-x-2 transition-transform duration-400 ease-out group-hover:text-[#1B2B1F]">
                           {link.name}
                         </span>
                         {/* Slide in arrow */}
                         <motion.span 
                           initial={{ x: -20, opacity: 0 }}
                           whileHover={{ x: 0, opacity: 1 }}
-                          className="ml-4 text-[#B56A43] text-2xl"
+                          className="ml-4 text-[#1B2B1F] text-2xl"
                         >
                           →
                         </motion.span>
@@ -315,7 +315,7 @@ export default function Navbar({ locale }: { locale?: string }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="px-8 pb-12 flex flex-col gap-4 border-t border-[#25251F]/10 pt-8"
+              className="px-8 pb-12 flex flex-col gap-4 border-t border-[#1B2B1F]/10 pt-8"
             >
               <div className="flex flex-col">
                 <span className="font-sans uppercase text-[10px] tracking-[0.14em] font-semibold">
@@ -328,7 +328,7 @@ export default function Navbar({ locale }: { locale?: string }) {
               <Link 
                 href="/contact"
                 onClick={closeMenu}
-                className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F3EBDD] bg-[#B56A43] px-8 py-[12px] rounded-[6px] min-h-[44px] w-full max-w-[200px] mt-2 focus:outline-none"
+                className="relative flex items-center justify-center font-sans uppercase text-[11px] tracking-[0.18em] font-semibold text-[#F5F3EB] bg-[#1B2B1F] px-8 py-[12px] rounded-[6px] min-h-[44px] w-full max-w-[200px] mt-2 focus:outline-none"
               >
                 ENQUIRE
               </Link>

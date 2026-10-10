@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-parchment: #F3EBDD;
-  --color-sand: #E8DDC9;
-  --color-charcoal: #25251F;
-  --color-earth: #3A3429;
-  --color-terracotta: #B56A43;
-  --color-gold: #C49A52;
-  --color-walnut: #7A6245;
-  --color-botanical: #66705A;
+  --color-parchment: #F5F3EB;
+  --color-sand: #EAE5D9;
+  --color-charcoal: #1B2B1F;
+  --color-earth: #1B2B1F;
+  --color-terracotta: #1B2B1F;
+  --color-gold: #D4B271;
+  --color-walnut: #1B2B1F;
+  --color-botanical: #334A38;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
@@ -16,8 +16,8 @@
 
 @layer base {
   :root {
-    --background: #F3EBDD;
-    --foreground: #25251F;
+    --background: #F5F3EB;
+    --foreground: #1B2B1F;
   }
 
   body {
